@@ -104,7 +104,8 @@ DisplayInfo companyName = {0, 0, 6, "Î÷°²Î¬ÄÉ²â¿Ø"},
   */
 int main(void)
 {
-    SystemResourcesInit(RCC_INIT 
+	uint8_t test[6];
+	SystemResourcesInit(RCC_INIT 
                         | FLASH_INIT
                         | USART_INIT
                         | GPIO_INIT
@@ -120,8 +121,9 @@ int main(void)
     TmrTaskConfig();
 	cleanScreen();
 	//fullScreenDisplay(niu);
-	displayOneLine16x16(companyName);	
-	displayOneLine24x32(oilHight);
+	//displayOneLine16x16(companyName);	
+	//displayOneLine24x32(oilHight);
+	getNum(12345, 3, test);
     while(1)
     {
     	//TmrTask(0);

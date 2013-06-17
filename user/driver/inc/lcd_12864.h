@@ -85,4 +85,5 @@ void fullScreenDisplay(unsigned char *pic);
 void displayOne16x16(DisplayInfo displayInfo);
 void displayOneLine16x16(DisplayInfo displayInfo);
 void displayOneLine24x32(DisplayInfo displayInfo);
+void getNum(unsigned int, uint8_t scale, char *rValue);
 

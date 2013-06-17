@@ -37,8 +37,6 @@ void setBaseXY(uint8_t startX, uint8_t startY);
 void copy(uint8_t *src, uint8_t *dst, uint8_t times, uint8_t offset);
 
 
-
-
 /* Private function prototypes -----------------------------------------------*/
 void lcdInit()
 {
@@ -216,7 +214,30 @@ uint8_t *getGB2432(uint8_t code, const typFNT_GB2432 GB_2432[])
 	return gb2432;							  	
 }
 
-void numToString()
-{
+void getNum(unsigned int num, uint8_t scale, char *rValue)
+{	
+	uint8_t i, j, length = 0;
+	unsigned int res = num;
+	char numOfString[11] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.'};
+	unsigned int level[5] = {1, 10, 100, 1000, 10000};
+	
+	while(res)
+	{
+		res /= 10;
+		length++;
+	}
+
+	for(i = 0, j = 0; i < length; i++, j++)
+	{
+		if(i == length - scale)
+		{
+			rValue[j] = numOfString[11];
+			j++;
+		}
+		rValue[j] = num / (level[length - i - 1]);
+
+		num %= level[length - i - 1];
+	}
 	
 }
+
