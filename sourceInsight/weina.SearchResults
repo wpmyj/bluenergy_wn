@@ -1,0 +1,5 @@
+---- typFNT_GB16 Matches (4 in 0 files) ----
+GB1616.h (user\resoucre):} typFNT_GB16;
+GB1616.h (user\resoucre):extern const typFNT_GB16 tGB_16[GB1616_MAXSIZE] = {
+GB2432.h (user\resoucre):extern const typFNT_GB16 tGB_16[GB1616_MAXSIZE] = {
+Lcd_12864.c (user\driver\src):uint8_t *getGB1616(uint8_t code[2], const typFNT_GB16 GB_16[])
