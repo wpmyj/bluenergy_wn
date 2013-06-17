@@ -1,5 +1,6 @@
----- typFNT_GB16 Matches (4 in 0 files) ----
-GB1616.h (user\resoucre):} typFNT_GB16;
-GB1616.h (user\resoucre):extern const typFNT_GB16 tGB_16[GB1616_MAXSIZE] = {
-GB2432.h (user\resoucre):extern const typFNT_GB16 tGB_16[GB1616_MAXSIZE] = {
-Lcd_12864.c (user\driver\src):uint8_t *getGB1616(uint8_t code[2], const typFNT_GB16 GB_16[])
+---- displayOneLine16x16.position Matches (6 in 0 files) ----
+Lcd_12864.c (user\driver\src):void displayOneLine16x16(DisplayInfo position)
+Lcd_12864.c (user\driver\src):		setBaseXY(position.x, position.y);
+Lcd_12864.c (user\driver\src):		lcdWriteCom(BASE_PAGE_ADDR + page + position.y);
+Lcd_12864.c (user\driver\src):		for(i = 0; i < position.length; i++)
+Lcd_12864.c (user\driver\src):			gb1616 = getGB1616(position.data +i * 2, tGB_16);

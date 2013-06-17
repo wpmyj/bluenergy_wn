@@ -65,6 +65,13 @@
 #define	LIGHT_VALUE		0x24	//亮度值 
 
 /* Exported types ------------------------------------------------------------*/
+typedef struct                 // 汉字字模数据结构			
+{
+	uint8_t x;               // 汉字内码索引
+    uint8_t y;                       // 点阵码数据
+    uint8_t length;
+	uint8_t data[16];
+} DisplayInfo;
 
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
@@ -75,4 +82,7 @@ void lcdInit(void);
 void lcdWriteData(uint8_t data);
 void cleanScreen(void);
 void fullScreenDisplay(unsigned char *pic);
+void displayOne16x16(DisplayInfo displayInfo);
+void displayOneLine16x16(DisplayInfo displayInfo);
+void displayOneLine24x32(DisplayInfo displayInfo);
 

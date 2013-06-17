@@ -1,36 +1,6 @@
 #define GB2432_MAXSIZE		11
 #define GB2432_SIZE			96
 
-typedef enum characterSetTypes {ASCII8x16,GB16x16, GB24x32} characterSetTypes;
-typedef struct
-{
-	uint8_t width;
-	uint8_t hight;
-	characterSetTypes type;
-} Character;
-
-const Character character[3] = {
-8, 16, ASCII8x16,
-16, 16, GB16x16,
-24, 32, GB24x32
-};
-
-typedef struct
-{
-	uint8_t position_x;
-	uint8_t position_y;
-	uint8_t length;
-	characterSetTypes type;
-} DisplayItem;
-
-static DisplayItem companyName = 
-{
-	0,
-	0,
-	6,
-	ASCII8x16	
-};
-
 typedef struct                 // 汉字字模数据结构			
 {
 	uint8_t Index;               // 汉字内码索引

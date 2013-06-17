@@ -33,7 +33,6 @@
 /* Private functions ---------------------------------------------------------*/
 uint8_t *getGB1616(uint8_t code[2], const typFNT_GB1616 GB_16[]);
 uint8_t *getGB2432(uint8_t code, const typFNT_GB2432 GB_2432[]);
-void copyOneCharacter(uint8_t src[32], uint8_t *dst);
 void setBaseXY(uint8_t startX, uint8_t startY);
 void copy(uint8_t *src, uint8_t *dst, uint8_t times, uint8_t offset);
 
@@ -108,18 +107,18 @@ void fullScreenDisplay(uint8_t *pic)
 
 }
 
-void displayOneChineseCharacter(uint8_t startX, uint8_t startY, uint8_t code[2])
+void displayOne16x16(DisplayInfo displayInfo)
 {
 	uint8_t *gb1616, i;	
 	uint8_t page;
 	uint8_t gb[2][16];
 
-	gb1616 = getGB1616(code, tGB_16);
+	gb1616 = getGB1616(displayInfo.data, tGB_16);
 	copy(gb1616, gb[0], 2, GB1616_SIZE);
-	//copyOneCharacter(gb1616, gb[0]);
-	for(page = startY; page < startY + 2; page++)
+
+	for(page = displayInfo.y; page < displayInfo.y + 2; page++)
 	{
-		setBaseXY(startX, startY);
+		setBaseXY(displayInfo.x, displayInfo.y);
 		lcdWriteCom(BASE_PAGE_ADDR + page);
 		for(i = 0; i< 16; i++) 
 		{
@@ -128,7 +127,7 @@ void displayOneChineseCharacter(uint8_t startX, uint8_t startY, uint8_t code[2])
 	}
 }
 
-void displayOneLineOfChineseCharacter(uint8_t startX, uint8_t startY, uint8_t length, uint8_t *data)
+void displayOneLine16x16(DisplayInfo displayInfo)
 {
 	uint8_t *gb1616, i, k;	
 	uint8_t page;
@@ -136,12 +135,11 @@ void displayOneLineOfChineseCharacter(uint8_t startX, uint8_t startY, uint8_t le
 	
 	for(page = 0; page < 2; page++)
 	{		
-		setBaseXY(startX, startY);
-		lcdWriteCom(BASE_PAGE_ADDR + page + startY);
-		for(i = 0; i < length; i++)
+		setBaseXY(displayInfo.x, displayInfo.y);
+		lcdWriteCom(BASE_PAGE_ADDR + page + displayInfo.y);
+		for(i = 0; i < displayInfo.length; i++)
 		{
-			gb1616 = getGB1616(data + i * 2, tGB_16);
-			//copyOneCharacter(gb1616, gb[0]);
+			gb1616 = getGB1616(displayInfo.data + i * 2, tGB_16);
 			copy(gb1616, gb[0], 2, GB1616_SIZE);
 			for(k = 0; k < 16; k++)
 			{
@@ -151,7 +149,7 @@ void displayOneLineOfChineseCharacter(uint8_t startX, uint8_t startY, uint8_t le
 	}
 }
 
-void displayOneLine2432Character(uint8_t startX, uint8_t startY, uint8_t length, uint8_t *data)
+void displayOneLine24x32(DisplayInfo displayInfo)
 {
 	uint8_t *gb2432, i, k;	
 	uint8_t page;
@@ -159,12 +157,11 @@ void displayOneLine2432Character(uint8_t startX, uint8_t startY, uint8_t length,
 	
 	for(page = 0; page < 4; page++)
 	{		
-		setBaseXY(startX, startY);
-		lcdWriteCom(BASE_PAGE_ADDR + page + startY);
-		for(i = 0; i < length; i++)
+		setBaseXY(displayInfo.x, displayInfo.y);
+		lcdWriteCom(BASE_PAGE_ADDR + page + displayInfo.y);
+		for(i = 0; i < displayInfo.length; i++)
 		{
-			gb2432 = getGB2432(data[i], tGB_24);
-			//copyOneCharacter(gb1616, gb[0]);
+			gb2432 = getGB2432(displayInfo.data[i], tGB_24);
 			copy(gb2432, gb[0], 4, GB2432_SIZE);
 			for(k = 0; k < GB2432_SIZE / 4; k++)
 			{
@@ -183,12 +180,6 @@ void setBaseXY(uint8_t startX, uint8_t startY)
 	lcdWriteCom(COLUMN_SET_L + (startX & 0x0f));		//ÁÐµÍ4Î»£¨A3-A0£©
 }
 
-void copyOneCharacter(uint8_t src[32], uint8_t *dst)
-{
-	memcpy(dst, src, 16);
-	memcpy(dst + 16, src + 16, 16);
-}
-
 void copy(uint8_t *src, uint8_t *dst, uint8_t times, uint8_t size)
 {
 	uint8_t i, offset = size / times;
@@ -197,7 +188,6 @@ void copy(uint8_t *src, uint8_t *dst, uint8_t times, uint8_t size)
 		memcpy(dst + i * offset, src + i * offset, offset);
 	}
 }
-
 
 uint8_t *getGB1616(uint8_t code[2], const typFNT_GB1616 GB_16[])
 {
@@ -224,4 +214,9 @@ uint8_t *getGB2432(uint8_t code, const typFNT_GB2432 GB_2432[])
 		}
     }
 	return gb2432;							  	
+}
+
+void numToString()
+{
+	
 }
