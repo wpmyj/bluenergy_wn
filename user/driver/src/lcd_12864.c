@@ -169,6 +169,29 @@ void displayOneLine24x32(DisplayInfo displayInfo)
 	}
 }
 
+void displayOneLine24x32_with_paras(uint8_t x, uint8_t y, uint8_t length, uint8_t *data)
+{
+	uint8_t *gb2432, i, k;	
+	uint8_t page;
+	uint8_t gb[4][24];
+	
+	for(page = 0; page < 4; page++)
+	{		
+		setBaseXY(x, y);
+		lcdWriteCom(BASE_PAGE_ADDR + page + y);
+		for(i = 0; i < length; i++)
+		{
+			gb2432 = getGB2432(data[i], tGB_24);
+			copy(gb2432, gb[0], 4, GB2432_SIZE);
+			for(k = 0; k < GB2432_SIZE / 4; k++)
+			{
+				lcdWriteData(gb[page][k]);
+			}			
+		}
+	}
+}
+
+
 /* Private func */
 
 void setBaseXY(uint8_t startX, uint8_t startY)
@@ -214,11 +237,11 @@ uint8_t *getGB2432(uint8_t code, const typFNT_GB2432 GB_2432[])
 	return gb2432;							  	
 }
 
-void getNum(unsigned int num, uint8_t scale, char *rValue)
+void getNum(unsigned int num, uint8_t scale, uint8_t *rValue)
 {	
 	uint8_t i, j, length = 0;
 	unsigned int res = num;
-	char numOfString[11] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.'};
+	uint8_t numOfString[11] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.'};
 	unsigned int level[5] = {1, 10, 100, 1000, 10000};
 	
 	while(res)
@@ -231,10 +254,10 @@ void getNum(unsigned int num, uint8_t scale, char *rValue)
 	{
 		if(i == length - scale)
 		{
-			rValue[j] = numOfString[11];
+			rValue[j] = numOfString[10];
 			j++;
 		}
-		rValue[j] = num / (level[length - i - 1]);
+		rValue[j] = numOfString[num / (level[length - i - 1])];
 
 		num %= level[length - i - 1];
 	}

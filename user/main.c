@@ -123,7 +123,8 @@ int main(void)
 	//fullScreenDisplay(niu);
 	//displayOneLine16x16(companyName);	
 	//displayOneLine24x32(oilHight);
-	getNum(12345, 3, test);
+	getNum(1099, 2, test);
+	displayOneLine24x32_with_paras(0, 4, 5, test);
     while(1)
     {
     	//TmrTask(0);

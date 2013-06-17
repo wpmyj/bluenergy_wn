@@ -64,27 +64,17 @@ Section Cross References
     fsmc_sram.o(.text) refers to stm32f10x_fsmc.o(.text) for FSMC_NORSRAMCmd
     lcd_12864.o(.text) refers to stm32f10x_gpio.o(.text) for GPIO_ResetBits
     lcd_12864.o(.text) refers to stm32f10x_spi.o(.text) for SPI_I2S_SendData
-    lcd_12864.o(.text) refers to memcpya.o(.text) for __aeabi_memcpy4
+    lcd_12864.o(.text) refers to memcpya.o(.text) for __aeabi_memcpy
     lcd_12864.o(.text) refers to lcd_12864.o(.constdata) for .constdata
     lcd_12864.o(.text) refers to lcd_12864.o(.text) for lcdWriteCom
-    lcd_12864.o(.text) refers to lcd_12864.o(.text) for lcdWriteCom
-    lcd_12864.o(.text) refers to memcpya.o(.text) for __aeabi_memcpy
     lcd_12864.o(.text) refers to memcpya.o(.text) for __aeabi_memcpy
     lcd_12864.o(.text) refers to lcd_12864.o(.text) for getGB1616
     lcd_12864.o(.text) refers to lcd_12864.o(.text) for copy
-    lcd_12864.o(.text) refers to lcd_12864.o(.text) for setBaseXY
-    lcd_12864.o(.text) refers to lcd_12864.o(.text) for lcdWriteCom
     lcd_12864.o(.text) refers to lcd_12864.o(.constdata) for .constdata
     lcd_12864.o(.text) refers to lcd_12864.o(.text) for setBaseXY
-    lcd_12864.o(.text) refers to lcd_12864.o(.text) for lcdWriteCom
     lcd_12864.o(.text) refers to lcd_12864.o(.text) for getGB1616
-    lcd_12864.o(.text) refers to lcd_12864.o(.text) for copy
     lcd_12864.o(.text) refers to lcd_12864.o(.constdata) for .constdata
-    lcd_12864.o(.text) refers to memcpya.o(.text) for __aeabi_memcpy
     lcd_12864.o(.text) refers to lcd_12864.o(.text) for setBaseXY
-    lcd_12864.o(.text) refers to lcd_12864.o(.text) for lcdWriteCom
-    lcd_12864.o(.text) refers to lcd_12864.o(.text) for getGB2432
-    lcd_12864.o(.text) refers to lcd_12864.o(.text) for copy
     lcd_12864.o(.text) refers to lcd_12864.o(.constdata) for .constdata
     system_init.o(.text) refers to misc.o(.text) for NVIC_SetVectorTable
     system_init.o(.text) refers to stm32f10x_gpio.o(.text) for GPIO_Init
@@ -555,12 +545,9 @@ Removing Unused input sections from the image.
     Removing flash.o(.text), (46 bytes).
     Removing fsmc_sram.o(.text), (82 bytes).
     Removing lcd_12864.o(.text), (56 bytes).
-    Removing lcd_12864.o(.text), (26 bytes).
-    Removing lcd_12864.o(.text), (44 bytes).
     Removing lcd_12864.o(.text), (60 bytes).
     Removing lcd_12864.o(.text), (100 bytes).
     Removing lcd_12864.o(.text), (124 bytes).
-    Removing lcd_12864.o(.text), (50 bytes).
     Removing lcd_12864.o(.text), (128 bytes).
     Removing system_init.o(.text), (88 bytes).
     Removing system_init.o(.text), (2 bytes).
@@ -582,7 +569,7 @@ Removing Unused input sections from the image.
     Removing timertask.o(.text), (24 bytes).
     Removing timertask.o(.text), (76 bytes).
 
-432 unused section(s) (total 17102 bytes) removed from the image.
+429 unused section(s) (total 16982 bytes) removed from the image.
 
 ==============================================================================
 
@@ -656,19 +643,19 @@ Image Symbol Table
     .text                                    0x080005c8   Section        0  stm32f10x_tim.o(.text)
     .text                                    0x08000604   Section        0  stm32f10x_usart.o(.text)
     .text                                    0x08000734   Section        0  lcd_12864.o(.text)
-    .text                                    0x080008b4   Section        0  system_init.o(.text)
-    NVIC_SetPriority                         0x08000cf1   Thumb Code    22  system_init.o(.text)
-    .text                                    0x08000d10   Section        0  main.o(.text)
-    ConmmunctionTimer                        0x08000d11   Thumb Code    26  main.o(.text)
-    .text                                    0x08000dc0   Section        0  stm32f10x_it.o(.text)
-    .text                                    0x08000f4c   Section        0  timertask.o(.text)
-    .text                                    0x0800100c   Section        0  memcpya.o(.text)
-    .text                                    0x08001030   Section       36  init.o(.text)
-    i.__scatterload_copy                     0x08001054   Section       14  handlers.o(i.__scatterload_copy)
-    i.__scatterload_null                     0x08001062   Section        2  handlers.o(i.__scatterload_null)
-    i.__scatterload_zeroinit                 0x08001064   Section       14  handlers.o(i.__scatterload_zeroinit)
-    .constdata                               0x08001074   Section        4  system_stm32f10x.o(.constdata)
-    .constdata                               0x08001078   Section     1292  lcd_12864.o(.constdata)
+    .text                                    0x080009ac   Section        0  system_init.o(.text)
+    NVIC_SetPriority                         0x08000de9   Thumb Code    22  system_init.o(.text)
+    .text                                    0x08000e08   Section        0  main.o(.text)
+    ConmmunctionTimer                        0x08000e09   Thumb Code    26  main.o(.text)
+    .text                                    0x08000ec4   Section        0  stm32f10x_it.o(.text)
+    .text                                    0x08001050   Section        0  timertask.o(.text)
+    .text                                    0x08001110   Section        0  memcpya.o(.text)
+    .text                                    0x08001134   Section       36  init.o(.text)
+    i.__scatterload_copy                     0x08001158   Section       14  handlers.o(i.__scatterload_copy)
+    i.__scatterload_null                     0x08001166   Section        2  handlers.o(i.__scatterload_null)
+    i.__scatterload_zeroinit                 0x08001168   Section       14  handlers.o(i.__scatterload_zeroinit)
+    .constdata                               0x08001178   Section        4  system_stm32f10x.o(.constdata)
+    .constdata                               0x0800117c   Section     1292  lcd_12864.o(.constdata)
     .data                                    0x20000000   Section       20  stm32f10x_rcc.o(.data)
     ADCPrescTable                            0x20000000   Data           4  stm32f10x_rcc.o(.data)
     APBAHBPrescTable                         0x20000004   Data          16  stm32f10x_rcc.o(.data)
@@ -794,54 +781,58 @@ Image Symbol Table
     lcdInit                                  0x08000771   Thumb Code    76  lcd_12864.o(.text)
     lcdWriteData                             0x080007bd   Thumb Code    60  lcd_12864.o(.text)
     cleanScreen                              0x080007f9   Thumb Code    52  lcd_12864.o(.text)
-    getNum                                   0x0800082d   Thumb Code   112  lcd_12864.o(.text)
-    SysTick_Configuration                    0x080008b5   Thumb Code    64  system_init.o(.text)
-    USART_NVIC_Init                          0x080008f5   Thumb Code    42  system_init.o(.text)
-    USART_GPIO_Init                          0x0800091f   Thumb Code    54  system_init.o(.text)
-    USART_Configuration                      0x08000955   Thumb Code    90  system_init.o(.text)
-    FSCM_GPIO_Init                           0x080009af   Thumb Code   196  system_init.o(.text)
-    FSCM_Configuration                       0x08000a73   Thumb Code    18  system_init.o(.text)
-    RCC_Configuration                        0x08000a85   Thumb Code    96  system_init.o(.text)
-    GPIO_Configuration                       0x08000ae5   Thumb Code   128  system_init.o(.text)
-    Flash_Configuration                      0x08000b65   Thumb Code    58  system_init.o(.text)
-    Timer_Configuration                      0x08000b9f   Thumb Code    44  system_init.o(.text)
-    SPIx_Configuration                       0x08000bcb   Thumb Code   170  system_init.o(.text)
-    SystemResourcesInit                      0x08000c75   Thumb Code   124  system_init.o(.text)
-    TmrTaskConfig                            0x08000d2b   Thumb Code    40  main.o(.text)
-    delay                                    0x08000d53   Thumb Code    12  main.o(.text)
-    main                                     0x08000d5f   Thumb Code    66  main.o(.text)
-    TimingDelay_Decrement                    0x08000da1   Thumb Code    16  main.o(.text)
-    NMI_Handler                              0x08000dc1   Thumb Code     2  stm32f10x_it.o(.text)
-    HardFault_Handler                        0x08000dc3   Thumb Code     2  stm32f10x_it.o(.text)
-    MemManage_Handler                        0x08000dc5   Thumb Code     2  stm32f10x_it.o(.text)
-    BusFault_Handler                         0x08000dc7   Thumb Code     2  stm32f10x_it.o(.text)
-    UsageFault_Handler                       0x08000dc9   Thumb Code     2  stm32f10x_it.o(.text)
-    DebugMon_Handler                         0x08000dcb   Thumb Code     2  stm32f10x_it.o(.text)
-    SVC_Handler                              0x08000dcd   Thumb Code     2  stm32f10x_it.o(.text)
-    PendSV_Handler                           0x08000dcf   Thumb Code     2  stm32f10x_it.o(.text)
-    SysTick_Handler                          0x08000dd1   Thumb Code    14  stm32f10x_it.o(.text)
-    RTC_IRQHandler                           0x08000ddf   Thumb Code    72  stm32f10x_it.o(.text)
-    USART1_IRQHandler                        0x08000e27   Thumb Code   262  stm32f10x_it.o(.text)
-    TmrCfgFnct                               0x08000f4d   Thumb Code    24  timertask.o(.text)
-    TmrInit                                  0x08000f65   Thumb Code    28  timertask.o(.text)
-    TmrReset                                 0x08000f81   Thumb Code    20  timertask.o(.text)
-    TmrSetMST                                0x08000f95   Thumb Code    44  timertask.o(.text)
-    TmrStart                                 0x08000fc1   Thumb Code    18  timertask.o(.text)
-    TmrStop                                  0x08000fd3   Thumb Code    18  timertask.o(.text)
-    TmrDiDa                                  0x08000fe5   Thumb Code    36  timertask.o(.text)
-    __aeabi_memcpy                           0x0800100d   Thumb Code    36  memcpya.o(.text)
-    __aeabi_memcpy4                          0x0800100d   Thumb Code     0  memcpya.o(.text)
-    __aeabi_memcpy8                          0x0800100d   Thumb Code     0  memcpya.o(.text)
-    __scatterload                            0x08001031   Thumb Code    28  init.o(.text)
-    __scatterload_rt2                        0x08001031   Thumb Code     0  init.o(.text)
-    __scatterload_copy                       0x08001055   Thumb Code    14  handlers.o(i.__scatterload_copy)
-    __scatterload_null                       0x08001063   Thumb Code     2  handlers.o(i.__scatterload_null)
-    __scatterload_zeroinit                   0x08001065   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
-    SystemFrequency                          0x08001074   Data           4  system_stm32f10x.o(.constdata)
-    tGB_16                                   0x08001078   Data         204  lcd_12864.o(.constdata)
-    tGB_24                                   0x08001144   Data        1067  lcd_12864.o(.constdata)
-    Region$$Table$$Base                      0x08001584   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x080015a4   Number         0  anon$$obj.o(Region$$Table)
+    setBaseXY                                0x0800082d   Thumb Code    24  lcd_12864.o(.text)
+    copy                                     0x08000845   Thumb Code    44  lcd_12864.o(.text)
+    getGB2432                                0x08000871   Thumb Code    50  lcd_12864.o(.text)
+    displayOneLine24x32_with_paras           0x080008a3   Thumb Code   108  lcd_12864.o(.text)
+    getNum                                   0x0800090f   Thumb Code   130  lcd_12864.o(.text)
+    SysTick_Configuration                    0x080009ad   Thumb Code    64  system_init.o(.text)
+    USART_NVIC_Init                          0x080009ed   Thumb Code    42  system_init.o(.text)
+    USART_GPIO_Init                          0x08000a17   Thumb Code    54  system_init.o(.text)
+    USART_Configuration                      0x08000a4d   Thumb Code    90  system_init.o(.text)
+    FSCM_GPIO_Init                           0x08000aa7   Thumb Code   196  system_init.o(.text)
+    FSCM_Configuration                       0x08000b6b   Thumb Code    18  system_init.o(.text)
+    RCC_Configuration                        0x08000b7d   Thumb Code    96  system_init.o(.text)
+    GPIO_Configuration                       0x08000bdd   Thumb Code   128  system_init.o(.text)
+    Flash_Configuration                      0x08000c5d   Thumb Code    58  system_init.o(.text)
+    Timer_Configuration                      0x08000c97   Thumb Code    44  system_init.o(.text)
+    SPIx_Configuration                       0x08000cc3   Thumb Code   170  system_init.o(.text)
+    SystemResourcesInit                      0x08000d6d   Thumb Code   124  system_init.o(.text)
+    TmrTaskConfig                            0x08000e23   Thumb Code    40  main.o(.text)
+    delay                                    0x08000e4b   Thumb Code    12  main.o(.text)
+    main                                     0x08000e57   Thumb Code    78  main.o(.text)
+    TimingDelay_Decrement                    0x08000ea5   Thumb Code    16  main.o(.text)
+    NMI_Handler                              0x08000ec5   Thumb Code     2  stm32f10x_it.o(.text)
+    HardFault_Handler                        0x08000ec7   Thumb Code     2  stm32f10x_it.o(.text)
+    MemManage_Handler                        0x08000ec9   Thumb Code     2  stm32f10x_it.o(.text)
+    BusFault_Handler                         0x08000ecb   Thumb Code     2  stm32f10x_it.o(.text)
+    UsageFault_Handler                       0x08000ecd   Thumb Code     2  stm32f10x_it.o(.text)
+    DebugMon_Handler                         0x08000ecf   Thumb Code     2  stm32f10x_it.o(.text)
+    SVC_Handler                              0x08000ed1   Thumb Code     2  stm32f10x_it.o(.text)
+    PendSV_Handler                           0x08000ed3   Thumb Code     2  stm32f10x_it.o(.text)
+    SysTick_Handler                          0x08000ed5   Thumb Code    14  stm32f10x_it.o(.text)
+    RTC_IRQHandler                           0x08000ee3   Thumb Code    72  stm32f10x_it.o(.text)
+    USART1_IRQHandler                        0x08000f2b   Thumb Code   262  stm32f10x_it.o(.text)
+    TmrCfgFnct                               0x08001051   Thumb Code    24  timertask.o(.text)
+    TmrInit                                  0x08001069   Thumb Code    28  timertask.o(.text)
+    TmrReset                                 0x08001085   Thumb Code    20  timertask.o(.text)
+    TmrSetMST                                0x08001099   Thumb Code    44  timertask.o(.text)
+    TmrStart                                 0x080010c5   Thumb Code    18  timertask.o(.text)
+    TmrStop                                  0x080010d7   Thumb Code    18  timertask.o(.text)
+    TmrDiDa                                  0x080010e9   Thumb Code    36  timertask.o(.text)
+    __aeabi_memcpy                           0x08001111   Thumb Code    36  memcpya.o(.text)
+    __aeabi_memcpy4                          0x08001111   Thumb Code     0  memcpya.o(.text)
+    __aeabi_memcpy8                          0x08001111   Thumb Code     0  memcpya.o(.text)
+    __scatterload                            0x08001135   Thumb Code    28  init.o(.text)
+    __scatterload_rt2                        0x08001135   Thumb Code     0  init.o(.text)
+    __scatterload_copy                       0x08001159   Thumb Code    14  handlers.o(i.__scatterload_copy)
+    __scatterload_null                       0x08001167   Thumb Code     2  handlers.o(i.__scatterload_null)
+    __scatterload_zeroinit                   0x08001169   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
+    SystemFrequency                          0x08001178   Data           4  system_stm32f10x.o(.constdata)
+    tGB_16                                   0x0800117c   Data         204  lcd_12864.o(.constdata)
+    tGB_24                                   0x08001248   Data        1067  lcd_12864.o(.constdata)
+    Region$$Table$$Base                      0x08001688   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x080016a8   Number         0  anon$$obj.o(Region$$Table)
     GPIO_InitStructure                       0x20000014   Data           4  system_init.o(.data)
     DataSizeOfTransfer                       0x20000018   Data           1  main.o(.data)
     ACK_Data                                 0x20000019   Data           6  main.o(.data)
@@ -858,19 +849,19 @@ Memory Map of the image
 
   Image Entry point : 0x08000101
 
-  Load Region LR_1 (Base: 0x08000000, Size: 0x000015cc, Max: 0xffffffff, ABSOLUTE)
+  Load Region LR_1 (Base: 0x08000000, Size: 0x000016d0, Max: 0xffffffff, ABSOLUTE)
 
-    Execution Region ER_RO (Base: 0x08000000, Size: 0x000015a4, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_RO (Base: 0x08000000, Size: 0x000016a8, Max: 0xffffffff, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x08000000   0x000000ec   Data   RO           82    RESET               startup_stm32f10x_md.o
-    0x080000ec   0x00000000   Code   RO         2957  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
-    0x080000ec   0x00000004   Code   RO         2964    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
-    0x080000f0   0x00000004   Code   RO         2967    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
-    0x080000f4   0x00000000   Code   RO         2969    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
-    0x080000f4   0x00000008   Code   RO         2970    .ARM.Collect$$$$00000009  mc_w.l(entry8.o)
-    0x080000fc   0x00000004   Code   RO         2965    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
+    0x080000ec   0x00000000   Code   RO         2941  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
+    0x080000ec   0x00000004   Code   RO         2948    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
+    0x080000f0   0x00000004   Code   RO         2951    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
+    0x080000f4   0x00000000   Code   RO         2953    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
+    0x080000f4   0x00000008   Code   RO         2954    .ARM.Collect$$$$00000009  mc_w.l(entry8.o)
+    0x080000fc   0x00000004   Code   RO         2949    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
     0x08000100   0x0000001c   Code   RO           83  * .text               startup_stm32f10x_md.o
     0x0800011c   0x00000074   Code   RO           88    .text               misc.o
     0x08000190   0x000000c4   Code   RO          825    .text               stm32f10x_flash.o
@@ -881,20 +872,20 @@ Memory Map of the image
     0x080005c6   0x00000002   PAD
     0x080005c8   0x0000003c   Code   RO         1936    .text               stm32f10x_tim.o
     0x08000604   0x00000130   Code   RO         2469    .text               stm32f10x_usart.o
-    0x08000734   0x00000180   Code   RO         2709    .text               lcd_12864.o
-    0x080008b4   0x0000045c   Code   RO         2802    .text               system_init.o
-    0x08000d10   0x000000b0   Code   RO         2847    .text               main.o
-    0x08000dc0   0x0000018c   Code   RO         2891    .text               stm32f10x_it.o
-    0x08000f4c   0x000000c0   Code   RO         2915    .text               timertask.o
-    0x0800100c   0x00000024   Code   RO         2960    .text               mc_w.l(memcpya.o)
-    0x08001030   0x00000024   Code   RO         2971    .text               mc_w.l(init.o)
-    0x08001054   0x0000000e   Code   RO         2975    i.__scatterload_copy  mc_w.l(handlers.o)
-    0x08001062   0x00000002   Code   RO         2976    i.__scatterload_null  mc_w.l(handlers.o)
-    0x08001064   0x0000000e   Code   RO         2977    i.__scatterload_zeroinit  mc_w.l(handlers.o)
-    0x08001072   0x00000002   PAD
-    0x08001074   0x00000004   Data   RO           19    .constdata          system_stm32f10x.o
-    0x08001078   0x0000050c   Data   RO         2718    .constdata          lcd_12864.o
-    0x08001584   0x00000020   Data   RO         2973    Region$$Table       anon$$obj.o
+    0x08000734   0x00000278   Code   RO         2709    .text               lcd_12864.o
+    0x080009ac   0x0000045c   Code   RO         2786    .text               system_init.o
+    0x08000e08   0x000000bc   Code   RO         2831    .text               main.o
+    0x08000ec4   0x0000018c   Code   RO         2875    .text               stm32f10x_it.o
+    0x08001050   0x000000c0   Code   RO         2899    .text               timertask.o
+    0x08001110   0x00000024   Code   RO         2944    .text               mc_w.l(memcpya.o)
+    0x08001134   0x00000024   Code   RO         2955    .text               mc_w.l(init.o)
+    0x08001158   0x0000000e   Code   RO         2959    i.__scatterload_copy  mc_w.l(handlers.o)
+    0x08001166   0x00000002   Code   RO         2960    i.__scatterload_null  mc_w.l(handlers.o)
+    0x08001168   0x0000000e   Code   RO         2961    i.__scatterload_zeroinit  mc_w.l(handlers.o)
+    0x08001176   0x00000002   PAD
+    0x08001178   0x00000004   Data   RO           19    .constdata          system_stm32f10x.o
+    0x0800117c   0x0000050c   Data   RO         2715    .constdata          lcd_12864.o
+    0x08001688   0x00000020   Data   RO         2957    Region$$Table       anon$$obj.o
 
 
     Execution Region ER_RW (Base: 0x20000000, Size: 0x00000028, Max: 0xffffffff, ABSOLUTE)
@@ -902,20 +893,20 @@ Memory Map of the image
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x20000000   0x00000014   Data   RW         1464    .data               stm32f10x_rcc.o
-    0x20000014   0x00000004   Data   RW         2807    .data               system_init.o
-    0x20000018   0x00000001   Data   RW         2853    .data               main.o
-    0x20000019   0x00000006   Data   RW         2855    .data               main.o
+    0x20000014   0x00000004   Data   RW         2791    .data               system_init.o
+    0x20000018   0x00000001   Data   RW         2837    .data               main.o
+    0x20000019   0x00000006   Data   RW         2839    .data               main.o
     0x2000001f   0x00000001   PAD
-    0x20000020   0x00000004   Data   RW         2859    .data               main.o
-    0x20000024   0x00000001   Data   RW         2893    .data               stm32f10x_it.o
+    0x20000020   0x00000004   Data   RW         2843    .data               main.o
+    0x20000024   0x00000001   Data   RW         2877    .data               stm32f10x_it.o
 
 
     Execution Region ER_ZI (Base: 0x20000028, Size: 0x000013a0, Max: 0xffffffff, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000028   0x0000100c   Zero   RW         2851    .bss                main.o
-    0x20001034   0x00000190   Zero   RW         2852    .bss                main.o
+    0x20000028   0x0000100c   Zero   RW         2835    .bss                main.o
+    0x20001034   0x00000190   Zero   RW         2836    .bss                main.o
     0x200011c4   0x00000004   PAD
     0x200011c8   0x00000200   Zero   RW           80    STACK               startup_stm32f10x_md.o
 
@@ -928,8 +919,8 @@ Image component sizes
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
          0          0          0          0          0       4248   core_cm3.o
-       384         24       1292          0          0      11922   lcd_12864.o
-       176         16          0         11       4508       2180   main.o
+       632         28       1292          0          0      13848   lcd_12864.o
+       188         16          0         11       4508       2184   main.o
        116         12          0          0          0       1096   misc.o
         28          4        236          0        512        728   startup_stm32f10x_md.o
        196         12          0          0          0       3139   stm32f10x_flash.o
@@ -945,7 +936,7 @@ Image component sizes
        192          4          0          0          0       2658   timertask.o
 
     ----------------------------------------------------------------------
-      3852        212       1564         40       5024     315619   Object Totals
+      4112        216       1564         40       5024     317549   Object Totals
          0          0         32          0          0          0   (incl. Generated)
          2          0          0          4          4          0   (incl. Padding)
 
@@ -982,15 +973,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-      3976        228       1564         40       5024     314299   Grand Totals
-      3976        228       1564         40       5024     314299   ELF Image Totals
-      3976        228       1564         40          0          0   ROM Totals
+      4236        232       1564         40       5024     316229   Grand Totals
+      4236        232       1564         40       5024     316229   ELF Image Totals
+      4236        232       1564         40          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                 5540 (   5.41kB)
+    Total RO  Size (Code + RO Data)                 5800 (   5.66kB)
     Total RW  Size (RW Data + ZI Data)              5064 (   4.95kB)
-    Total ROM Size (Code + RO Data + RW Data)       5580 (   5.45kB)
+    Total ROM Size (Code + RO Data + RW Data)       5840 (   5.70kB)
 
 ==============================================================================
 
