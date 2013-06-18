@@ -2,6 +2,7 @@
 #include "fsmc_sram.h"
 #include "platform_config.h"
 #include "Stm32f10x_spi.h"
+#include "Lcd_12864.h"
 
 #define GPIO_INIT		0x0001
 #define RTC_INIT	 	0x0002

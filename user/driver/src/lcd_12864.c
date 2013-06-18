@@ -20,7 +20,7 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "include.h"
+#include "Include.h"
 #include "GB1616.h"
 #include "GB2432.h"
 

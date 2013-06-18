@@ -21,10 +21,11 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f10x_it.h"
+#include "Stm32f10x_exti.h"
 #include "platform_config.h"
 #include "Usart.h"
 #include "TimerTask.h"
+unsigned int cal;
 
 /** @addtogroup StdPeriph_Examples
   * @{
@@ -271,6 +272,25 @@ void USART1_IRQHandler(void)                                        //´®¿Ú1ÖĞ¶Ï´
             TxCounter = 0;                                               //·¢ËÍ¼ÆÊıÆ÷ÇåÁã
         }
     }
+}
+
+/******************************************************************************
+                            ½Ó¿ÚÉè±¸ÖĞ¶Ï´¦Àíº¯Êı                           
+  µ±ÒªÌí¼ÓÖĞ¶Ï´¦Àíº¯ÊıÊ±£¬¶ÔÓ¦µÄº¯ÊıÃûÎ»ÓÚÆô¶¯ÎÄ¼şstartup_stm32f10x_hd.s
+                       µÄÖĞ¶ÏÏòÁ¿±íVector Table                               
+******************************************************************************/
+void EXTI0_IRQHandler(void)										  //Íâ²¿ÖĞ¶Ï0ºÅÏßÖĞ¶Ï´¦Àíº¯Êı
+{																  
+  if(EXTI_GetITStatus(EXTI_Line0) != RESET)						  //¼ì²âÊÇ·ñ·¢ÉúÁË0ºÅÏßÖĞ¶Ï
+  {
+    for(cal=0;cal<100000;cal++);								  //¼òµ¥ÑÓÊ±£¬°´¼üÏû¶¶
+	if(!GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_0))				  //¼ì²âÊÇ·ñÊÇS1°´ÏÂ
+		{
+		GPIO_WriteBit(GPIOB, GPIO_Pin_0, (BitAction)0x01);  	  //µãÁÁLED1Ö¸Ê¾µÆ
+		}
+    EXTI_ClearITPendingBit(EXTI_Line0);							  //Çå³ı0ºÅÏßÖĞ¶Ï±êÖ¾Î»
+  	while(1);
+  }
 }
 
 /******************************************************************************/

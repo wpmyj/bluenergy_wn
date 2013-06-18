@@ -250,9 +250,51 @@ void RCC_Configuration(void)
 	}
 }
 
-void GPIO_NVIC_Init(void)
+void GPIO_DI_NVIC_Configuration(void)
 {
+  NVIC_InitTypeDef NVIC_InitStructure;
+  
+  /* 选择中断分组 */
+  NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);				 //选择中断分组1（主优先级1位，从优先级3位）
+  
+  /* 配置外部中断0号线 */
+  NVIC_InitStructure.NVIC_IRQChannel = EXTI0_IRQn;				 //选择外部中断0号线中断通道
+  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;		 //主优先级为1
+  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;			 //从优先级为0
+  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;				 //使能中断通道
+  NVIC_Init(&NVIC_InitStructure);								 //用以上参数初始化0号线中断通道
+}
 
+void GPIO_DI_EXIT_Configuration(void)
+{
+  EXTI_InitTypeDef EXTI_InitStructure;
+   /* 连接中断线路与按键所在的IO端口 */
+  GPIO_EXTILineConfig(GPIO_PortSourceGPIOA, GPIO_PinSource0);	  //选择PA0作为外部中断线
+
+  /* 配置PA0中断线 */    
+  EXTI_InitStructure.EXTI_Line = EXTI_Line0;					  //选择外部中断0号线
+  EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;			  //外部线路模式为中断模式
+  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;		  //设置中断为下降沿有效
+  EXTI_InitStructure.EXTI_LineCmd = ENABLE;						  //打开中断线路
+
+  EXTI_Init(&EXTI_InitStructure);								  //用以上参数初始化PA0所占中断线
+}
+
+void GPIO_DI_Configration(void)
+{
+	/* Enable ,打开GPIO 时钟*/
+	GPIO_InitTypeDef GPIO_InitStructure;
+
+	/* 配置中断 */
+	GPIO_DI_NVIC_Configuration();
+
+	GPIO_DI_EXIT_Configuration();
+
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
+
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;		  //端口模式为浮空输入方式
+	GPIO_Init(GPIOA, &GPIO_InitStructure);
 }
 
 /**
@@ -261,58 +303,9 @@ void GPIO_NVIC_Init(void)
   * @retval : None
   */
 void GPIO_Configuration(void)
-{
-	/* (1) ---- Enable ,打开GPIOA GPIOC时钟*/
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA
-						   | RCC_APB2Periph_GPIOB 
-						   | RCC_APB2Periph_GPIOC 
-						   | RCC_APB2Periph_GPIOD
-						   | RCC_APB2Periph_GPIOE
-						   , ENABLE);
-	/* (2) ----  配置GPIO中断*/
-	GPIO_NVIC_Init();
-	
-	/* (3) ---- 配置 iButton 所用IO口*/
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;             //时钟速度为50M
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4;                   //发送脚为PC4
-	//GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;             //复用推挽输出
-	//GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;       //复用开漏输入
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;//GPIO_Mode_Out_OD;                 
-	GPIO_Init(GPIOC, &GPIO_InitStructure);                      //用以上几个参数初始化PA口
-	
-	/* (4 - PA0 PA1) ---- 配置 充电状态检测 所用IO口*/
-    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;             //时钟速度为50M
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1;                   
-    //GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;             //复用推挽输出
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;       //复用开漏输入
-    //GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-    GPIO_Init(GPIOA, &GPIO_InitStructure);                      //用以上几个参数初始化PA口
-	
-	/* (4 - PE4 PE5) ---- 配置 充电状态检测 所用IO口*/
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;             //时钟速度为50M
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4 | GPIO_Pin_5;                   
-    //GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;             //复用推挽输出
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;       //复用开漏输入
-    //GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-    GPIO_Init(GPIOE, &GPIO_InitStructure);                      //用以上几个参数初始化PA口
+{		
 
-	/* (5) ---- 配置 锁 所用IO口*/
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;
-  	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-  	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-  	GPIO_Init(GPIOE, &GPIO_InitStructure);
-
-	/* (6) ---- 配置 充电状态LED指示灯 所用IO口*/
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5;  	//充满
-  	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-  	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-  	GPIO_Init(GPIOB, &GPIO_InitStructure);
-
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6; 	//充电
-  	GPIO_Init(GPIOD, &GPIO_InitStructure);
-
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;	//移除
-  	GPIO_Init(GPIOE, &GPIO_InitStructure);
+	GPIO_DI_Configration();
 	
 }
 
@@ -353,12 +346,11 @@ void Timer_Configuration(void)
 	TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure); 
 }
 
-void SPIx_Configuration(void)
+void SPIx_GPIO_Config()
 {
-	SPI_InitTypeDef  SPI_InitStructure;   
 	GPIO_InitTypeDef GPIO_InitStructure;    
 	/*允许 SPI1 和GPIOA时钟，这两个外设都是挂在APB2总线上的 */    
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SPI1 | RCC_APB2Periph_GPIOA | RCC_APB2Periph_GPIOC, ENABLE);       
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_GPIOC, ENABLE);       
 	/*配置 SPI1 引脚，由于这里只用到了 SCK,和 MOSI ，所以只对PA5和PA7进行了初始化*/   
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5 | GPIO_Pin_7;   
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;    
@@ -374,9 +366,17 @@ void SPIx_Configuration(void)
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;  
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;   
 	GPIO_Init(GPIOA, &GPIO_InitStructure);     
+}
+
+void SPIx_Configuration(void)
+{
+	SPI_InitTypeDef  SPI_InitStructure;   
+
+	SPIx_GPIO_Config();
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SPI1, ENABLE);
 	/* 初始化片选为高，不选种LCD */   
 	LCD_CS_SET;	//PA8;     
-	/* SPI1 配置，关于这个怎么配置见STM32的手册，为什么这样配置见下 */    
+	/* SPI1 配置，关于这个怎么配置见STM32的手册*/    
 	SPI_InitStructure.SPI_Direction = SPI_Direction_1Line_Tx;   
 	SPI_InitStructure.SPI_Mode = SPI_Mode_Master;   
 	SPI_InitStructure.SPI_DataSize = SPI_DataSize_8b;   
