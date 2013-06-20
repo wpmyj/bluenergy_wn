@@ -21,10 +21,7 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "Stm32f10x_exti.h"
-#include "platform_config.h"
-#include "Usart.h"
-#include "TimerTask.h"
+#include "include.h"
 #include "Menu.h"
 
 unsigned int cal;
@@ -289,7 +286,10 @@ void EXTI0_IRQHandler(void)										  //外部中断0号线中断处理函数
     for(cal=0;cal<100000;cal++);								  //简单延时，按键消抖
 	if(!GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_0))				  //检测是否是S1按下
 	{
-		currentMenu = currentMenu->next;
+		if(currentMenu->next != NULL)
+		{
+			currentMenu = currentMenu->next;
+		}
 	}
     EXTI_ClearITPendingBit(EXTI_Line0);							  //清除0号线中断标志位
   	

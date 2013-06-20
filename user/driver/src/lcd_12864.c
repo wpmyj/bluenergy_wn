@@ -152,6 +152,29 @@ void displayOneLine16x16(DisplayInfo displayInfo)
 	}
 }
 
+void displayOneLine16x16_with_params(uint8_t x, uint8_t y, uint8_t length, uint8_t *data, bool selected)
+{
+	uint8_t *gb1616, i, k;	
+	uint8_t page;
+	uint8_t gb[2][16];
+	
+	for(page = 0; page < 2; page++)
+	{		
+		setBaseXY(x, y);
+		lcdWriteCom(BASE_PAGE_ADDR + page + y);
+		for(i = 0; i < length; i++)
+		{
+			gb1616 = getGB1616(data + i * 2, tGB_16);
+			copy(gb1616, gb[0], 2, GB1616_SIZE);
+			for(k = 0; k < 16; k++)
+			{
+				lcdWriteData(selected == TRUE ? ~gb[page][k] : gb[page][k]);
+			}			
+		}
+	}
+}
+
+
 void displayOneLine24x32(DisplayInfo displayInfo)
 {
 	uint8_t *gb2432, i, k;	
