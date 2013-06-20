@@ -52,6 +52,11 @@ void lcdInit()
   	lcdWriteCom(LIGHT_SET);				//亮度设定入口 
   	lcdWriteCom(LIGHT_VALUE);			//亮度值 
   	lcdWriteCom(RAM_START_ADDR);		//RAM起始地址
+
+	LCD_RST_RESET;
+  	delay(2);
+  	LCD_RST_SET;
+  	delay(2);
 }
 
 void lcdWriteCom(uint8_t command) 

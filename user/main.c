@@ -20,12 +20,12 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "include.h"
+#include "Menu.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 #define TxBufferSize   (sizeof(TxBuffer))                  //统计发送数组元素个数
 #define RxBufferSize   (sizeof(TxBuffer))                  //接收数组元素个数与发送数组一致
-
 
 #ifdef _GNUC_
 #define PUTCHAR_PROTOTYPE int _io_putchar(int ch)
@@ -72,9 +72,11 @@ static  void  ConmmunctionTimer (void *arg)
 TmrTaskConfig(void)
 {
     TmrInit();
-    TmrCfgFnct(FALSE, 0, ConmmunctionTimer, (void *)0);                  /* Execute when Timer #0 times out          */
-	TmrSetMST(0, 0, 10, 0);                                 /* Set timer #0 to 0 min., 10 sec. 0/10 sec. */
-    TmrStart(0);
+    //TmrCfgFnct(FALSE, 1, ConmmunctionTimer, (void *)0);                  /* Execute when Timer #0 times out          */
+	//TmrSetMST(0, 0, 10, 0);                                 /* Set timer #0 to 0 min., 10 sec. 0/10 sec. */
+	//TmrStart(0);
+
+	setMenuTimeoutTimer();
 }
 
 /*******************************************************************************
@@ -97,6 +99,11 @@ void Time_Reset(void)
 DisplayInfo companyName = {0, 0, 6, "西安维纳测控"},
 		 	oilHight = {0, 4, 5, "0.345"};
 
+void devicesInit()
+{
+	lcdInit();
+}
+
 /**
   * @brief  Main program.
   * @param  None
@@ -112,22 +119,20 @@ int main(void)
                         | SYSTICK_INIT
                         | TIMER_INIT
                         | SPI_INIT);
-	LCD_RST_RESET;
-  	delay(2);
-  	LCD_RST_SET;
-  	delay(2);
-
-	lcdInit();	
+	devicesInit();
+		
     TmrTaskConfig();
 	cleanScreen();
 	//fullScreenDisplay(niu);
 	//displayOneLine16x16(companyName);	
 	//displayOneLine24x32(oilHight);
-	getNum(1099, 2, test);
-	displayOneLine24x32_with_paras(0, 4, 5, test);
+	//getNum(1099, 1, test);
+	//displayOneLine24x32_with_paras(0, 4, 5, test);
+	TmrStart(MENU_TIMEOUT_TIMER);	
     while(1)
-    {
-    	//TmrTask(0);
+    {    	
+		TmrTask(0);
+		menuModel();
 	}
 }
 
