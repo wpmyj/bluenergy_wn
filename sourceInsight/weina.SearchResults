@@ -1,4 +1,5 @@
----- displayOne16x16.position Matches (5 in 0 files) ----
-Lcd_12864.c (user\driver\src):void displayOne16x16(DisplayInfo position, uint8_t code[2])
-Lcd_12864.c (user\driver\src):	for(page = position.y; page < position.y + 2; page++)
-Lcd_12864.c (user\driver\src):		setBaseXY(position.x, position.y);
+---- displayOneLine24x32_with_paras Matches (4 in 0 files) ----
+Lcd_12864.c (user\driver\src):void displayOneLine24x32_with_paras(uint8_t x, uint8_t y, uint8_t length, uint8_t *data)
+Lcd_12864.h (user\driver\inc):void displayOneLine24x32_with_paras(uint8_t x, uint8_t y, uint8_t length, uint8_t *data);
+Main.c (user):	//displayOneLine24x32_with_paras(0, 4, 5, test);
+Menu.c (user\function\src):	displayOneLine24x32_with_paras(0, y, 5, test);	

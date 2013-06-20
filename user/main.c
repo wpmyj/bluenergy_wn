@@ -120,15 +120,16 @@ int main(void)
                         | TIMER_INIT
                         | SPI_INIT);
 	devicesInit();
-		
-    TmrTaskConfig();
-	cleanScreen();
+	menuInit();	
+    //TmrTaskConfig();
+	
 	//fullScreenDisplay(niu);
 	//displayOneLine16x16(companyName);	
 	//displayOneLine24x32(oilHight);
 	//getNum(1099, 1, test);
-	//displayOneLine24x32_with_paras(0, 4, 5, test);
-	TmrStart(MENU_TIMEOUT_TIMER);	
+	//displayOneLine24x32_with_params(0, 4, 5, test);
+	cleanScreen();
+	//TmrStart(MENU_TIMEOUT_TIMER);	
     while(1)
     {    	
 		TmrTask(0);

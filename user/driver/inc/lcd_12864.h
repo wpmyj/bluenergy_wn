@@ -86,5 +86,5 @@ void displayOne16x16(DisplayInfo displayInfo);
 void displayOneLine16x16(DisplayInfo displayInfo);
 void displayOneLine24x32(DisplayInfo displayInfo);
 void getNum(unsigned int, uint8_t scale, uint8_t *rValue);
-void displayOneLine24x32_with_paras(uint8_t x, uint8_t y, uint8_t length, uint8_t *data);
+void displayOneLine24x32_with_params(uint8_t x, uint8_t y, uint8_t length, uint8_t *data);
 

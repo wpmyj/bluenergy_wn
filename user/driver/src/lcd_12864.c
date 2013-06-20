@@ -40,6 +40,11 @@ void copy(uint8_t *src, uint8_t *dst, uint8_t times, uint8_t offset);
 /* Private function prototypes -----------------------------------------------*/
 void lcdInit()
 {
+	LCD_RST_RESET;
+  	delay(2);
+  	LCD_RST_SET;
+  	delay(2);
+
 	lcdWriteCom(DISPLAY_ON);			//Display on
   	lcdWriteCom(RAM_START_ADDR);		//RAM起始地址
   	lcdWriteCom(ADC_NORMAL);			//左右反转 正常    
@@ -52,11 +57,6 @@ void lcdInit()
   	lcdWriteCom(LIGHT_SET);				//亮度设定入口 
   	lcdWriteCom(LIGHT_VALUE);			//亮度值 
   	lcdWriteCom(RAM_START_ADDR);		//RAM起始地址
-
-	LCD_RST_RESET;
-  	delay(2);
-  	LCD_RST_SET;
-  	delay(2);
 }
 
 void lcdWriteCom(uint8_t command) 
@@ -174,7 +174,7 @@ void displayOneLine24x32(DisplayInfo displayInfo)
 	}
 }
 
-void displayOneLine24x32_with_paras(uint8_t x, uint8_t y, uint8_t length, uint8_t *data)
+void displayOneLine24x32_with_params(uint8_t x, uint8_t y, uint8_t length, uint8_t *data)
 {
 	uint8_t *gb2432, i, k;	
 	uint8_t page;

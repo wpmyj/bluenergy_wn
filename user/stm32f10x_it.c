@@ -25,7 +25,10 @@
 #include "platform_config.h"
 #include "Usart.h"
 #include "TimerTask.h"
+#include "Menu.h"
+
 unsigned int cal;
+extern Menu *currentMenu;
 
 /** @addtogroup StdPeriph_Examples
   * @{
@@ -285,11 +288,11 @@ void EXTI0_IRQHandler(void)										  //外部中断0号线中断处理函数
   {
     for(cal=0;cal<100000;cal++);								  //简单延时，按键消抖
 	if(!GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_0))				  //检测是否是S1按下
-		{
-		GPIO_WriteBit(GPIOB, GPIO_Pin_0, (BitAction)0x01);  	  //点亮LED1指示灯
-		}
+	{
+		currentMenu = currentMenu->next;
+	}
     EXTI_ClearITPendingBit(EXTI_Line0);							  //清除0号线中断标志位
-  	while(1);
+  	
   }
 }
 
