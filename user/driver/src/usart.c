@@ -35,5 +35,8 @@
 
 
 /* Private variables ---------------------------------------------------------*/
-
-
+void usartSendData(uint8_t data)
+{
+	USART_SendData(USART2, data);                 					//发送一字节数据
+	while(USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET);
+}	

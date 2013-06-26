@@ -76,7 +76,7 @@ TmrTaskConfig(void)
 	//TmrSetMST(0, 0, 10, 0);                                 /* Set timer #0 to 0 min., 10 sec. 0/10 sec. */
 	//TmrStart(0);
 
-	setMenuTimeoutTimer();
+	SetMenuTimeoutTimer();
 }
 
 /*******************************************************************************
@@ -99,9 +99,9 @@ void Time_Reset(void)
 DisplayInfo companyName = {0, 0, 6, "Î÷°²Î¬ÄÉ²â¿Ø"},
 		 	oilHight = {0, 4, 5, "0.345"};
 
-void devicesInit()
+void DevicesInit()
 {
-	lcdInit();
+	LcdInit();
 }
 
 /**
@@ -112,28 +112,35 @@ void devicesInit()
 int main(void)
 {
 	uint8_t test[6];
+
 	SystemResourcesInit(RCC_INIT 
                         | FLASH_INIT
-                        | USART_INIT
+                      	| USART_INIT
                         | GPIO_INIT
                         | SYSTICK_INIT
                         | TIMER_INIT
-                        | SPI_INIT);
-	devicesInit();
-	menuInit();	
-    //TmrTaskConfig();
+                        | SPI_INIT
+                        | DAC_INIT
+                        | ADC_INIT);
 	
-	//fullScreenDisplay(niu);
-	//displayOneLine16x16(companyName);	
-	//displayOneLine24x32(oilHight);
-	//getNum(1099, 1, test);
-	//displayOneLine24x32_with_params(0, 4, 5, test);
-	cleanScreen();
-	//TmrStart(MENU_TIMEOUT_TIMER);	
+	DevicesInit();
+	MenuInit();
+    //TmrTaskConfig();
+	CleanScreen();	
+	//DisplayOneLine24x32(oilHight);
+	//GetNum(1099, 1, test);
+	//DisplayOneLine24x32_with_params(0, 4, 5, test);
+	
+	//DisplayOneLine16x16(companyName);
+	//TmrStart(MENU_TIMEOUT_TIMER);
+	GetVINAdcValue();
     while(1)
     {    	
-		TmrTask(0);
-		menuModel();
+		
+		//DisplayOneLine16x16(companyName);	
+		//TmrTask(0);
+		MenuModel();
+	
 	}
 }
 
@@ -148,10 +155,10 @@ PUTCHAR_PROTOTYPE
 
 {
     /* Write a character to the USART */
-    USART_SendData(USART1, (uint8_t)ch);
+    USART_SendData(USART2, (uint8_t)ch);
 
     /* Loop until the end of transmission */
-    while(USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET)
+    while(USART_GetFlagStatus(USART2, USART_FLAG_TXE) == RESET)
         ;
 
     return ch;

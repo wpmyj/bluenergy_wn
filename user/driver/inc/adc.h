@@ -21,45 +21,14 @@
 /* Define to prevent recursive inclusion -------------------------------------*/
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f10x.h"
-
-
-#define SOF     	0x7e
-#define START   	0
-#define CMD     	1
-#define SEQ     	2
-#define LEN     	3
-#define DATA        4
-#define CKS        5
-
-#define REV_NORMAL		0x00
-#define REV_OK			0x01
-#define REV_FAULT       0x02
-
-#define	DWLOAD		0x01
-#define	FINISH		0x02
-#define	ACK			0x03
-#define	NAK			0x04
-#define	CLEAN		0x05
-
 
 /* Exported types ------------------------------------------------------------*/
-typedef struct
-{
-	__IO uint8_t ComState;
-	__IO uint8_t Command;
-	__IO uint8_t LastSeq;
-	__IO uint8_t Seq;
-	__IO uint8_t LenNum;
-	__IO uint16_t Length;
-	__IO uint16_t DataCount;
-	uint8_t Data[4096];
-	__IO uint8_t CheckSum;
-	__IO uint8_t RevOK;
-} ComDataStruct;
 
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
-void usartSendData(uint8_t data);
+uint16_t GetVINAdcValue(void);
+void V_IOUT_adcInit(void);
+void ADC_IN_adcInit(void);
+
 

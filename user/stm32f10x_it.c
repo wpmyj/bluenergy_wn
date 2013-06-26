@@ -26,6 +26,7 @@
 
 unsigned int cal;
 extern Menu *currentMenu;
+extern Menu *slideWindowStart;
 
 /** @addtogroup StdPeriph_Examples
   * @{
@@ -188,111 +189,84 @@ void RTC_IRQHandler(void)
   当要添加中断处理函数时，对应的函数名位于启动文件startup_stm32f10x_hd.s
                        的中断向量表Vector Table
 ******************************************************************************/
-void USART1_IRQHandler(void)                                        //串口1中断处理函数
+void USART2_IRQHandler(void)                                        //串口1中断处理函数
 {
     uint8_t Data;
-    if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)               //检测是否是接收中断
+    if(USART_GetITStatus(USART2, USART_IT_RXNE) != RESET)               //检测是否是接收中断
     {
         /* Read one byte from the receive data register */
-        Data = USART_ReceiveData(USART1);               //接收一字节数据
-        switch(ComData.ComState)
-        {
-        case START:
-            if(Data == 0x7e)
-            {
-                ComData.ComState = CMD;
-               TmrReset(0);
-               TmrStart(0);
-            }
-            break;
-        case CMD:
-            ComData.Command = Data;
-            ComData.ComState = SEQ;
-            break;
-        case SEQ:
-            if(0x01 == Data)
-            {
-                ComData.LastSeq = 1;
-            }
-            else
-            {
-                ComData.LastSeq = ComData.Seq;
-            }
-            ComData.Seq = Data;
-            ComData.ComState = LEN;
-            break;
-        case LEN:
-            if(ComData.LenNum == 1)
-            {
-                ComData.Length = (ComData.Length << 8) + Data;
-                if(ComData.Length > 4096)
-                {
-                    ComData.Length = 1;
-                }
-                ComData.ComState = DATA;
-                ComData.LenNum = 0;
-            }
-            else
-            {
-                ComData.Length = (ComData.Length << 8) + Data;
-                ComData.LenNum++;
-            }
-            break;
-        case DATA:
-            ComData.DataCount++;
-            if(ComData.DataCount == ComData.Length)
-            {
-                ComData.Data[ComData.DataCount - 1] = Data;
-                ComData.DataCount = 0;
-                ComData.ComState = CKS;
-            }
-            else
-            {
-                ComData.Data[ComData.DataCount - 1] = Data;
-            }
-            break;
-        case CKS:
-            ComData.CheckSum = Data;
-            ComData.ComState = START;
-            ComData.RevOK = REV_OK;
-            TmrStop(0);
-            break;
-        }
-    }
-    if(USART_GetITStatus(USART1, USART_IT_TXE) != RESET)             //检测是否是发送中断
-    {
-        USART_ClearFlag(USART1, USART_FLAG_TC);
-        /* Send one byte */
-        USART_SendData(USART1, ACK_Data[TxCounter++]);                 //发送一字节数据
-        while(USART_GetFlagStatus(USART1, USART_FLAG_TC) == RESET);
-        if(TxCounter == DataSizeOfTransfer)                            //如果发送数据量等于总数据量
-        {
-            USART_ITConfig(USART1, USART_IT_TXE, DISABLE);               //关闭串口发送中断，停止发送
-            //GPIO_WriteBit(GPIOA, GPIO_Pin_1, (BitAction)(!GPIO_ReadOutputDataBit(GPIOA, GPIO_Pin_1)));
-            TxCounter = 0;                                               //发送计数器清零
-        }
+        Data = (uint8_t)USART_ReceiveData(USART2);               //接收一字节数据
+		if(Data == 0x88)
+		{
+			GPIO_SetBits(GPIOA, GPIO_Pin_12);	
+		}
+		if(Data == 0x77)
+		{
+			GPIO_ResetBits(GPIOA, GPIO_Pin_12);	
+		}		
     }
 }
-
 /******************************************************************************
                             接口设备中断处理函数                           
   当要添加中断处理函数时，对应的函数名位于启动文件startup_stm32f10x_hd.s
                        的中断向量表Vector Table                               
 ******************************************************************************/
-void EXTI0_IRQHandler(void)										  //外部中断0号线中断处理函数
+void EXTI15_10_IRQHandler(void)										  //外部中断0号线中断处理函数
 {																  
-  if(EXTI_GetITStatus(EXTI_Line0) != RESET)						  //检测是否发生了0号线中断
+  
+  
+  if(EXTI_GetITStatus(EXTI_Line13) != RESET)						  //检测是否发生了0号线中断
   {
-    for(cal=0;cal<100000;cal++);								  //简单延时，按键消抖
-	if(!GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_0))				  //检测是否是S1按下
+    EXTI_ClearITPendingBit(EXTI_Line13);							  //清除0号线中断标志位
+
+	for(cal=0;cal<100000;cal++);								  //简单延时，按键消抖
+	if(!GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_13))				  //检测是否是S1按下
 	{
-		if(currentMenu->next != NULL)
+		if(currentMenu->right != NULL)
 		{
-			currentMenu = currentMenu->next;
+			currentMenu = currentMenu->right;
+			if(currentMenu->position > ((slideWindowStart + 3)->position))
+			{
+				slideWindowStart = slideWindowStart->right;
+			}
+
+			if(currentMenu->position < slideWindowStart->position)
+			{
+				slideWindowStart = currentMenu;
+			}
+			currentMenu->refresh = TRUE;
+			GPIO_ResetBits(GPIOA, GPIO_Pin_12);
 		}
-	}
-    EXTI_ClearITPendingBit(EXTI_Line0);							  //清除0号线中断标志位
-  	
+	}      	
+  } else if(EXTI_GetITStatus(EXTI_Line14) != RESET)						  //检测是否发生了0号线中断
+  {
+    EXTI_ClearITPendingBit(EXTI_Line14);							  //清除0号线中断标志位
+
+	for(cal=0;cal<100000;cal++);								  //简单延时，按键消抖
+	if(!GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_14))				  //检测是否是S1按下
+	{
+		if(currentMenu->pre != NULL)
+		{			
+			currentMenu = currentMenu->pre;
+			currentMenu->refresh = TRUE;
+			GPIO_SetBits(GPIOA, GPIO_Pin_12);
+		}
+	}      	
+  } else if(EXTI_GetITStatus(EXTI_Line15) != RESET)						  //检测是否发生了0号线中断
+  {
+    EXTI_ClearITPendingBit(EXTI_Line15);							  //清除0号线中断标志位
+
+	for(cal=0;cal<100000;cal++);								  //简单延时，按键消抖
+	if(!GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_15))				  //检测是否是S1按下
+	{		
+		if(currentMenu->next != NULL)
+		{			
+			currentMenu = currentMenu->next;
+			slideWindowStart = currentMenu;
+			currentMenu->refresh = TRUE;
+			GPIO_ResetBits(GPIOA, GPIO_Pin_12);
+		}		
+	}      	
   }
 }
 

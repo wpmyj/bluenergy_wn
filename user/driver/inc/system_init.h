@@ -14,6 +14,8 @@
 #define SYSTICK_INIT	0x0080
 #define TIMER_INIT		0x0100
 #define SPI_INIT		0x0101
+#define DAC_INIT		0x0102
+#define ADC_INIT		0x0104
 
 void RCC_Configuration(void);
 void GPIO_Configuration(void);

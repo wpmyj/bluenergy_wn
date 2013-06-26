@@ -24,14 +24,14 @@
 #include "stm32f10x_spi.h"
 
 /* LCD_RST */  
-#define LCD_RST_SET		GPIO_SetBits(GPIOC, GPIO_Pin_7)			//PC7 
-#define LCD_RST_RESET   GPIO_ResetBits(GPIOC, GPIO_Pin_7)		//PC7    
+#define LCD_RST_SET		GPIO_SetBits(GPIOB, GPIO_Pin_14)			//PC7 
+#define LCD_RST_RESET   GPIO_ResetBits(GPIOB, GPIO_Pin_14)		//PC7    
 /* LCD_RS */ 
-#define LCD_A0_SET     	GPIO_SetBits(GPIOA, GPIO_Pin_10)		//PC8 
-#define LCD_A0_RESET    GPIO_ResetBits(GPIOA, GPIO_Pin_10)		//PC8    
+#define LCD_A0_SET     	GPIO_SetBits(GPIOA, GPIO_Pin_8)		//PC8 
+#define LCD_A0_RESET    GPIO_ResetBits(GPIOA, GPIO_Pin_8)		//PC8    
 /* LCD_CS */   
-#define LCD_CS_SET     	GPIO_SetBits(GPIOA, GPIO_Pin_8)			//PA8 
-#define LCD_CS_RESET    GPIO_ResetBits(GPIOA, GPIO_Pin_8)		//PA8    
+#define LCD_CS_SET     	GPIO_SetBits(GPIOB, GPIO_Pin_12)			//PA8 
+#define LCD_CS_RESET    GPIO_ResetBits(GPIOB, GPIO_Pin_12)		//PA8    
 
 #define COLUMN_SET_H	0x10
 #define COLUMN_SET_L 	0x00
@@ -77,15 +77,15 @@ typedef struct                 // 汉字字模数据结构
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
 /* functions ---------------------------------------------------------*/
-void lcdWriteCom(uint8_t command);
-void lcdInit(void);
-void lcdWriteData(uint8_t data);
-void cleanScreen(void);
-void fullScreenDisplay(unsigned char *pic);
-void displayOne16x16(DisplayInfo displayInfo);
-void displayOneLine16x16(DisplayInfo displayInfo);
-void displayOneLine24x32(DisplayInfo displayInfo);
-void getNum(unsigned int, uint8_t scale, uint8_t *rValue);
-void displayOneLine24x32_with_params(uint8_t x, uint8_t y, uint8_t length, uint8_t *data);
-void displayOneLine16x16_with_params(uint8_t x, uint8_t y, uint8_t length, uint8_t *data, bool selected);
+void LcdWriteCom(uint8_t command);
+void LcdInit(void);
+void LcdWriteData(uint8_t data);
+void CleanScreen(void);
+void FullScreenDisplay(unsigned char *pic);
+void DisplayOne16x16(DisplayInfo displayInfo);
+void DisplayOneLine16x16(DisplayInfo displayInfo);
+void DisplayOneLine24x32(DisplayInfo displayInfo);
+void GetNum(unsigned int, uint8_t scale, uint8_t *rValue);
+void DisplayOneLine24x32_with_params(uint8_t x, uint8_t y, uint8_t length, uint8_t *data);
+void DisplayOneLine16x16_with_params(uint8_t x, uint8_t y, uint8_t length, uint8_t *data, bool selected);
 
