@@ -1,12 +1,4 @@
----- DisplaySubMenuWindow Matches (11 in 0 files) ----
-Menu.c (user\function\src):void DisplaySubMenuWindow(uint8_t maxItemSize);
-Menu.c (user\function\src):static Menu mainManu[TOP_MENU_SIZE] = {{0, 1, "Î÷",  DisplaySubMenuWindow, 5, TRUE, NULL, NULL, NULL, NULL}, 
-Menu.c (user\function\src):									   {1, 1, "°²",  DisplaySubMenuWindow, 5, TRUE, NULL, NULL, NULL, NULL}, 
-Menu.c (user\function\src):								   	   {2, 1, "Î¬",  DisplaySubMenuWindow, 5, TRUE, NULL, NULL, NULL, NULL}, 
-Menu.c (user\function\src):									   {3, 1, "ÄÉ",  DisplaySubMenuWindow, 5, TRUE, NULL, NULL, NULL, NULL},
-Menu.c (user\function\src):									   {4, 1, "²â",  DisplaySubMenuWindow, 5, TRUE, NULL, NULL, NULL, NULL}};
-Menu.c (user\function\src):static Menu sub_1_MenuItems[SUB_1_MENU_SIZE] = {{0, 2, "Î¬ÄÉ",  DisplaySubMenuWindow, 2, TRUE, NULL, NULL, NULL, NULL},
-Menu.c (user\function\src):						   					    {1, 2, "²â¿Ø",  DisplaySubMenuWindow, 2, TRUE, NULL, NULL, NULL, NULL}};
-Menu.c (user\function\src):static Menu sub_2_MenuItems[SUB_2_MENU_SIZE] = {{0, 1, "²â",  DisplaySubMenuWindow, 2, TRUE, NULL, NULL, NULL, NULL}, 
-Menu.c (user\function\src):						   						{1, 1, "¿Ø",  DisplaySubMenuWindow, 2, TRUE, NULL, NULL, NULL, NULL}};
-Menu.c (user\function\src):void DisplaySubMenuWindow(uint8_t maxItemSize)
+---- Menu.position Matches (4 in 0 files) ----
+Menu.h (user\function\inc):	uint8_t position;	
+Stm32f10x_it.c (user):			if(currentMenu->position > ((slideWindowStart + 3)->position))
+Stm32f10x_it.c (user):			if(currentMenu->position < slideWindowStart->position)

@@ -223,17 +223,12 @@ void EXTI15_10_IRQHandler(void)										  //外部中断0号线中断处理函数
 	if(!GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_13))				  //检测是否是S1按下
 	{
 		if(currentMenu->right != NULL)
-		{
-			currentMenu = currentMenu->right;
-			if(currentMenu->position > ((slideWindowStart + 3)->position))
+		{			
+			if(currentMenu == slideWindowEnd)
 			{
 				slideWindowStart = slideWindowStart->right;
 			}
-
-			if(currentMenu->position < slideWindowStart->position)
-			{
-				slideWindowStart = currentMenu;
-			}
+			currentMenu = currentMenu->right;
 			currentMenu->refresh = TRUE;
 			GPIO_ResetBits(GPIOA, GPIO_Pin_12);
 		}
@@ -249,8 +244,9 @@ void EXTI15_10_IRQHandler(void)										  //外部中断0号线中断处理函数
 		{			
 			currentMenu = currentMenu->pre;
 			currentMenu->refresh = TRUE;
-			GPIO_SetBits(GPIOA, GPIO_Pin_12);
+			
 		}
+		GPIO_SetBits(GPIOA, GPIO_Pin_12);
 	}      	
   } else if(EXTI_GetITStatus(EXTI_Line15) != RESET)						  //检测是否发生了0号线中断
   {

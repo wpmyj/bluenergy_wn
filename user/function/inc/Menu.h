@@ -1,13 +1,13 @@
 #define MENU_TIMEOUT_TIMER 	0
 #define MENU_WINDOW_SIZE	4
+#define	slideWindowEnd	slideWindowStart->right->right->right
 
 void DisplayMainMenu(void);
 void BackToMainMenu(void);
 void MenuInit(void);
 
 
-typedef struct Menu {
-	uint8_t position;	
+typedef struct Menu {	
 	uint8_t displayContentLength;
    	char *displayContent;		
 	void (*optFun)(uint8_t);
