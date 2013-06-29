@@ -24,9 +24,9 @@
 #include "include.h"
 #include "Menu.h"
 
+extern uint8_t currentMenu;
+extern Menu menus[];
 unsigned int cal;
-extern Menu *currentMenu;
-extern Menu *slideWindowStart;
 
 /** @addtogroup StdPeriph_Examples
   * @{
@@ -222,16 +222,7 @@ void EXTI15_10_IRQHandler(void)										  //外部中断0号线中断处理函数
 	for(cal=0;cal<100000;cal++);								  //简单延时，按键消抖
 	if(!GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_13))				  //检测是否是S1按下
 	{
-		if(currentMenu->right != NULL)
-		{			
-			if(currentMenu == slideWindowEnd)
-			{
-				slideWindowStart = slideWindowStart->right;
-			}
-			currentMenu = currentMenu->right;
-			currentMenu->refresh = TRUE;
-			GPIO_ResetBits(GPIOA, GPIO_Pin_12);
-		}
+		menus[currentMenu].optFun(UP);
 	}      	
   } else if(EXTI_GetITStatus(EXTI_Line14) != RESET)						  //检测是否发生了0号线中断
   {
@@ -240,13 +231,7 @@ void EXTI15_10_IRQHandler(void)										  //外部中断0号线中断处理函数
 	for(cal=0;cal<100000;cal++);								  //简单延时，按键消抖
 	if(!GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_14))				  //检测是否是S1按下
 	{
-		if(currentMenu->pre != NULL)
-		{			
-			currentMenu = currentMenu->pre;
-			currentMenu->refresh = TRUE;
-			
-		}
-		GPIO_SetBits(GPIOA, GPIO_Pin_12);
+		menus[currentMenu].optFun(DOWN);
 	}      	
   } else if(EXTI_GetITStatus(EXTI_Line15) != RESET)						  //检测是否发生了0号线中断
   {
@@ -255,13 +240,7 @@ void EXTI15_10_IRQHandler(void)										  //外部中断0号线中断处理函数
 	for(cal=0;cal<100000;cal++);								  //简单延时，按键消抖
 	if(!GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_15))				  //检测是否是S1按下
 	{		
-		if(currentMenu->next != NULL)
-		{			
-			currentMenu = currentMenu->next;
-			slideWindowStart = currentMenu;
-			currentMenu->refresh = TRUE;
-			GPIO_ResetBits(GPIOA, GPIO_Pin_12);
-		}		
+		menus[currentMenu].optFun(ENTER);
 	}      	
   }
 }

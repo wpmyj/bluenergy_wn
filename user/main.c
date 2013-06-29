@@ -43,9 +43,6 @@ uint8_t DataSizeOfTransfer = 5;           //发送数据量等于发送数组元素个数
 uint8_t DataSizeOfReceiver = RxBufferSize;           //接收数据量等于接收数组元素个数
 uint8_t ACK_Data[6] = {0x7e, 0x00, 0x00, 0x01, 0x00, 0x00};
 ComDataStruct ComData;
-extern unsigned char gBattery[6][4608], gLock[3][4608]; 
-                            
-FlashDataInfoData_16 FLSH_PicData = {0x08040000, 0x08065fff, 77823, 0};
 
 TMR       TmrTbl[TMR_MAX_TMR];          /* Table of timers managed by this module             */
 
@@ -75,8 +72,6 @@ TmrTaskConfig(void)
     //TmrCfgFnct(FALSE, 1, ConmmunctionTimer, (void *)0);                  /* Execute when Timer #0 times out          */
 	//TmrSetMST(0, 0, 10, 0);                                 /* Set timer #0 to 0 min., 10 sec. 0/10 sec. */
 	//TmrStart(0);
-
-	SetMenuTimeoutTimer();
 }
 
 /*******************************************************************************
@@ -124,7 +119,6 @@ int main(void)
                         | ADC_INIT);
 	
 	DevicesInit();
-	MenuInit();
     //TmrTaskConfig();
 	CleanScreen();	
 	//DisplayOneLine24x32(oilHight);
@@ -134,12 +128,13 @@ int main(void)
 	//DisplayOneLine16x16(companyName);
 	//TmrStart(MENU_TIMEOUT_TIMER);
 	GetVINAdcValue();
+	//DisplayOne12x16(4, 0, 'B', FALSE);
     while(1)
     {    	
 		
 		//DisplayOneLine16x16(companyName);	
 		//TmrTask(0);
-		MenuModel();
+		DisplayWindow();
 	
 	}
 }

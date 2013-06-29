@@ -23,6 +23,7 @@
 #include "Include.h"
 #include "GB1616.h"
 #include "GB2432.h"
+#include "ascii_12x16.h"
 
 /* Private define ------------------------------------------------------------*/
 
@@ -31,11 +32,11 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* Private functions ---------------------------------------------------------*/
-uint8_t *GetGB1616(uint8_t code[2], const typFNT_GB1616 GB_16[]);
-uint8_t *GetGB2432(uint8_t code, const typFNT_GB2432 GB_2432[]);
+void GetGB1616(uint8_t code[2], const typFNT_GB1616 GB_16[],uint8_t gb[2][16]);
+void GetGB2432(uint8_t code, const typFNT_GB2432 GB_2432[],uint8_t gb[4][24]);
 void SetBaseXY(uint8_t startX, uint8_t startY);
-void Copy(uint8_t *src, uint8_t *dst, uint8_t times, uint8_t offset);
 
+void GetAscii1216(char ch, const unsigned char ascii12x16[][24], uint8_t ascii[2][12]);
 
 /* Private function prototypes -----------------------------------------------*/
 void LcdInit()
@@ -110,14 +111,33 @@ void FullScreenDisplay(uint8_t *pic)
 
 }
 
+void DisplayOne12x16(uint8_t x, uint8_t y, char ch, bool inverse)
+{
+	uint8_t *ascii1216, i;	
+	uint8_t page;
+	uint8_t ascii[2][12];
+
+	GetAscii1216(ch, ascii_12x16, ascii);
+
+	for(page = 0; page < 2; page++)
+	{
+		SetBaseXY(x, y);
+		LcdWriteCom(BASE_PAGE_ADDR + page);
+		for(i = 0; i< 12; i++) 
+		{
+	  		LcdWriteData((inverse == TRUE) ? ~ascii[page][i] : ascii[page][i]);
+	 	}
+	}
+}
+
+
 void DisplayOne16x16(DisplayInfo displayInfo)
 {
-	uint8_t *gb1616, i;	
+	uint8_t i;	
 	uint8_t page;
 	uint8_t gb[2][16];
 
-	gb1616 = GetGB1616(displayInfo.data, tGB_16);
-	Copy(gb1616, gb[0], 2, GB1616_SIZE);
+	GetGB1616(displayInfo.data, tGB_16, gb);
 
 	for(page = displayInfo.y; page < displayInfo.y + 2; page++)
 	{
@@ -132,7 +152,7 @@ void DisplayOne16x16(DisplayInfo displayInfo)
 
 void DisplayOneLine16x16(DisplayInfo displayInfo)
 {
-	uint8_t *gb1616, i, k;	
+	uint8_t i, k;	
 	uint8_t page;
 	uint8_t gb[2][16];
 	
@@ -142,8 +162,8 @@ void DisplayOneLine16x16(DisplayInfo displayInfo)
 		LcdWriteCom(BASE_PAGE_ADDR + page + displayInfo.y);
 		for(i = 0; i < displayInfo.length; i++)
 		{
-			gb1616 = GetGB1616(displayInfo.data + i * 2, tGB_16);
-			Copy(gb1616, gb[0], 2, GB1616_SIZE);
+			GetGB1616(displayInfo.data + i * 2, tGB_16, gb);
+
 			for(k = 0; k < 16; k++)
 			{
 				LcdWriteData(gb[page][k]);
@@ -154,7 +174,7 @@ void DisplayOneLine16x16(DisplayInfo displayInfo)
 
 void DisplayOneLine16x16_with_params(uint8_t x, uint8_t y, uint8_t length, uint8_t *data, bool selected)
 {
-	uint8_t *gb1616, i, k;	
+	uint8_t i, k;	
 	uint8_t page;
 	uint8_t gb[2][16];
 	
@@ -164,8 +184,8 @@ void DisplayOneLine16x16_with_params(uint8_t x, uint8_t y, uint8_t length, uint8
 		LcdWriteCom(BASE_PAGE_ADDR + page + y);
 		for(i = 0; i < length; i++)
 		{
-			gb1616 = GetGB1616(data + i * 2, tGB_16);
-			Copy(gb1616, gb[0], 2, GB1616_SIZE);
+			GetGB1616(data + i * 2, tGB_16, gb);
+
 			for(k = 0; k < 16; k++)
 			{
 				LcdWriteData((selected == TRUE) ? ~gb[page][k] : gb[page][k]);
@@ -177,7 +197,7 @@ void DisplayOneLine16x16_with_params(uint8_t x, uint8_t y, uint8_t length, uint8
 
 void DisplayOneLine24x32(DisplayInfo displayInfo)
 {
-	uint8_t *gb2432, i, k;	
+	uint8_t i, k;	
 	uint8_t page;
 	uint8_t gb[4][24];
 	
@@ -187,8 +207,8 @@ void DisplayOneLine24x32(DisplayInfo displayInfo)
 		LcdWriteCom(BASE_PAGE_ADDR + page + displayInfo.y);
 		for(i = 0; i < displayInfo.length; i++)
 		{
-			gb2432 = GetGB2432(displayInfo.data[i], tGB_24);
-			Copy(gb2432, gb[0], 4, GB2432_SIZE);
+			GetGB2432(displayInfo.data[i], tGB_24, gb);
+
 			for(k = 0; k < GB2432_SIZE / 4; k++)
 			{
 				LcdWriteData(gb[page][k]);
@@ -199,7 +219,7 @@ void DisplayOneLine24x32(DisplayInfo displayInfo)
 
 void DisplayOneLine24x32_with_params(uint8_t x, uint8_t y, uint8_t length, uint8_t *data)
 {
-	uint8_t *gb2432, i, k;	
+	uint8_t i, k;	
 	uint8_t page;
 	uint8_t gb[4][24];
 	
@@ -209,8 +229,8 @@ void DisplayOneLine24x32_with_params(uint8_t x, uint8_t y, uint8_t length, uint8
 		LcdWriteCom(BASE_PAGE_ADDR + page + y);
 		for(i = 0; i < length; i++)
 		{
-			gb2432 = GetGB2432(data[i], tGB_24);
-			Copy(gb2432, gb[0], 4, GB2432_SIZE);
+			GetGB2432(data[i], tGB_24, gb);
+
 			for(k = 0; k < GB2432_SIZE / 4; k++)
 			{
 				LcdWriteData(gb[page][k]);
@@ -229,40 +249,37 @@ void SetBaseXY(uint8_t startX, uint8_t startY)
 	LcdWriteCom(COLUMN_SET_L + (startX & 0x0f));		//列低4位（A3-A0）
 }
 
-void Copy(uint8_t *src, uint8_t *dst, uint8_t times, uint8_t size)
+void GetAscii1216(char ch, const unsigned char ascii12x16[][24], uint8_t ascii[2][12])
 {
-	uint8_t i, offset = size / times;
-	for(i = 0; i < times; i++)
-	{
-		memcpy(dst + i * offset, src + i * offset, offset);
-	}
+	uint8_t k;
+	memcpy(ascii, ascii12x16[ch - ' '], ASCII1216_SIZE);				  	
 }
 
-uint8_t *GetGB1616(uint8_t code[2], const typFNT_GB1616 GB_16[])
+
+void GetGB1616(uint8_t code[2], const typFNT_GB1616 GB_16[], uint8_t gb[2][16])
 {
-	uint8_t gb16[GB1616_SIZE], k;
+	uint8_t k;
 	for (k = 0; k < GB1616_MAXSIZE; k++) //64标示自建汉字库中的个数，循环查询内码
     {
         if ((GB_16[k].Index[0] == code[0]) && (GB_16[k].Index[1] == code[1]))
         {
-            memcpy(gb16, GB_16[k].Msk, GB1616_SIZE);			
+            memcpy(gb, GB_16[k].Msk, GB1616_SIZE);			
 		}
-    }
-	return gb16;							  	
+    }							  	
 }
 
-uint8_t *GetGB2432(uint8_t code, const typFNT_GB2432 GB_2432[])
+void GetGB2432(uint8_t code, const typFNT_GB2432 GB_2432[], uint8_t gb[4][24])
 {
-	uint8_t gb2432[GB2432_SIZE], k;
+	uint8_t k;
 	
 	for (k = 0; k < GB2432_MAXSIZE; k++) //64标示自建汉字库中的个数，循环查询内码
     {
         if (GB_2432[k].Index == code)
         {
-            memcpy(gb2432, GB_2432[k].Msk, GB2432_SIZE);			
+            memcpy(gb, GB_2432[k].Msk, GB2432_SIZE);			
 		}
     }
-	return gb2432;							  	
+							  	
 }
 
 void GetNum(unsigned int num, uint8_t scale, uint8_t *rValue)
