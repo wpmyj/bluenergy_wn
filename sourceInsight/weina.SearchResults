@@ -1,4 +1,44 @@
----- Menu.position Matches (4 in 0 files) ----
-Menu.h (user\function\inc):	uint8_t position;	
-Stm32f10x_it.c (user):			if(currentMenu->position > ((slideWindowStart + 3)->position))
-Stm32f10x_it.c (user):			if(currentMenu->position < slideWindowStart->position)
+---- pre Matches (5 in 4 files) ----
+Menu.h (user\function\inc):13
+	uint8_t pre;
+	uint8_t next;
+	uint8_t left;
+Misc.c (lib\src):79
+  * @brief  Configures the priority grouping: pre-emption priority and 
+  *         subpriority.
+  * @param NVIC_PriorityGroup: specifies the priority grouping bits length. 
+Misc.c (lib\src):83
+  * @arg NVIC_PriorityGroup_0: 0 bits for pre-emption priority
+  *                            4 bits for subpriority
+  * @arg NVIC_PriorityGroup_1: 1 bits for pre-emption priority
+  *                            3 bits for subpriority
+  * @arg NVIC_PriorityGroup_2: 2 bits for pre-emption priority
+  *                            2 bits for subpriority
+  * @arg NVIC_PriorityGroup_3: 3 bits for pre-emption priority
+  *                            1 bits for subpriority
+  * @arg NVIC_PriorityGroup_4: 4 bits for pre-emption priority
+  *                            0 bits for subpriority
+  * @retval : None
+Misc.h (lib\inc):91
+#define NVIC_PriorityGroup_0         ((uint32_t)0x700) /* 0 bits for pre-emption priority
+                                                          4 bits for subpriority */
+#define NVIC_PriorityGroup_1         ((uint32_t)0x600) /* 1 bits for pre-emption priority
+                                                          3 bits for subpriority */
+#define NVIC_PriorityGroup_2         ((uint32_t)0x500) /* 2 bits for pre-emption priority
+                                                          2 bits for subpriority */
+#define NVIC_PriorityGroup_3         ((uint32_t)0x400) /* 3 bits for pre-emption priority
+                                                          1 bits for subpriority */
+#define NVIC_PriorityGroup_4         ((uint32_t)0x300) /* 4 bits for pre-emption priority
+                                                          0 bits for subpriority */
+
+Stm32f10x.h (sys):2329
+#define  SCB_AIRCR_PRIGROUP0                 ((uint32_t)0x00000000)        /*!< Priority group=0 (7 bits of pre-emption priority, 1 bit of subpriority) */
+#define  SCB_AIRCR_PRIGROUP1                 ((uint32_t)0x00000100)        /*!< Priority group=1 (6 bits of pre-emption priority, 2 bits of subpriority) */
+#define  SCB_AIRCR_PRIGROUP2                 ((uint32_t)0x00000200)        /*!< Priority group=2 (5 bits of pre-emption priority, 3 bits of subpriority) */
+#define  SCB_AIRCR_PRIGROUP3                 ((uint32_t)0x00000300)        /*!< Priority group=3 (4 bits of pre-emption priority, 4 bits of subpriority) */
+#define  SCB_AIRCR_PRIGROUP4                 ((uint32_t)0x00000400)        /*!< Priority group=4 (3 bits of pre-emption priority, 5 bits of subpriority) */
+#define  SCB_AIRCR_PRIGROUP5                 ((uint32_t)0x00000500)        /*!< Priority group=5 (2 bits of pre-emption priority, 6 bits of subpriority) */
+#define  SCB_AIRCR_PRIGROUP6                 ((uint32_t)0x00000600)        /*!< Priority group=6 (1 bit of pre-emption priority, 7 bits of subpriority) */
+#define  SCB_AIRCR_PRIGROUP7                 ((uint32_t)0x00000700)        /*!< Priority group=7 (no pre-emption priority, 8 bits of subpriority) */
+
+#define  SCB_AIRCR_ENDIANESS                 ((uint32_t)0x00008000)        /*!< Data endianness bit */

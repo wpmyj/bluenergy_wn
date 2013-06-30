@@ -172,6 +172,27 @@ void DisplayOneLine16x16(DisplayInfo displayInfo)
 	}
 }
 
+void DisplayOneLine12x16_with_params(uint8_t x, uint8_t y, uint8_t length, char *data, bool selected)
+{
+	uint8_t *ascii1216, i, k;	
+	uint8_t page;
+	uint8_t ascii[2][12];
+	
+	for(page = 0; page < 2; page++)
+	{		
+		SetBaseXY(x, y);
+		LcdWriteCom(BASE_PAGE_ADDR + page + y);
+		for(i = 0; i < length; i++)
+		{
+			GetAscii1216(data[i], ascii_12x16, ascii);
+			for(k = 0; k < 12; k++)
+			{
+				LcdWriteData((selected == TRUE) ? ~ascii[page][k] : ascii[page][k]);
+			}			
+		}
+	}
+}
+
 void DisplayOneLine16x16_with_params(uint8_t x, uint8_t y, uint8_t length, uint8_t *data, bool selected)
 {
 	uint8_t i, k;	

@@ -10,11 +10,11 @@ typedef struct Menu {
    	char *displayContent;		
 	void (*optFun)(uint8_t);
 	uint8_t refresh;
-	uint8_t pre;
 	uint8_t next;
 	uint8_t left;
 	uint8_t right;
 } Menu;
 
 void DisplayWindow(void);
+void MainWindow(void);
 

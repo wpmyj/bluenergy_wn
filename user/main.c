@@ -43,6 +43,7 @@ uint8_t DataSizeOfTransfer = 5;           //发送数据量等于发送数组元素个数
 uint8_t DataSizeOfReceiver = RxBufferSize;           //接收数据量等于接收数组元素个数
 uint8_t ACK_Data[6] = {0x7e, 0x00, 0x00, 0x01, 0x00, 0x00};
 ComDataStruct ComData;
+void (*displayModel)(uint8_t);
 
 TMR       TmrTbl[TMR_MAX_TMR];          /* Table of timers managed by this module             */
 
@@ -106,7 +107,7 @@ void DevicesInit()
   */
 int main(void)
 {
-	uint8_t test[6];
+	
 
 	SystemResourcesInit(RCC_INIT 
                         | FLASH_INIT
@@ -121,14 +122,14 @@ int main(void)
 	DevicesInit();
     //TmrTaskConfig();
 	CleanScreen();	
-	//DisplayOneLine24x32(oilHight);
-	//GetNum(1099, 1, test);
-	//DisplayOneLine24x32_with_params(0, 4, 5, test);
+	//DisplayOneLine24x32(oilHight);	
 	
 	//DisplayOneLine16x16(companyName);
 	//TmrStart(MENU_TIMEOUT_TIMER);
 	GetVINAdcValue();
 	//DisplayOne12x16(4, 0, 'B', FALSE);
+	displayModel = MainWindow;
+	
     while(1)
     {    	
 		
