@@ -24,9 +24,9 @@
 #include "include.h"
 #include "Menu.h"
 
-extern uint8_t currentMenu;
-extern Menu menus[];
 unsigned int cal;
+extern Menu menus[];
+extern uint8_t windowPointer, currentMenu;
 
 /** @addtogroup StdPeriph_Examples
   * @{

@@ -427,7 +427,7 @@ void GPIO_Configuration(void)
 	GPIO_DI_KEY0_Configration();
 	GPIO_DI_KEY1_Configration();
 	GPIO_DI_KEY2_Configration();
-	//GPIO_DO_REALY_Configration();
+	GPIO_DO_REALY_Configration();
 	GPIO_DO_LED_Configration();
 	
 }

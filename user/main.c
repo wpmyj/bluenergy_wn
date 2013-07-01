@@ -66,7 +66,6 @@ static  void  ConmmunctionTimer (void *arg)
     ComData.RevOK = REV_NORMAL;
 }
 
-
 TmrTaskConfig(void)
 {
     TmrInit();
@@ -120,8 +119,10 @@ int main(void)
                         | ADC_INIT);
 	
 	DevicesInit();
-    //TmrTaskConfig();
-	CleanScreen();	
+    TmrTaskConfig();
+	CleanScreen();
+	GPIO_ResetBits(GPIOA, GPIO_Pin_0);
+	//GPIO_SetBits(GPIOA, GPIO_Pin_0);
 	//DisplayOneLine24x32(oilHight);	
 	
 	//DisplayOneLine16x16(companyName);
@@ -134,7 +135,7 @@ int main(void)
     {    	
 		
 		//DisplayOneLine16x16(companyName);	
-		//TmrTask(0);
+		TmrTask(0);
 		DisplayWindow();
 	
 	}
