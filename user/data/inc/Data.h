@@ -52,6 +52,8 @@ MODBUS功能码：读线圈（1）
 	0x0000	RS		R/W	继电器状态（0-闭合，1-打开）
 */
 
+
+/*
 typedef struct Data{
 	uint16_t		OCM;	// 输出控制模式（0-AO，1-DO）
 	uint16_t		AM;		// 自动/手动模式（0-自动，1-手动）
@@ -83,3 +85,53 @@ typedef struct Data{
 	uint16_t		QualifiedYear;	//检验日期：年（BCD码）
 	uint16_t		QualifiedDate;	//检验日期：月日（BCD码）	
 } Data;
+*/
+
+#define		OCM_ADDR		0x0000	
+#define		AM_ADDR			0x0002
+#define		RH_ADDR			0x0004
+#define		RL_ADDR			0x0006
+#define		AH_ADDR			0x0008
+#define		AL_ADDR			0x000A
+#define		AHH_ADDR		0x000C
+#define		ALL_ADDR		0x000E
+#define		SV_ADDR			0x0010
+#define		PV_ADDR			0x0012
+#define		AOFR_ADDR		0x0014
+#define		DAMP_ADDR		0x0016
+#define		MV_ADDR			0x0018
+#define		P_ADDR			0x001A
+#define		I_ADDR			0x001C
+#define		D_ADDR			0x001E
+#define		CO_ADDR			0x0020
+#define		VI_ADDR			0x0022
+#define		PWR_ADDR		0x0024
+#define		ULT_ADDR		0x0026
+
+#define		VENDOR0_ADDR	0x0050
+#define		VENDOR1_ADDR	0x0052
+#define		VENDOR2_ADDR	0x0054
+#define		VENDOR3_ADDR	0x0056
+#define		VENDOR4_ADDR	0x0058
+#define		VENDOR5_ADDR	0x005A
+#define		VENDOR6_ADDR	0x005C
+#define		VENDOR7_ADDR	0x005E
+#define		VENDOR8_ADDR	0x0060
+#define		PRODUCT0_ADDR	0x0062
+#define		PRODUCT1_ADDR	0x0064
+#define		PRODUCT2_ADDR	0x0066
+#define		PRODUCT3_ADDR	0x0068
+#define		PRODUCT4_ADDR	0x006A
+#define		PRODUCT5_ADDR	0x006C
+#define		PRODUCT6_ADDR	0x006E
+#define		PRODUCT7_ADDR	0x0070
+#define		PRODUCT8_ADDR	0x0072
+#define		R_YEAR_ADDR		0x0074
+#define		R_DATE_ADDR		0x0076
+#define		Q_YEAR_ADDR		0x0078
+#define		Q_DATE_ADDR		0x007A
+
+uint16_t GetData(uint16_t type);
+void UpdateData(uint8_t type, uint8_t val);
+
+extern uint16_t Data[26];

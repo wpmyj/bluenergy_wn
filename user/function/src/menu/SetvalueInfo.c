@@ -4,14 +4,14 @@
 extern const Menu menus[];
 extern uint8_t windowPointer, currentMenu, needRefresh;
 extern void (*displayModel)(uint8_t);
-extern Data data;
+extern uint16_t Data[];
 
 void DisplaySetValue(void)
 {
 	char buf[100];
 	float pp;
-	GetData();
-	pp = (float)data.SV/100; 
+	
+	pp = (float)GetData(SV_ADDR)/100; 
 	sprintf( buf, "%f", pp);
 	DisplayOneLine12x16_with_params(4, 3, 3, "SV:", FALSE);
 	DisplayOneLine12x16_with_params(42, 3, 6, buf, FALSE);
