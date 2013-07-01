@@ -65,9 +65,8 @@ extern const Menu menus[52] = {{4, "信息查询",  KeyOptFun, TRUE, 5, 4, 1}, 			//
 					 
 					 {0, "",	 ReturnToSubMenuKeyOptFun, TRUE, 9, 50, 50}, 			// 50	阀门控制
 
-				   	 {0, "",	 ReturnToSubMenuKeyOptFun, TRUE, 11, 51, 51} 			// 51	运行参数 - 设定液位查询
+				   	 {0, "",	 ReturnToSubMenuKeyOptFun, TRUE, 29, 51, 51} 			// 51	运行参数 - 设定液位查询
 };
-
 
 void MainWindow(void)
 {
