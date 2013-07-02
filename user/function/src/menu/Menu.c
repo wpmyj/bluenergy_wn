@@ -5,7 +5,7 @@
 extern uint8_t windowPointer = 0, currentMenu = 0, needRefresh = TRUE;
 extern void (*displayModel)(uint8_t);
 
-extern const Menu menus[52] = {{4, "信息查询",  KeyOptFun, TRUE, 5, 4, 1}, 			// 0
+extern const Menu menus[55] = {{4, "信息查询",  KeyOptFun, TRUE, 5, 4, 1}, 			// 0
 					 {4, "人工模式",  KeyOptFun, TRUE, 8, 0, 2}, 				// 1 
 					 {4, "参数设置",  KeyOptFun, TRUE, 11, 1, 3}, 				// 2 
 					 {4, "系统校准",  KeyOptFun, TRUE, 26, 2, 4}, 				// 3
@@ -15,8 +15,8 @@ extern const Menu menus[52] = {{4, "信息查询",  KeyOptFun, TRUE, 5, 4, 1}, 			//
 					 {4, "运行参数",  KeyOptFun, TRUE, 29, 5, 7}, 			// 6
 					 {2, "返回",  	KeyOptFun, TRUE, 0, 6, 5}, 				// 7
 					 
-					 {5, "继电器控制",  KeyOptFun, TRUE, 49, 10, 9}, 		// 8
-					 {4, "阀门控制",  KeyOptFun, TRUE, 50, 8, 10}, 			// 9
+					 {5, "电磁阀控制",  DisplaySetRelayStatusKeOptFun, TRUE, 49, 10, 9}, 		// 8
+					 {5, "调节阀控制",  KeyOptFun, TRUE, 50, 8, 10}, 			// 9
 					 {2, "返回",  	KeyOptFun, TRUE, 0, 9, 8}, 				// 10
 					 
 					 {6, "输出控制模式",  KeyOptFun, TRUE, NULL, 25, 12}, 	// 11
@@ -61,7 +61,7 @@ extern const Menu menus[52] = {{4, "信息查询",  KeyOptFun, TRUE, 5, 4, 1}, 			//
 			
 					 {0, "",	 ReturnToSubMenuKeyOptFun, TRUE, 5, 48, 48}, 			// 48  	出厂信息
 
-					 {0, "",	 ReturnToSubMenuKeyOptFun, TRUE, 8, 49, 49}, 			// 49 	继电器控制
+					 {2, "返回",  SetRelayKeOptFun, TRUE, 8, 49, 49}, 			// 49 	继电器控制
 					 
 					 {0, "",	 ReturnToSubMenuKeyOptFun, TRUE, 9, 50, 50}, 			// 50	阀门控制
 
@@ -130,7 +130,7 @@ void ReturnToSubMenuKeyOptFun(uint8_t key)
 	{
 		case ENTER:
 			displayModel = DisplayMenu;
-			EnterKeyOpt();
+			MoveToNextMenu();
 			break;
 		default:
 			break;
@@ -156,7 +156,7 @@ void KeyOptFun(uint8_t key)
 				DownKeyOpt();
 				break;
 			case ENTER:
-				EnterKeyOpt();
+				MoveToNextMenu();
 				break;
 			default:
 				break;
@@ -193,12 +193,6 @@ void DownKeyOpt(void)
 	}
 	
 	currentMenu = menus[currentMenu].right;
-}
-
-void EnterKeyOpt(void)
-{
-	currentMenu = menus[currentMenu].next;
-	windowPointer = currentMenu;
 }
 
 void ReturnBackToMainWindowEnterKeyOpt(void)

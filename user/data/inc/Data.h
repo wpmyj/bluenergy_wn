@@ -131,7 +131,15 @@ typedef struct Data{
 #define		Q_YEAR_ADDR		0x0078
 #define		Q_DATE_ADDR		0x007A
 
+#define 	OPEN			0x01
+#define 	CLOSE			0x00
+
 uint16_t GetData(uint16_t type);
 void UpdateData(uint8_t type, uint8_t val);
+uint16_t GetRelayStatus(void);
+void SetRelay(int16_t status);
 
 extern uint16_t Data[26];
+
+extern uint16_t DO;
+

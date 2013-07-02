@@ -122,22 +122,17 @@ int main(void)
     TmrTaskConfig();
 	CleanScreen();
 	GPIO_ResetBits(GPIOA, GPIO_Pin_0);
-	//GPIO_SetBits(GPIOA, GPIO_Pin_0);
-	//DisplayOneLine24x32(oilHight);	
-	
-	//DisplayOneLine16x16(companyName);
+;
 	//TmrStart(MENU_TIMEOUT_TIMER);
 	GetVINAdcValue();
-	//DisplayOne12x16(4, 0, 'B', FALSE);
+
 	displayModel = MainWindow;
 	
     while(1)
     {    	
-		
-		//DisplayOneLine16x16(companyName);	
 		TmrTask(0);
 		DisplayWindow();
-	
+		OperateRelay(GetRelayStatus());	
 	}
 }
 

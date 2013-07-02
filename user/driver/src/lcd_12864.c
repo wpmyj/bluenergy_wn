@@ -272,7 +272,6 @@ void SetBaseXY(uint8_t startX, uint8_t startY)
 
 void GetAscii1216(char ch, const unsigned char ascii12x16[][24], uint8_t ascii[2][12])
 {
-	uint8_t k;
 	memcpy(ascii, ascii12x16[ch - ' '], ASCII1216_SIZE);				  	
 }
 
