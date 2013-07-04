@@ -113,7 +113,7 @@ void FullScreenDisplay(uint8_t *pic)
 
 void DisplayOne12x16(uint8_t x, uint8_t y, char ch, bool inverse)
 {
-	uint8_t *ascii1216, i;	
+	uint8_t i;	
 	uint8_t page;
 	uint8_t ascii[2][12];
 
@@ -122,7 +122,7 @@ void DisplayOne12x16(uint8_t x, uint8_t y, char ch, bool inverse)
 	for(page = 0; page < 2; page++)
 	{
 		SetBaseXY(x, y);
-		LcdWriteCom(BASE_PAGE_ADDR + page);
+		LcdWriteCom(BASE_PAGE_ADDR + page + y);
 		for(i = 0; i< 12; i++) 
 		{
 	  		LcdWriteData((inverse == TRUE) ? ~ascii[page][i] : ascii[page][i]);
@@ -174,7 +174,7 @@ void DisplayOneLine16x16(DisplayInfo displayInfo)
 
 void DisplayOneLine12x16_with_params(uint8_t x, uint8_t y, uint8_t length, char *data, bool selected)
 {
-	uint8_t *ascii1216, i, k;	
+	uint8_t i, k;	
 	uint8_t page;
 	uint8_t ascii[2][12];
 	

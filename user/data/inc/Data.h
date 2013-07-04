@@ -135,7 +135,7 @@ typedef struct Data{
 #define 	CLOSE			0x00
 
 uint16_t GetData(uint16_t type);
-void UpdateData(uint8_t type, uint8_t val);
+void UpdateData(uint8_t type, uint16_t val);
 uint16_t GetRelayStatus(void);
 void SetRelay(int16_t status);
 

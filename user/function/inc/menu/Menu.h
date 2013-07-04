@@ -8,8 +8,8 @@
 
 void DisplayWindow(void);
 void MainWindow(void);
-void UpKeyOpt(void);
-void DownKeyOpt(void);
+void MoveToLeftMenu(void);
+void MoveToRightMenu(void);
 void KeyOptFun(uint8_t key);
 void DisplayMenu(void);
 void ReturnToSubMenuKeyOptFun(uint8_t key);

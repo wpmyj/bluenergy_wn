@@ -1,4 +1,5 @@
 #include "BasicInfo.h"
-#include "SetvalueInfo.h"
+#include "SetValueInfo.h"
+#include "SetValue.h"
 #include "RelayControl.h"
 

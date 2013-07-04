@@ -5,10 +5,10 @@ uint16_t DO;
 
 uint16_t GetData(uint16_t type)
 {
-	return Data[type] = rand();
+	return Data[type];
 }
 
-void UpdateData(uint8_t type, uint8_t val)
+void UpdateData(uint8_t type, uint16_t val)
 {
 	Data[type] = val;
 }

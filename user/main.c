@@ -122,12 +122,11 @@ int main(void)
     TmrTaskConfig();
 	CleanScreen();
 	GPIO_ResetBits(GPIOA, GPIO_Pin_0);
-;
 	//TmrStart(MENU_TIMEOUT_TIMER);
 	GetVINAdcValue();
 
 	displayModel = MainWindow;
-	
+	Data[SV_ADDR] = 6777;
     while(1)
     {    	
 		TmrTask(0);

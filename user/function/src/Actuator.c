@@ -7,7 +7,7 @@ void SaveOptMod(void)
 	preOptMod = GetData(AM_ADDR);
 }
 
-void SetOptMod(uint8_t optMod)
+void SetOptMod(uint16_t optMod)
 {	
 	UpdateData(AM_ADDR, optMod);
 }

@@ -38,10 +38,10 @@ void SubMenuKeyOptFun(uint8_t key)
 	switch(key)
 		{
 			case UP:
-				UpKeyOpt();
+				MoveToLeftMenu();
 				break;
 			case DOWN:
-				DownKeyOpt();
+				MoveToRightMenu();
 				break;
 			case ENTER:
 				SubMenuEnterKeyOpt();

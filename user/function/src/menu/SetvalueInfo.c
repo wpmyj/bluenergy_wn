@@ -8,10 +8,10 @@ extern uint16_t Data[];
 
 void DisplaySetValue(void)
 {
-	char buf[100];
+	char buf[5];
 	float pp;
 	
-	pp = (float)GetData(SV_ADDR)/100; 
+	pp = (float)GetData(SV_ADDR)/1000; 
 	sprintf( buf, "%f", pp);
 	DisplayOneLine12x16_with_params(4, 3, 3, "SV:", FALSE);
 	DisplayOneLine12x16_with_params(42, 3, 6, buf, FALSE);
@@ -24,6 +24,12 @@ void DisplaySetValeKeOptFun(uint8_t key)
 	needRefresh = TRUE;
 	switch(key)
 		{
+			case UP:
+				MoveToLeftMenu();
+				break;
+			case DOWN:
+				MoveToRightMenu();
+				break;
 			case ENTER:
 				MoveToNextMenu();
 				StartScreenRefreshTimer();
