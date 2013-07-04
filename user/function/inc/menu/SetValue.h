@@ -1,4 +1,4 @@
-#define 	SET_VAL_BASE	51
+#define 	SET_VAL_BASE	44
 #define 	ADD				0x01
 #define 	MINUS			0x02
 

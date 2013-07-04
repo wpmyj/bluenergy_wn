@@ -32,7 +32,6 @@ void DisplaySetValeKeOptFun(uint8_t key)
 				break;
 			case ENTER:
 				MoveToNextMenu();
-				StartScreenRefreshTimer();
 				ChangeDisplayMode(DisplaySetValue);
 				break;
 			default:

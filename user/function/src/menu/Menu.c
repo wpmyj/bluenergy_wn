@@ -5,10 +5,10 @@
 extern uint8_t windowPointer = 0, currentMenu = 0, needRefresh = TRUE;
 extern void (*displayModel)(uint8_t);
 
-extern const Menu menus[52] = {{4, "信息查询",  KeyOptFun, 5, 4, 1}, 	// 0
-					 {4, "人工模式",  KeyOptFun,8, 0, 2}, 				// 1 
-					 {4, "参数设置",  KeyOptFun,11, 1, 3}, 				// 2 
-					 {4, "系统校准",  KeyOptFun,26, 2, 4}, 				// 3
+extern const Menu menus[53] = {{4, "信息查询",  KeyOptFun, 5, 4, 1}, 	// 0
+					 {4, "人工模式",  KeyOptFun, 8, 0, 2}, 				// 1 
+					 {4, "参数设置",  KeyOptFun, 11, 1, 3}, 				// 2 
+					 {4, "系统校准",  KeyOptFun, 26, 2, 4}, 				// 3
 					 {2, "返回",  	 ReturnToMainWindowKeyOptFun, 0, 3, 0}, // 4
 					 
 					 {4, "基本信息",  SubMenuKeyOptFun, 41, 7, 6}, 		// 5
@@ -46,10 +46,10 @@ extern const Menu menus[52] = {{4, "信息查询",  KeyOptFun, 5, 4, 1}, 	// 0
 					 {4, "阀门状态",	 KeyOptFun, NULL, 32, 34}, 		// 33
 					 {4, "阻尼系数",	 KeyOptFun, NULL, 33, 35}, 		// 34		
 					 {5, "皮挨地系数",	 KeyOptFun, NULL, 34, 36}, 			// 35		
-					 {4, "电流输出",	 DisplayCurrentOutputKeOptFun, 51, 35, 37}, 		// 36
+					 {4, "电流输出",	 DisplayCurrentOutputKeOptFun, 51, 35, 37}, 	// 36
 					 {4, "电压输入",	 KeyOptFun, NULL, 36, 38}, 		// 37
 					 {4, "电源电压",	 KeyOptFun, NULL, 37, 39}, 		// 38
-					 {6, "液位设定范围",	 KeyOptFun, NULL, 38, 40}, 	// 39
+					 {6, "液位设定范围", DisplaySetValueRangeKeOptFun, 52, 38, 40}, 	// 39
 					 {2, "返回",	 KeyOptFun, NULL,     39, 29}, 		// 40
 			
 					 {0, "",	 ReturnToSubMenuKeyOptFun, 5, 41, 41}, 	// 41  	出厂信息
@@ -60,7 +60,7 @@ extern const Menu menus[52] = {{4, "信息查询",  KeyOptFun, 5, 4, 1}, 	// 0
 
 					  // 运行参数 - 设定液位查询
 
-				   	 {1, "",	 ChangeValueKeOptFun, 18, 49, 45},	//44		液位整数1 位
+				   	 {1, "",	 ChangeValueKeOptFun, 18, 47, 45},	//44		液位整数1 位
 
 					 {1, "",	 ChangeValueKeOptFun, 18, 44, 46},	//45		液位小数1 位
 
@@ -74,7 +74,9 @@ extern const Menu menus[52] = {{4, "信息查询",  KeyOptFun, 5, 4, 1}, 	// 0
 
 					 {2, "返回",	 ReturnToSubMenuKeyOptFun, 32, 50, 50},	//50		液位返回
 
-					 {2, "返回",	 ReturnToSubMenuKeyOptFun, 36, 51, 51}	//51		液位返回
+					 {2, "返回",	 ReturnToSubMenuKeyOptFun, 36, 51, 51},	//51		液位返回
+
+					 {2, "返回",	 ReturnToSubMenuKeyOptFun, 36, 52, 52},	//52		设定液位范围返回
 
 };
 

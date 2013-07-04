@@ -13,7 +13,7 @@ void DisplayCurrentOutput(void)
 	
 	pp = (float)GetData(CO_ADDR)/1000; 
 	sprintf( buf, "%f", pp);
-	DisplayOneLine12x16_with_params(24, 3, 2, "I:", FALSE);
+	DisplayOneLine12x16_with_params(14, 3, 2, "I:", FALSE);
 	DisplayOneLine12x16_with_params(42, 3, 6, buf, FALSE);
 	DisplayOneLine12x16_with_params(105, 3, 2, "MA", FALSE);
 	

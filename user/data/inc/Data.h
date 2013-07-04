@@ -106,7 +106,8 @@ typedef struct Data{
 #define		CO_ADDR			0x0020
 #define		VI_ADDR			0x0022
 #define		PWR_ADDR		0x0024
-#define		ULT_ADDR		0x0026
+#define		SVH_ADDR		0x0026
+#define		SVL_ADDR		0x0028
 
 #define		VENDOR0_ADDR	0x0050
 #define		VENDOR1_ADDR	0x0052
