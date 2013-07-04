@@ -26,7 +26,6 @@ typedef struct Menu {
 	uint8_t displayContentLength;
    	char *displayContent;		
 	void (*optFun)(uint8_t);
-	uint8_t refresh;
 	uint8_t next;
 	uint8_t left;
 	uint8_t right;

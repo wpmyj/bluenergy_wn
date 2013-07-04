@@ -5,81 +5,76 @@
 extern uint8_t windowPointer = 0, currentMenu = 0, needRefresh = TRUE;
 extern void (*displayModel)(uint8_t);
 
-extern const Menu menus[58] = {{4, "信息查询",  KeyOptFun, TRUE, 5, 4, 1}, 			// 0
-					 {4, "人工模式",  KeyOptFun, TRUE, 8, 0, 2}, 				// 1 
-					 {4, "参数设置",  KeyOptFun, TRUE, 11, 1, 3}, 				// 2 
-					 {4, "系统校准",  KeyOptFun, TRUE, 26, 2, 4}, 				// 3
-					 {2, "返回",  	 ReturnToMainWindowKeyOptFun, TRUE, 0, 3, 0}, // 4
+extern const Menu menus[52] = {{4, "信息查询",  KeyOptFun, 5, 4, 1}, 	// 0
+					 {4, "人工模式",  KeyOptFun,8, 0, 2}, 				// 1 
+					 {4, "参数设置",  KeyOptFun,11, 1, 3}, 				// 2 
+					 {4, "系统校准",  KeyOptFun,26, 2, 4}, 				// 3
+					 {2, "返回",  	 ReturnToMainWindowKeyOptFun, 0, 3, 0}, // 4
 					 
-					 {4, "基本信息",  SubMenuKeyOptFun, TRUE, 48, 7, 6}, 			// 5
-					 {4, "运行参数",  KeyOptFun, TRUE, 29, 5, 7}, 			// 6
-					 {2, "返回",  	KeyOptFun, TRUE, 0, 6, 5}, 				// 7
+					 {4, "基本信息",  SubMenuKeyOptFun, 41, 7, 6}, 		// 5
+					 {4, "运行参数",  KeyOptFun, 29, 5, 7}, 			// 6
+					 {2, "返回",  	KeyOptFun, 0, 6, 5}, 				// 7
 					 
-					 {5, "电磁阀控制",  DisplaySetRelayStatusKeOptFun, TRUE, 49, 10, 9}, 		// 8
-					 {5, "调节阀控制",  KeyOptFun, TRUE, 50, 8, 10}, 			// 9
-					 {2, "返回",  	KeyOptFun, TRUE, 0, 9, 8}, 				// 10
+					 {5, "电磁阀控制",  DisplaySetRelayStatusKeOptFun, 42, 10, 9}, // 8
+					 {5, "调节阀控制",  KeyOptFun, NULL, 8, 10}, 			// 9
+					 {2, "返回",  	KeyOptFun,0, 9, 8}, 				// 10
 					 
-					 {6, "输出控制模式",  KeyOptFun, TRUE, NULL, 25, 12}, 	// 11
-					 {4, "量程上限",  KeyOptFun, TRUE, NULL, 11, 13}, 		// 12
-					 {4, "量程下限",  KeyOptFun, TRUE, NULL, 12, 14}, 		// 13
-					 {4, "告警上限",  KeyOptFun, TRUE, NULL, 13, 15}, 		// 14
-					 {4, "告警下限",  KeyOptFun, TRUE, NULL, 14, 16}, 		// 15
-					 {5, "告警上上限",  KeyOptFun, TRUE, NULL, 15, 17}, 		// 16
-					 {5, "告警下下限",  KeyOptFun, TRUE, NULL, 16, 18}, 		// 17
-					 {4, "设定液位",  SetValueKeOptFun, TRUE, 51, 17, 19}, 		// 18
-					 {5, "阀门正反向",  KeyOptFun, TRUE, NULL, 18, 20}, 		// 19
-					 {4, "阻尼系数",  KeyOptFun, TRUE, NULL, 19, 21}, 		// 20
-					 {4, "比例增益",  KeyOptFun, TRUE, NULL, 20, 22}, 		// 21
-					 {4, "积分时间",  KeyOptFun, TRUE, NULL, 21, 23}, 		// 22
-					 {4, "微分时间",  KeyOptFun, TRUE, NULL, 22, 24}, 		// 23
-					 {5, "液位上下限",  KeyOptFun, TRUE, NULL, 23, 25}, 		// 24
-					 {2, "返回",  	KeyOptFun, TRUE, NULL, 24, 11}, 			// 25
+					 {6, "输出控制模式",  KeyOptFun, NULL, 25, 12}, 	// 11
+					 {4, "量程上限",  KeyOptFun, NULL, 11, 13}, 		// 12
+					 {4, "量程下限",  KeyOptFun, NULL, 12, 14}, 		// 13
+					 {4, "告警上限",  KeyOptFun, NULL, 13, 15}, 		// 14
+					 {4, "告警下限",  KeyOptFun, NULL, 14, 16}, 		// 15
+					 {5, "告警上上限",  KeyOptFun, NULL, 15, 17}, 		// 16
+					 {5, "告警下下限",  KeyOptFun, NULL, 16, 18}, 		// 17
+					 {4, "设定液位",  SetValueKeOptFun, 44, 17, 19}, 	// 18
+					 {5, "阀门正反向",  KeyOptFun, NULL, 18, 20}, 		// 19
+					 {4, "阻尼系数",  KeyOptFun, NULL, 19, 21}, 		// 20
+					 {4, "比例增益",  KeyOptFun, NULL, 20, 22}, 		// 21
+					 {4, "积分时间",  KeyOptFun, NULL, 21, 23}, 		// 22
+					 {4, "微分时间",  KeyOptFun, NULL, 22, 24}, 		// 23
+					 {5, "液位上下限",  KeyOptFun, NULL, 23, 25}, 		// 24
+					 {2, "返回",  	KeyOptFun, NULL, 24, 11}, 			// 25
 					 
-					 {4, "零点校准",  KeyOptFun, TRUE, NULL, 28, 27}, 		// 26
-					 {4, "满度校准",  KeyOptFun, TRUE, NULL, 26, 28}, 		// 27
-					 {2, "返回",	 KeyOptFun, TRUE, NULL, 27, 26}, 		// 28
+					 {4, "零点校准",  KeyOptFun, NULL, 28, 27}, 		// 26
+					 {4, "满度校准",  KeyOptFun, NULL, 26, 28}, 		// 27
+					 {2, "返回",	 KeyOptFun, NULL, 27, 26}, 			// 28
 					 
-					 {6, "输出控制模式",	 KeyOptFun, TRUE, NULL, 47, 30}, 	// 29
-					 {4, "量程上限",	 KeyOptFun, TRUE, NULL, 29, 31}, 		// 30
-					 {4, "量程下限",	 KeyOptFun, TRUE, NULL, 30, 32}, 		// 31
-					 {4, "告警上限",	 KeyOptFun, TRUE, NULL, 31, 33}, 		// 32
-					 {4, "告警下限",	 KeyOptFun, TRUE, NULL, 32, 34}, 		// 33
-					 {5, "告警上上限",	 KeyOptFun, TRUE, NULL, 33, 35}, 		// 34
-					 {5, "告警下下限",	 KeyOptFun, TRUE, NULL, 34, 36}, 		// 35
-					 {4, "设定液位",	 DisplaySetValeKeOptFun, TRUE, 57, 35, 37}, 		// 36
-					 {5, "阀门正反向",	 KeyOptFun, TRUE, NULL, 36, 38}, 		// 37
-					 {4, "阻尼系数",	 KeyOptFun, TRUE, NULL, 37, 39}, 		// 38
-					 {4, "阀门开度",	 KeyOptFun, TRUE, NULL, 38, 40}, 		// 39
-					 {4, "比例增益",	 KeyOptFun, TRUE, NULL, 39, 41}, 		// 40
-					 {4, "积分时间",	 KeyOptFun, TRUE, NULL, 40, 42}, 		// 41
-					 {4, "微分时间",	 KeyOptFun, TRUE, NULL, 41, 43}, 		// 42
-					 {4, "电流输出",	 KeyOptFun, TRUE, NULL, 42, 44}, 		// 43
-					 {4, "电压输入",	 KeyOptFun, TRUE, NULL, 43, 45}, 		// 44
-					 {5, "24V输入",	 KeyOptFun, TRUE, NULL, 	   44, 46}, 		// 45
-					 {5, "液位上下限",	 KeyOptFun, TRUE, NULL, 45, 47}, 		// 46
-					 {2, "返回",	 KeyOptFun, TRUE, NULL,     46, 29}, 		// 47
+					 {6, "输出控制模式",	 KeyOptFun, NULL, 40, 30}, 	// 29
+					 {4, "量程范围",	 KeyOptFun, NULL, 29, 31}, 		// 30
+					 {4, "告警范围",	 KeyOptFun, NULL, 30, 32}, 		// 31		
+					 {4, "设定液位",	 DisplaySetValeKeOptFun, 50, 31, 33}, // 32
+					 {4, "阀门状态",	 KeyOptFun, NULL, 32, 34}, 		// 33
+					 {4, "阻尼系数",	 KeyOptFun, NULL, 33, 35}, 		// 34		
+					 {5, "皮挨地系数",	 KeyOptFun, NULL, 34, 36}, 			// 35		
+					 {4, "电流输出",	 DisplayCurrentOutputKeOptFun, 51, 35, 37}, 		// 36
+					 {4, "电压输入",	 KeyOptFun, NULL, 36, 38}, 		// 37
+					 {4, "电源电压",	 KeyOptFun, NULL, 37, 39}, 		// 38
+					 {6, "液位设定范围",	 KeyOptFun, NULL, 38, 40}, 	// 39
+					 {2, "返回",	 KeyOptFun, NULL,     39, 29}, 		// 40
 			
-					 {0, "",	 ReturnToSubMenuKeyOptFun, TRUE, 5, 48, 48}, 	// 48  	出厂信息
+					 {0, "",	 ReturnToSubMenuKeyOptFun, 5, 41, 41}, 	// 41  	出厂信息
 
-					 {2, "返回",  SetRelayKeOptFun, TRUE, 8, 49, 49}, 			// 49 	继电器控制
+					 {2, "返回",  SetRelayKeOptFun, 8, 42, 42}, 			// 42 	继电器控制
 					 
-					 {0, "",	 ReturnToSubMenuKeyOptFun, TRUE, 9, 50, 50}, 	// 50	阀门控制
+					 {0, "",	 ReturnToSubMenuKeyOptFun, 9, 43, 43}, 	// 43	阀门控制
 
 					  // 运行参数 - 设定液位查询
 
-				   	 {1, "",	 ChangeValueKeOptFun, TRUE, 29, 56, 52},	// 51	液位整数1 位
+				   	 {1, "",	 ChangeValueKeOptFun, 18, 49, 45},	//44		液位整数1 位
 
-					 {1, "",	 ChangeValueKeOptFun, TRUE, 29, 51, 53},	//52		液位小数1 位
+					 {1, "",	 ChangeValueKeOptFun, 18, 44, 46},	//45		液位小数1 位
 
-					 {1, "",	 ChangeValueKeOptFun, TRUE, 29, 52, 54},	//53		液位小数2 位
+					 {1, "",	 ChangeValueKeOptFun, 18, 45, 47},	//46		液位小数2 位
 
-					 {1, "",	 ChangeValueKeOptFun, TRUE, 29, 53, 55},	//54		液位小数3 位
+					 {1, "",	 ChangeValueKeOptFun, 18, 46, 48},	//47		液位小数3 位
 
-					 {2, "保存",	 SaveValueKeOptFun, TRUE, 29, 54, 56},	//55		液位保存
+					 {2, "保存",	 SaveValueKeOptFun, 18, 47, 49},	//48		液位保存
 
-					 {2, "返回",	 ReturnFromSetValueMenuKeyOptFun, TRUE, 18, 55, 51},	//56		液位返回
+					 {2, "返回",	 ReturnFromSetValueMenuKeyOptFun, 18, 48, 44}, //49		液位返回
 
-					 {2, "返回",	 ReturnToSubMenuKeyOptFun, TRUE, 29, 57, 57}	//57		液位返回
+					 {2, "返回",	 ReturnToSubMenuKeyOptFun, 32, 50, 50},	//50		液位返回
+
+					 {2, "返回",	 ReturnToSubMenuKeyOptFun, 36, 51, 51}	//51		液位返回
 
 };
 

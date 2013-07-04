@@ -2,4 +2,5 @@
 #include "SetValueInfo.h"
 #include "SetValue.h"
 #include "RelayControl.h"
+#include "CurrentOutput.h"
 
