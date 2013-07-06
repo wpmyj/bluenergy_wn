@@ -22,6 +22,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "Include.h"
 #include "GB1616.h"
+#include "GB1216.h"
 #include "GB2432.h"
 #include "ascii_12x16.h"
 
@@ -35,7 +36,7 @@
 void GetGB1616(uint8_t code[2], const typFNT_GB1616 GB_16[],uint8_t gb[2][16]);
 void GetGB2432(uint8_t code, const typFNT_GB2432 GB_2432[],uint8_t gb[4][24]);
 void SetBaseXY(uint8_t startX, uint8_t startY);
-
+void GetGB1216(uint8_t ch, const uint8_t gb12x16[][24], uint8_t ascii[2][12]);
 void GetAscii1216(char ch, const unsigned char ascii12x16[][24], uint8_t ascii[2][12]);
 
 /* Private function prototypes -----------------------------------------------*/
@@ -130,7 +131,6 @@ void DisplayOne12x16(uint8_t x, uint8_t y, char ch, bool inverse)
 	}
 }
 
-
 void DisplayOne16x16(DisplayInfo displayInfo)
 {
 	uint8_t i;	
@@ -215,6 +215,41 @@ void DisplayOneLine16x16_with_params(uint8_t x, uint8_t y, uint8_t length, uint8
 	}
 }
 
+void DisplayOneGB12x16(uint8_t x, uint8_t y, uint8_t index, bool inverse)
+{
+	uint8_t i;	
+	uint8_t page;
+	uint8_t gb[2][12];
+
+	GetGB1216(index, GB_1216, gb);
+	for(page = 0; page < 2; page++)
+	{
+		SetBaseXY(x, y);
+		LcdWriteCom(BASE_PAGE_ADDR + page + y);
+		for(i = 0; i< 12; i++) 
+		{
+	  		LcdWriteData((inverse == TRUE) ? ~gb[page][i] : gb[page][i]);
+	 	}
+	}
+}
+
+void DisplayOne24x32(uint8_t x, uint8_t y, char ch, bool inverse)
+{
+	uint8_t i;	
+	uint8_t page;
+	uint8_t gb[4][24];
+
+	GetGB2432(ch, tGB_24, gb);
+	for(page = 0; page < 4; page++)
+	{
+		SetBaseXY(x, y);
+		LcdWriteCom(BASE_PAGE_ADDR + page + y);
+		for(i = 0; i< 24; i++) 
+		{
+	  		LcdWriteData((inverse == TRUE) ? ~gb[page][i] : gb[page][i]);
+	 	}
+	}
+}
 
 void DisplayOneLine24x32(DisplayInfo displayInfo)
 {
@@ -260,7 +295,6 @@ void DisplayOneLine24x32_with_params(uint8_t x, uint8_t y, uint8_t length, uint8
 	}
 }
 
-
 /* Private func */
 
 void SetBaseXY(uint8_t startX, uint8_t startY)
@@ -273,6 +307,11 @@ void SetBaseXY(uint8_t startX, uint8_t startY)
 void GetAscii1216(char ch, const unsigned char ascii12x16[][24], uint8_t ascii[2][12])
 {
 	memcpy(ascii, ascii12x16[ch - ' '], ASCII1216_SIZE);				  	
+}
+
+void GetGB1216(uint8_t ch, const uint8_t gb12x16[][24], uint8_t ascii[2][12])
+{
+	memcpy(ascii, gb12x16[ch], GB1216_SIZE);				  	
 }
 
 

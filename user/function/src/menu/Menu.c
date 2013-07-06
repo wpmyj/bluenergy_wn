@@ -94,9 +94,27 @@ extern const Menu menus[67] = {{4, "–≈œ¢≤È—Ø",  KeyOptFun, 5, 4, 1}, 	// 0
 
 void MainWindow(void)
 {
-	uint8_t currentValue[5];
-	sprintf(currentValue, "%4.3f", ((float)GetData(PV_ADDR)) / 1000);
-	DisplayOneLine24x32_with_params(4, 2, 5, currentValue);
+	uint8_t currentValue[4];
+	//sprintf(currentValue, "%4.3f", ((float)GetData(PV_ADDR)) / 1000);
+	currentValue[0] = (GetData(PV_ADDR) / 1000) % 10;
+	currentValue[1] = (GetData(PV_ADDR) / 100) % 10;
+	currentValue[2] = (GetData(PV_ADDR) / 10) % 10;
+	currentValue[3] = (GetData(PV_ADDR)) % 10;
+	
+	DisplayOne24x32(4, 2,  currentValue[0] + 48, FALSE);
+	DisplayOneGB12x16(28, 4, 0, FALSE);
+	DisplayOne24x32(40, 2, currentValue[1] + 48, FALSE);
+	DisplayOne24x32(64, 2, currentValue[2] + 48, FALSE);
+	DisplayOne24x32(88, 2, currentValue[3] + 48, FALSE);
+	DisplayOneGB12x16(115, 4, 3, FALSE); // m
+	if(GetData(OCM_ADDR) == 0)
+	{
+		DisplayOneGB12x16(115, 2, 2, FALSE); // S 
+	}
+	else
+	{
+		DisplayOneGB12x16(115, 2, 1, FALSE); // R
+	}
 }
 
 void DisplayWindow(void)
@@ -124,6 +142,7 @@ void ReturnToMainWindowKeyOptFun(uint8_t key)
 		case ENTER:
 			ReturnBackToMainWindowEnterKeyOpt();
 			TmrStart(MAIN_WINDOW_REFRESH_TIMER);
+			TmrStop(MENU_TIMEOUT_TIMER);
 			break;
 		default:
 			break;
@@ -166,6 +185,7 @@ void ReturnToSubMenuKeyOptFun(uint8_t key)
 void KeyOptFun(uint8_t key)
 {
 	needRefresh = TRUE;
+	MenuTimeoutTimerInit();
 	if(displayModel == MainWindow)
 	{
 		displayModel = DisplayMenu;
@@ -266,4 +286,17 @@ void MainWindowRefreshTimerInit(void)
 {
 	TmrCfg(MAIN_WINDOW_REFRESH_TIMER, MainWindowRefreshTimer, (void *)0, 0, 1, 0, TRUE, TRUE);
 }
+
+void MenuTimeout(void)
+{
+	needRefresh = TRUE;
+	displayModel = MainWindow;
+	StartScreenRefreshTimer();
+}
+
+void MenuTimeoutTimerInit(void)
+{
+	TmrCfg(MENU_TIMEOUT_TIMER, MenuTimeout, (void *)0, 0, 10, 0, FALSE, TRUE);
+}
+
 
