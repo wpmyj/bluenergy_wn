@@ -7,7 +7,7 @@
 extern const Menu menus[];
 extern uint8_t windowPointer, currentMenu, needRefresh;
 extern void (*displayModel)(uint8_t);
-extern uint16_t Data[];
+extern uint8_t Data[];
 uint16_t newSetValue;
 
 void DisplayValueAndSimbol(uint8_t x, uint8_t y, char val, uint8_t cMenu)
@@ -24,8 +24,8 @@ void SetValue(void)
 {
 	char value[5], preValue[5];
 
-	sprintf( preValue, "%f", ((float)newSetValue) / 1000);
-	sprintf( value, "%f", ((float)GetData(SV_ADDR)) / 1000);
+	sprintf( preValue, "%4.3f", ((float)newSetValue) / 1000);
+	sprintf( value, "%4.3f", ((float)GetData(SV_ADDR)) / 1000);
 	
 	DisplayOneLine16x16_with_params(4, 0, 2, "µ±Ç°", FALSE); 
 	DisplayOneLine12x16_with_params(40, 0, 5, value, FALSE);
@@ -44,10 +44,10 @@ void SetValue(void)
 
 }
 
-void UpdateSetValue(uint8_t how)
+void UpdateSetValue(uint8_t how, uint8_t baseMenu)
 {
 	uint16_t base[4] = {1000, 100, 10, 1};
-	uint8_t digit = currentMenu - SET_VAL_BASE;
+	uint8_t digit = currentMenu - baseMenu;
 	uint16_t digitValue = (newSetValue / base[digit]) % 10;
 	uint16_t singleValue = digitValue;
 
@@ -64,12 +64,12 @@ void UpdateSetValue(uint8_t how)
 	newSetValue = newSetValue - (digitValue  * base[digit]) + (singleValue * base[digit]);
 }
 
-void MoveToFirstValueMenuItem(void)
+void MoveToFirstValueMenuItem(uint8_t menuItem)
 {
-	currentMenu = SET_VAL_BASE;
+	currentMenu = menuItem;
 }
 
-void SetValueKeOptFun(uint8_t key)
+void SetValueKeyOptFun(uint8_t key)
 {
 	needRefresh = TRUE;
 	
@@ -82,7 +82,7 @@ void SetValueKeOptFun(uint8_t key)
 				MoveToRightMenu();
 				break;
 			case ENTER:
-				newSetValue = GetData(SV_ADDR);;
+				newSetValue = GetData(SV_ADDR);
 				displayModel = SetValue;
 				MoveToNextMenu();				
 				break;
@@ -105,10 +105,10 @@ void ChangeValueKeOptFun(uint8_t key)
 	switch(key)
 		{
 			case UP:
-				UpdateSetValue(ADD);				
+				UpdateSetValue(ADD, SET_VAL_BASE);				
 				break;
 			case DOWN:
-				UpdateSetValue(MINUS);				
+				UpdateSetValue(MINUS, SET_VAL_BASE);				
 				break;
 			case ENTER:				
 				MoveToRightMenu();
@@ -126,7 +126,7 @@ void SaveValueKeOptFun(uint8_t key)
 	switch(key)
 		{
 			case UP:
-				MoveToFirstValueMenuItem();
+				MoveToFirstValueMenuItem(SET_VAL_BASE);
 				break;
 			case DOWN:
 				MoveToRightMenu();

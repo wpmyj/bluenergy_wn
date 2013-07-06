@@ -140,7 +140,15 @@ void UpdateData(uint8_t type, uint16_t val);
 uint16_t GetRelayStatus(void);
 void SetRelay(int16_t status);
 
-extern uint16_t Data[26];
+extern uint8_t Data[52];
 
 extern uint16_t DO;
+
+extern uint16_t deviceAddr;
+
+typedef struct Calibration {
+	uint16_t 	zero;
+	uint16_t 	ref;
+	uint16_t 	max;
+} Calibration;
 

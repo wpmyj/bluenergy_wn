@@ -5,7 +5,7 @@
 extern uint8_t windowPointer = 0, currentMenu = 0, needRefresh = TRUE;
 extern void (*displayModel)(uint8_t);
 
-extern const Menu menus[53] = {{4, "信息查询",  KeyOptFun, 5, 4, 1}, 	// 0
+extern const Menu menus[67] = {{4, "信息查询",  KeyOptFun, 5, 4, 1}, 	// 0
 					 {4, "人工模式",  KeyOptFun, 8, 0, 2}, 				// 1 
 					 {4, "参数设置",  KeyOptFun, 11, 1, 3}, 				// 2 
 					 {4, "系统校准",  KeyOptFun, 26, 2, 4}, 				// 3
@@ -26,31 +26,31 @@ extern const Menu menus[53] = {{4, "信息查询",  KeyOptFun, 5, 4, 1}, 	// 0
 					 {4, "告警下限",  KeyOptFun, NULL, 14, 16}, 		// 15
 					 {5, "告警上上限",  KeyOptFun, NULL, 15, 17}, 		// 16
 					 {5, "告警下下限",  KeyOptFun, NULL, 16, 18}, 		// 17
-					 {4, "设定液位",  SetValueKeOptFun, 44, 17, 19}, 	// 18
+					 {4, "设定液位",  SetValueKeyOptFun, 44, 17, 19}, 	// 18
 					 {5, "阀门正反向",  KeyOptFun, NULL, 18, 20}, 		// 19
 					 {4, "阻尼系数",  KeyOptFun, NULL, 19, 21}, 		// 20
 					 {4, "比例增益",  KeyOptFun, NULL, 20, 22}, 		// 21
 					 {4, "积分时间",  KeyOptFun, NULL, 21, 23}, 		// 22
 					 {4, "微分时间",  KeyOptFun, NULL, 22, 24}, 		// 23
-					 {5, "液位上下限",  KeyOptFun, NULL, 23, 25}, 		// 24
-					 {2, "返回",  	KeyOptFun, NULL, 24, 11}, 			// 25
+					 {5, "液位上下限",  KeyOptFun, NULL, 23, 62}, 		// 24
+					 {2, "返回",  	KeyOptFun, NULL, 62, 11}, 			// 25
 					 
 					 {4, "零点校准",  KeyOptFun, NULL, 28, 27}, 		// 26
 					 {4, "满度校准",  KeyOptFun, NULL, 26, 28}, 		// 27
 					 {2, "返回",	 KeyOptFun, NULL, 27, 26}, 			// 28
 					 
-					 {6, "输出控制模式",	 KeyOptFun, NULL, 40, 30}, 	// 29
-					 {4, "量程范围",	 KeyOptFun, NULL, 29, 31}, 		// 30
-					 {4, "告警范围",	 KeyOptFun, NULL, 30, 32}, 		// 31		
-					 {4, "设定液位",	 DisplaySetValeKeOptFun, 50, 31, 33}, // 32
-					 {4, "阀门状态",	 KeyOptFun, NULL, 32, 34}, 		// 33
-					 {4, "阻尼系数",	 KeyOptFun, NULL, 33, 35}, 		// 34		
-					 {5, "皮挨地系数",	 KeyOptFun, NULL, 34, 36}, 			// 35		
+					 {6, "输出控制模式",	 DisplayOutputControlModInfoKeyOptFun, 55, 40, 30}, 	// 29
+					 {4, "量程范围",	 DisplayMeasureRangeKeyOptFun, 53, 29, 31}, 		// 30
+					 {4, "告警范围",	 DisplayAlarmRangeKeyOptFun, 54, 30, 32}, 		// 31		
+					 {4, "设定液位",	 DisplaySetValeKeyOptFun, 50, 31, 33}, // 32
+					 {4, "阀门状态",	 DisplayRelayStatusInfoKeyOptFun, 56, 32, 34}, 		// 33
+					 {4, "阻尼系数",	 DisplayDampInfoKeyOptFun, 57, 33, 35}, 		// 34		
+					 {5, "皮挨地系数",	 DisplayPID_InfoKeyOptFun, 58, 34, 36}, 			// 35		
 					 {4, "电流输出",	 DisplayCurrentOutputKeOptFun, 51, 35, 37}, 	// 36
-					 {4, "电压输入",	 KeyOptFun, NULL, 36, 38}, 		// 37
+					 {4, "电压输入",	 DisplayVolageInputInfoKeyOptFun, 59, 36, 38}, 		// 37
 					 {4, "电源电压",	 KeyOptFun, NULL, 37, 39}, 		// 38
-					 {6, "液位设定范围", DisplaySetValueRangeKeOptFun, 52, 38, 40}, 	// 39
-					 {2, "返回",	 KeyOptFun, NULL,     39, 29}, 		// 40
+					 {6, "液位设定范围", DisplaySetValueRangeKeOptFun, 52, 38, 60}, 	// 39
+					 {2, "返回",	 KeyOptFun, NULL,     60, 29}, 		// 40
 			
 					 {0, "",	 ReturnToSubMenuKeyOptFun, 5, 41, 41}, 	// 41  	出厂信息
 
@@ -71,21 +71,32 @@ extern const Menu menus[53] = {{4, "信息查询",  KeyOptFun, 5, 4, 1}, 	// 0
 					 {2, "保存",	 SaveValueKeOptFun, 18, 47, 49},	//48		液位保存
 
 					 {2, "返回",	 ReturnFromSetValueMenuKeyOptFun, 18, 48, 44}, //49		液位返回
-
 					 {2, "返回",	 ReturnToSubMenuKeyOptFun, 32, 50, 50},	//50		液位返回
+					 {2, "返回",	 ReturnToSubMenuKeyOptFun, 36, 51, 51},	//51		电流输出返回
+					 {2, "返回",	 ReturnToSubMenuKeyOptFun, 39, 52, 52},	//52		设定液位范围返回
+					 {2, "返回",	 ReturnToSubMenuKeyOptFun, 30, 53, 53},	//53		量程范围返回
+					 {2, "返回",	 ReturnToSubMenuKeyOptFun, 31, 54, 54},	//54		告警范围返回
+					 {2, "返回",	 ReturnToSubMenuKeyOptFun, 29, 55, 55},	//55		 输出模式返回
+					 {2, "返回",	 ReturnToSubMenuKeyOptFun, 33, 56, 56},	//56		 输出模式返回
+					 {2, "返回",	 ReturnToSubMenuKeyOptFun, 34, 57, 57},	//57		 阻尼系数返回
+					 {2, "返回",	 ReturnToSubMenuKeyOptFun, 35, 58, 58},	//58		PID系数返回
+					 {2, "返回",	 ReturnToSubMenuKeyOptFun, 37, 59, 59},	//59		PID系数返回
+					 {4, "设备地址", DisplayDeviceAddrKeyOptFun, 61, 39, 40}, 	// 60
+					 {2, "返回",	 ReturnToSubMenuKeyOptFun, 60, 61, 61},	//61	PID系数返回
 
-					 {2, "返回",	 ReturnToSubMenuKeyOptFun, 36, 51, 51},	//51		液位返回
-
-					 {2, "返回",	 ReturnToSubMenuKeyOptFun, 36, 52, 52},	//52		设定液位范围返回
+					 {4, "设备地址", SetDeviceAddrKeyOptFun, 63, 24, 25}, // 62
+					 {1, "",	 ChangeDeviceAddrKeOptFun, 64, 66, 64},	//63		液位小数2 位
+					 {1, "",	 ChangeDeviceAddrKeOptFun, 65, 63, 65},	//64		液位小数3 位
+					 {2, "保存",	 SaveDeviceAddrKeOptFun, 63, 64, 66},	//65		液位保存
+					 {2, "返回",	 ReturnFromSetValueMenuKeyOptFun, 18, 65, 63}, //66		液位返回
 
 };
 
 void MainWindow(void)
 {
-	uint8_t test[6];
-
-	GetNum(1099, 1, test);
-	DisplayOneLine24x32_with_params(4, 2, 5, test);
+	uint8_t currentValue[5];
+	sprintf(currentValue, "%4.3f", ((float)GetData(PV_ADDR)) / 1000);
+	DisplayOneLine24x32_with_params(4, 2, 5, currentValue);
 }
 
 void DisplayWindow(void)
@@ -112,6 +123,7 @@ void ReturnToMainWindowKeyOptFun(uint8_t key)
 			break;
 		case ENTER:
 			ReturnBackToMainWindowEnterKeyOpt();
+			TmrStart(MAIN_WINDOW_REFRESH_TIMER);
 			break;
 		default:
 			break;
@@ -158,7 +170,7 @@ void KeyOptFun(uint8_t key)
 	{
 		displayModel = DisplayMenu;
 	} else {
-		
+		TmrStop(MAIN_WINDOW_REFRESH_TIMER);
 		switch(key)
 		{
 			case UP:
@@ -238,5 +250,20 @@ void ChangeDisplayMode(void * currentDisplayMode)
 {
 	needRefresh = TRUE;
 	displayModel = currentDisplayMode;
+}
+
+void MenuInit(void)
+{
+	displayModel = MainWindow;
+}
+
+void MainWindowRefreshTimer(void)
+{
+	needRefresh = TRUE;
+}
+
+void MainWindowRefreshTimerInit(void)
+{
+	TmrCfg(MAIN_WINDOW_REFRESH_TIMER, MainWindowRefreshTimer, (void *)0, 0, 1, 0, TRUE, TRUE);
 }
 

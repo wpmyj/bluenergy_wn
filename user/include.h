@@ -12,7 +12,11 @@
 #include "TimerTask.h"
 #include "Flash.h"
 #include "Adc.h"
+#include "Dac.h"
 #include "Data.h"
 #include "stdlib.h"
 #include "define.h"
+#include "Control.h"
+#include "RelayControl.h"
+#include "Actuator.h"
 

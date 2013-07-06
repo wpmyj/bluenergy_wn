@@ -1,4 +1,3 @@
-#define MENU_TIMEOUT_TIMER 	0
 #define MENU_WINDOW_SIZE	4
 
 #define UP					0
@@ -21,6 +20,7 @@ void StartScreenRefreshTimer(void);
 void StopScreenRefreshTimer(void);
 void MoveToNextMenu(void);
 void ChangeDisplayMode(void * currentDisplayMode);
+void MainWindowRefreshTimerInit(void);
 
 typedef struct Menu {	
 	uint8_t displayContentLength;

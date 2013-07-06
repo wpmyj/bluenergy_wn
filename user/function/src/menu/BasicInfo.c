@@ -10,7 +10,7 @@ void DisplayDeviceStatus(void)
 	DisplayOneLine16x16_with_params(4, 0, 6, "西安维纳测控", FALSE);
 	
 	DisplayOneLine16x16_with_params(4, 2, 2, "型号", FALSE);
-	DisplayOneLine12x16_with_params(34, 2, 8, "WEINA-01", FALSE);
+	DisplayOneLine12x16_with_params(34, 2, 6, "WINNER", FALSE);
 	
 	DisplayOneLine16x16_with_params(4, 4, 2, "出厂", FALSE);
 	DisplayOneLine12x16_with_params(34, 4, 4, "2013", FALSE);

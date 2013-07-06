@@ -1,2 +1,2 @@
-void DisplaySetValeKeOptFun(uint8_t key);
+void DisplaySetValeKeyOptFun(uint8_t key);
 

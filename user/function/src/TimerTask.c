@@ -319,3 +319,14 @@ void TmrDiDa(void)
 		ptmr++;
 	}
 }
+
+void TmrCfg(uint8_t n, void (*fnct)(void *), void *arg, uint8_t min, uint8_t sec, uint8_t tenths, bool TmrRep, bool start)
+{
+	TmrCfgFnct(TmrRep, n, fnct, arg);
+	TmrSetMST(n, min, sec, tenths);  /* Set timer #n to x min., x sec. x/10 sec. */
+	if(start == TRUE)
+	{
+		TmrStart(n);
+	}
+}
+

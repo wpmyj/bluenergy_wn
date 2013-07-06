@@ -283,7 +283,7 @@ void RCC_Configuration(void)
 		FLASH_SetLatency(FLASH_Latency_2);                      //设定内部FLASH的的延时周期为2周期
 		/* Enable Prefetch Buffer */
 		FLASH_PrefetchBufferCmd(FLASH_PrefetchBuffer_Enable);   //使能FLASH预存取缓冲区
-		/* PLLCLK = 8MHz * 9 = 72 MHz */
+		/* PLLCLK = 8MHz * 3 = 24 MHz */
 		RCC_PLLConfig(RCC_PLLSource_HSE_Div1, RCC_PLLMul_3);    //配置PLL时钟为外部高速时钟的9倍频，8MHz * 9 = 72 MHz
 		/* Enable PLL */
 		RCC_PLLCmd(ENABLE);                                     //使能PLL时钟
@@ -432,28 +432,6 @@ void GPIO_Configuration(void)
 	
 }
 
-void DAC_VOLTAGE_Configuration()
-{
-	GPIO_InitTypeDef GPIO_InitStructure;
-	DAC_InitTypeDef	DAC_InitStructure;
-
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_DAC, ENABLE);		   //使能由APB1时钟控制的外设中的DAC端口
-	/*DAC通道IO配置*/
-  	GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_4;				//IO端口的第4位
-  	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;		//端口模式为输出(模拟输入方式不行)
-  	GPIO_Init(GPIOA, &GPIO_InitStructure);					//用以上几个参数初始化PA口
-
-	DAC_DeInit();
-
-	DAC_InitStructure.DAC_Trigger = DAC_Trigger_None;
-	DAC_InitStructure.DAC_WaveGeneration = DAC_WaveGeneration_None;      
-	DAC_InitStructure.DAC_OutputBuffer = DAC_OutputBuffer_Disable;
-	DAC_Init(DAC_Channel_1, &DAC_InitStructure);
-	DAC_Cmd(DAC_Channel_1, ENABLE);
-	DAC_SoftwareTriggerCmd(DAC_Channel_1,ENABLE);
-}
-
 void ADC_Configuration()
 {
 	//V_IOUT_adcInit();
@@ -537,7 +515,7 @@ void SPIx_Configuration(void)
 	SPI_InitStructure.SPI_CPOL = SPI_CPOL_High;   
 	SPI_InitStructure.SPI_CPHA = SPI_CPHA_2Edge;   
 	SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;    
-	SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_64;   
+	SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_2;   
 	SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;   
 	SPI_Init(SPI2, &SPI_InitStructure);        
 	SPI_Cmd(SPI2, ENABLE);    

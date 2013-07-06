@@ -5,7 +5,7 @@
 extern const Menu menus[];
 extern uint8_t windowPointer, currentMenu, needRefresh;
 extern void (*displayModel)(uint8_t);
-extern uint16_t Data[];
+extern uint8_t Data[];
 
 void DisplaySetRelayStatus(void)
 {
@@ -55,11 +55,11 @@ void SetRelayKeOptFun(uint8_t key)
 	switch(key)
 		{
 			case UP:
-				SetOptMod(MANUAL);
+				SetOptMod(MANUAL, DO_MOD);
 				SetRelay(OPEN);
 				break;
 			case DOWN:
-				SetOptMod(MANUAL);
+				SetOptMod(MANUAL, DO_MOD);
 				SetRelay(CLOSE);
 				break;
 			case ENTER:

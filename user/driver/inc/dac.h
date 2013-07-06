@@ -27,5 +27,6 @@
 /* Exported macro ------------------------------------------------------------*/
 
 /* Exported functions ------------------------------------------------------- */
-void dacOutput(uint16_t value);
+void DAC_VOLTAGE_Configuration(void);
+void DacOutput(uint16_t value);
 

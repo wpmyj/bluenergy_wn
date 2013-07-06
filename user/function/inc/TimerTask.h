@@ -21,6 +21,11 @@
 /* Define to prevent recursive inclusion -------------------------------------*/
 #define  TMR_MAX_TMR          20
 
+#define MENU_TIMEOUT_TIMER 	0
+#define RELAY_ACTION_TIMER	1
+#define MAIN_WINDOW_REFRESH_TIMER	2
+
+
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x.h"
 
@@ -50,4 +55,5 @@ void  TmrStart (uint8_t n);
 void  TmrStop (uint8_t n);
 void  TmrTask (void *data);
 void TmrDiDa(void);
+void TmrCfg(uint8_t n, void (*fnct)(void *), void *arg, uint8_t min, uint8_t sec, uint8_t tenths, bool TmrRep, bool start);
 

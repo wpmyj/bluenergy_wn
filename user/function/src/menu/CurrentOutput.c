@@ -4,15 +4,15 @@
 extern const Menu menus[];
 extern uint8_t windowPointer, currentMenu, needRefresh;
 extern void (*displayModel)(uint8_t);
-extern uint16_t Data[];
+extern uint8_t Data[];
 
 void DisplayCurrentOutput(void)
 {
 	char buf[5];
 	float pp;
 	
-	pp = (float)GetData(CO_ADDR)/1000; 
-	sprintf( buf, "%f", pp);
+	pp = ((float)GetData(CO_ADDR))/1000; 
+	sprintf( buf, "%4.3f", pp);
 	DisplayOneLine12x16_with_params(14, 3, 2, "I:", FALSE);
 	DisplayOneLine12x16_with_params(42, 3, 6, buf, FALSE);
 	DisplayOneLine12x16_with_params(105, 3, 2, "MA", FALSE);

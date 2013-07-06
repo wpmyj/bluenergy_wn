@@ -44,10 +44,11 @@
    frequency (after reset the HSI is used as SYSCLK source) */
 //#define SYSCLK_FREQ_HSE    HSE_Value
 //#define SYSCLK_FREQ_20MHz  20000000
+#define SYSCLK_FREQ_24MHz  24000000
 //#define SYSCLK_FREQ_36MHz  36000000
 //#define SYSCLK_FREQ_48MHz  48000000
 //#define SYSCLK_FREQ_56MHz  56000000
-#define SYSCLK_FREQ_72MHz  72000000
+//#define SYSCLK_FREQ_72MHz  72000000
 
 /*!< Uncomment the  following line if you need to use external SRAM mounted
      on STM3210E-EVAL board (STM32 High density devices) as data memory  */ 
@@ -86,6 +87,12 @@
   const uint32_t SystemFrequency_AHBClk  = SYSCLK_FREQ_20MHz;      /*!< AHB System bus speed                */
   const uint32_t SystemFrequency_APB1Clk = SYSCLK_FREQ_20MHz;      /*!< APB Peripheral bus 1 (low)  speed   */
   const uint32_t SystemFrequency_APB2Clk = SYSCLK_FREQ_20MHz;      /*!< APB Peripheral bus 2 (high) speed   */
+#elif defined SYSCLK_FREQ_24MHz
+	const uint32_t SystemFrequency		   = SYSCLK_FREQ_24MHz; 	 /*!< System Clock Frequency (Core Clock) */
+	const uint32_t SystemFrequency_SysClk  = SYSCLK_FREQ_24MHz; 	 /*!< System clock						  */
+	const uint32_t SystemFrequency_AHBClk  = SYSCLK_FREQ_24MHz; 	 /*!< AHB System bus speed				  */
+	const uint32_t SystemFrequency_APB1Clk = SYSCLK_FREQ_24MHz; 	 /*!< APB Peripheral bus 1 (low)  speed   */
+	const uint32_t SystemFrequency_APB2Clk = SYSCLK_FREQ_24MHz; 	 /*!< APB Peripheral bus 2 (high) speed   */
 #elif defined SYSCLK_FREQ_36MHz
   const uint32_t SystemFrequency         = SYSCLK_FREQ_36MHz;      /*!< System Clock Frequency (Core Clock) */
   const uint32_t SystemFrequency_SysClk  = SYSCLK_FREQ_36MHz;      /*!< System clock                        */

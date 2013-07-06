@@ -66,12 +66,12 @@ static  void  ConmmunctionTimer (void *arg)
     ComData.RevOK = REV_NORMAL;
 }
 
-TmrTaskConfig(void)
+TmrTasksInit(void)
 {
     TmrInit();
-    //TmrCfgFnct(FALSE, 1, ConmmunctionTimer, (void *)0);                  /* Execute when Timer #0 times out          */
-	//TmrSetMST(0, 0, 10, 0);                                 /* Set timer #0 to 0 min., 10 sec. 0/10 sec. */
-	//TmrStart(0);
+	MainWindowRefreshTimerInit();
+	//ActuatorTimerInit();
+	//TmrStart(MENU_TIMEOUT_TIMER);
 }
 
 /*******************************************************************************
@@ -90,15 +90,13 @@ void Time_Reset(void)
     /* Wait until last write operation on RTC registers has finished */
     RTC_WaitForLastTask();
 }
-  
-DisplayInfo companyName = {0, 0, 6, "Î÷°²Î¬ÄÉ²â¿Ø"},
-		 	oilHight = {0, 4, 5, "0.345"};
 
 void DevicesInit()
 {
 	LcdInit();
+	CleanScreen();
 }
-
+	
 /**
   * @brief  Main program.
   * @param  None
@@ -106,8 +104,6 @@ void DevicesInit()
   */
 int main(void)
 {
-	
-
 	SystemResourcesInit(RCC_INIT 
                         | FLASH_INIT
                       	| USART_INIT
@@ -119,19 +115,14 @@ int main(void)
                         | ADC_INIT);
 	
 	DevicesInit();
-    TmrTaskConfig();
-	CleanScreen();
-	GPIO_ResetBits(GPIOA, GPIO_Pin_0);
-	//TmrStart(MENU_TIMEOUT_TIMER);
-	GetVINAdcValue();
-
-	displayModel = MainWindow;
-	Data[SV_ADDR] = 6777;
+	SystemParamsInit();    
+	TmrTasksInit();
+	MenuInit();
     while(1)
     {    	
 		TmrTask(0);
 		DisplayWindow();
-		OperateRelay(GetRelayStatus());	
+		ControlMode();				
 	}
 }
 
