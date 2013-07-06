@@ -10,8 +10,9 @@ extern uint8_t Data[];
 void DisplaySetRelayStatus(void)
 {
 
-	DisplayOneLine16x16_with_params(4, 0, 2, "当前", FALSE);
-	DisplayOneLine16x16_with_params(40, 0, 1, ((GetRelayStatus() == OPEN) ? "开" : "关"), FALSE);
+	DisplayOneLine16x16_with_params(4, 0, 4, "当前状态", FALSE);
+	DisplayOne12x16(68, 0, ':', FALSE);
+	DisplayOneLine16x16_with_params(80, 0, 1, ((GetRelayStatus() == OPEN) ? "开" : "关"), FALSE);
 	DisplayOneLine16x16_with_params(4, 2, 1, "按", FALSE);
 	DisplayOneLine12x16_with_params(22, 2, 1, "&", FALSE);
 	DisplayOneLine16x16_with_params(37, 2, 1, "键", FALSE);

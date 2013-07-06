@@ -45,7 +45,7 @@ extern const Menu menus[67] = {{4, "信息查询",  KeyOptFun, 5, 4, 1}, 	// 0
 					 {4, "设定液位",	 DisplaySetValeKeyOptFun, 50, 31, 33}, // 32
 					 {4, "阀门状态",	 DisplayRelayStatusInfoKeyOptFun, 56, 32, 34}, 		// 33
 					 {4, "阻尼系数",	 DisplayDampInfoKeyOptFun, 57, 33, 35}, 		// 34		
-					 {5, "皮挨地系数",	 DisplayPID_InfoKeyOptFun, 58, 34, 36}, 			// 35		
+					 {5, "皮挨帝系数",	 DisplayPID_InfoKeyOptFun, 58, 34, 36}, 			// 35		
 					 {4, "电流输出",	 DisplayCurrentOutputKeOptFun, 51, 35, 37}, 	// 36
 					 {4, "电压输入",	 DisplayVolageInputInfoKeyOptFun, 59, 36, 38}, 		// 37
 					 {4, "电源电压",	 KeyOptFun, NULL, 37, 39}, 		// 38
@@ -88,7 +88,7 @@ extern const Menu menus[67] = {{4, "信息查询",  KeyOptFun, 5, 4, 1}, 	// 0
 					 {1, "",	 ChangeDeviceAddrKeOptFun, 64, 66, 64},	//63		液位小数2 位
 					 {1, "",	 ChangeDeviceAddrKeOptFun, 65, 63, 65},	//64		液位小数3 位
 					 {2, "保存",	 SaveDeviceAddrKeOptFun, 63, 64, 66},	//65		液位保存
-					 {2, "返回",	 ReturnFromSetValueMenuKeyOptFun, 18, 65, 63}, //66		液位返回
+					 {2, "返回",	 ReturnFromSetValueMenuKeyOptFun, 62, 65, 63}, //66		液位返回
 
 };
 

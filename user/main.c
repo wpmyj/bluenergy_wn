@@ -71,7 +71,7 @@ TmrTasksInit(void)
     TmrInit();
 	MainWindowRefreshTimerInit();
 	//ActuatorTimerInit();
-	//TmrStart(MENU_TIMEOUT_TIMER);
+	
 }
 
 /*******************************************************************************
