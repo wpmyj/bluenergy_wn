@@ -1,9 +1,9 @@
 #include "BasicInfo.h"
-#include "SetValueInfo.h"
+#include "ValueSetInfo.h"
 #include "SetValue.h"
 #include "RelayControl.h"
-#include "CurrentOutput.h"
-#include "SetValueRange.h"
+#include "CurrentOutputInfo.h"
+#include "ValueSetRangeInfo.h"
 #include "MeasureRangeInfo.h"
 #include "AlarmRangeInfo.h"
 #include "OutputControlModInfo.h"
@@ -13,4 +13,5 @@
 #include "VolageInputInfo.h"
 #include "DeviceAddrInfo.h"
 #include "SetDeviceAddr.h"
+#include "RegulatingValveControl.h"
 

@@ -98,7 +98,7 @@ void SaveValue(void)
 	UpdateData(SV_ADDR, newSetValue);
 }
 
-void ChangeValueKeOptFun(uint8_t key)
+void ChangeValueKeyOptFun(uint8_t key)
 {
 	needRefresh = TRUE;
 	
@@ -119,7 +119,7 @@ void ChangeValueKeOptFun(uint8_t key)
 	
 }
 
-void SaveValueKeOptFun(uint8_t key)
+void SaveValueKeyOptFun(uint8_t key)
 {
 	needRefresh = TRUE;
 	
@@ -153,6 +153,7 @@ void ReturnFromSetValueMenuKeyOptFun(uint8_t key)
 			MoveToRightMenu();
 			break;
 		case ENTER:
+			RestoreOptMod();
 			MoveToNextMenu();	
 			displayModel = DisplayMenu;
 			break;

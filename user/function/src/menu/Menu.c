@@ -1,11 +1,12 @@
 #include "Include.h"
 #include "SubMenus.h"
 #include "Menu.h"
+#include "Actuator.h"
 
 extern uint8_t windowPointer = 0, currentMenu = 0, needRefresh = TRUE;
 extern void (*displayModel)(uint8_t);
 
-extern const Menu menus[67] = {{4, "信息查询",  KeyOptFun, 5, 4, 1}, 	// 0
+extern const Menu menus[72] = {{4, "信息查询",  KeyOptFun, 5, 4, 1}, 	// 0
 					 {4, "人工模式",  KeyOptFun, 8, 0, 2}, 				// 1 
 					 {4, "参数设置",  KeyOptFun, 11, 1, 3}, 				// 2 
 					 {4, "系统校准",  KeyOptFun, 26, 2, 4}, 				// 3
@@ -15,8 +16,8 @@ extern const Menu menus[67] = {{4, "信息查询",  KeyOptFun, 5, 4, 1}, 	// 0
 					 {4, "运行参数",  KeyOptFun, 29, 5, 7}, 			// 6
 					 {2, "返回",  	KeyOptFun, 0, 6, 5}, 				// 7
 					 
-					 {5, "电磁阀控制",  DisplaySetRelayStatusKeOptFun, 42, 10, 9}, // 8
-					 {5, "调节阀控制",  KeyOptFun, NULL, 8, 10}, 			// 9
+					 {5, "电磁阀控制",  DisplayRelayStatusControlKeyOptFun, 42, 10, 9}, // 8
+					 {5, "调节阀控制",  DisplayValveControlKeyOptFun, 67, 8, 10}, 			// 9
 					 {2, "返回",  	KeyOptFun,0, 9, 8}, 				// 10
 					 
 					 {6, "输出控制模式",  KeyOptFun, NULL, 25, 12}, 	// 11
@@ -46,29 +47,29 @@ extern const Menu menus[67] = {{4, "信息查询",  KeyOptFun, 5, 4, 1}, 	// 0
 					 {4, "阀门状态",	 DisplayRelayStatusInfoKeyOptFun, 56, 32, 34}, 		// 33
 					 {4, "阻尼系数",	 DisplayDampInfoKeyOptFun, 57, 33, 35}, 		// 34		
 					 {5, "皮挨帝系数",	 DisplayPID_InfoKeyOptFun, 58, 34, 36}, 			// 35		
-					 {4, "电流输出",	 DisplayCurrentOutputKeOptFun, 51, 35, 37}, 	// 36
+					 {4, "电流输出",	 DisplayCurrentOutputKeyOptFun, 51, 35, 37}, 	// 36
 					 {4, "电压输入",	 DisplayVolageInputInfoKeyOptFun, 59, 36, 38}, 		// 37
 					 {4, "电源电压",	 KeyOptFun, NULL, 37, 39}, 		// 38
-					 {6, "液位设定范围", DisplaySetValueRangeKeOptFun, 52, 38, 60}, 	// 39
+					 {6, "液位设定范围", DisplaySetValueRangeKeyOptFun, 52, 38, 60}, 	// 39
 					 {2, "返回",	 KeyOptFun, NULL,     60, 29}, 		// 40
 			
 					 {0, "",	 ReturnToSubMenuKeyOptFun, 5, 41, 41}, 	// 41  	出厂信息
 
-					 {2, "返回",  SetRelayKeOptFun, 8, 42, 42}, 			// 42 	继电器控制
+					 {2, "返回",  SetRelayKeyOptFun, 8, 42, 42}, 			// 42 	继电器控制
 					 
 					 {0, "",	 ReturnToSubMenuKeyOptFun, 9, 43, 43}, 	// 43	阀门控制
 
 					  // 运行参数 - 设定液位查询
 
-				   	 {1, "",	 ChangeValueKeOptFun, 18, 47, 45},	//44		液位整数1 位
+				   	 {1, "",	 ChangeValueKeyOptFun, 18, 47, 45},	//44		液位整数1 位
 
-					 {1, "",	 ChangeValueKeOptFun, 18, 44, 46},	//45		液位小数1 位
+					 {1, "",	 ChangeValueKeyOptFun, 18, 44, 46},	//45		液位小数1 位
 
-					 {1, "",	 ChangeValueKeOptFun, 18, 45, 47},	//46		液位小数2 位
+					 {1, "",	 ChangeValueKeyOptFun, 18, 45, 47},	//46		液位小数2 位
 
-					 {1, "",	 ChangeValueKeOptFun, 18, 46, 48},	//47		液位小数3 位
+					 {1, "",	 ChangeValueKeyOptFun, 18, 46, 48},	//47		液位小数3 位
 
-					 {2, "保存",	 SaveValueKeOptFun, 18, 47, 49},	//48		液位保存
+					 {2, "保存",	 SaveValueKeyOptFun, 18, 47, 49},	//48		液位保存
 
 					 {2, "返回",	 ReturnFromSetValueMenuKeyOptFun, 18, 48, 44}, //49		液位返回
 					 {2, "返回",	 ReturnToSubMenuKeyOptFun, 32, 50, 50},	//50		液位返回
@@ -85,10 +86,16 @@ extern const Menu menus[67] = {{4, "信息查询",  KeyOptFun, 5, 4, 1}, 	// 0
 					 {2, "返回",	 ReturnToSubMenuKeyOptFun, 60, 61, 61},	//61	PID系数返回
 
 					 {4, "设备地址", SetDeviceAddrKeyOptFun, 63, 24, 25}, // 62
-					 {1, "",	 ChangeDeviceAddrKeOptFun, 64, 66, 64},	//63		液位小数2 位
-					 {1, "",	 ChangeDeviceAddrKeOptFun, 65, 63, 65},	//64		液位小数3 位
-					 {2, "保存",	 SaveDeviceAddrKeOptFun, 63, 64, 66},	//65		液位保存
+					 {1, "",	 ChangeDeviceAddrKeyOptFun, 64, 66, 64},	//63		液位小数2 位
+					 {1, "",	 ChangeDeviceAddrKeyOptFun, 65, 63, 65},	//64		液位小数3 位
+					 {2, "保存",	 SaveDeviceAddrKeyOptFun, 63, 63, 66},	//65		液位保存
 					 {2, "返回",	 ReturnFromSetValueMenuKeyOptFun, 62, 65, 63}, //66		液位返回
+
+					 {1, "",	 ChangeValveValueKeyOptFun, 68, 70, 68},	//67		液位小数2 位
+					 {1, "",	 ChangeValveValueKeyOptFun, 69, 67, 69},	//68		液位小数3 位
+					 {1, "",	 ChangeValveValueKeyOptFun, 70, 68, 70},	//69		液位小数3 位
+					 {2, "保存",	 SaveValveValueKeyOptFun, 67, 67, 71},	//70	液位保存
+					 {2, "返回",	 ReturnFromSetValueMenuKeyOptFun, 9, 70, 67}, //71		液位返回
 
 };
 
@@ -184,8 +191,7 @@ void ReturnToSubMenuKeyOptFun(uint8_t key)
 
 void KeyOptFun(uint8_t key)
 {
-	needRefresh = TRUE;
-	MenuTimeoutTimerInit();
+	needRefresh = TRUE;	
 	if(displayModel == MainWindow)
 	{
 		displayModel = DisplayMenu;
@@ -291,12 +297,13 @@ void MenuTimeout(void)
 {
 	needRefresh = TRUE;
 	displayModel = MainWindow;
+	currentMenu = windowPointer = 0;
+	RestoreOptMod();
 	StartScreenRefreshTimer();
 }
 
 void MenuTimeoutTimerInit(void)
 {
-	TmrCfg(MENU_TIMEOUT_TIMER, MenuTimeout, (void *)0, 0, 10, 0, FALSE, TRUE);
+	TmrCfg(MENU_TIMEOUT_TIMER, MenuTimeout, (void *)0, 0, 20, 0, FALSE, TRUE);
 }
-
 

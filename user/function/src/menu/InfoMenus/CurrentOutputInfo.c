@@ -19,7 +19,7 @@ void DisplayCurrentOutput(void)
 	
 }
 
-void DisplayCurrentOutputKeOptFun(uint8_t key)
+void DisplayCurrentOutputKeyOptFun(uint8_t key)
 {
 	needRefresh = TRUE;
 	switch(key)

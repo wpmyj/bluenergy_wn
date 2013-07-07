@@ -2,10 +2,8 @@
 #include "Menu.h"
 #include "Actuator.h"
 
-extern const Menu menus[];
-extern uint8_t windowPointer, currentMenu, needRefresh;
+extern uint8_t needRefresh;
 extern void (*displayModel)(uint8_t);
-extern uint8_t Data[];
 
 void DisplaySetRelayStatus(void)
 {
@@ -26,7 +24,7 @@ void DisplaySetRelayStatus(void)
 	DisplayOneLine16x16_with_params(99, 6, 2, "·µ»Ø", TRUE);	
 }
 
-void DisplaySetRelayStatusKeOptFun(uint8_t key)
+void DisplayRelayStatusControlKeyOptFun(uint8_t key)
 {
 	needRefresh = TRUE;
 	
@@ -49,7 +47,7 @@ void DisplaySetRelayStatusKeOptFun(uint8_t key)
 
 }
 
-void SetRelayKeOptFun(uint8_t key)
+void SetRelayKeyOptFun(uint8_t key)
 {
 	needRefresh = TRUE;
 	

@@ -1,7 +1,6 @@
 #include "Include.h"
 #include "Menu.h"
 
-extern const Menu menus[];
 extern uint8_t needRefresh;
 extern void (*displayModel)(uint8_t);
 uint16_t deviceAddr;

@@ -1,6 +1,7 @@
 #include "Include.h"
+#include "Control.h"
 
-uint16_t preOptMod, preOutputMod;
+uint16_t preOptMod, preOutputMod, changed;
 
 void SaveOptMod(void)
 {
@@ -10,14 +11,20 @@ void SaveOptMod(void)
 
 void SetOptMod(uint16_t optMod, uint16_t outputMod)
 {	
+	changed = TRUE;
 	UpdateData(AM_ADDR, optMod);
 	UpdateData(OCM_ADDR, outputMod);
 }
 
 void RestoreOptMod(void)
 {
-	UpdateData(AM_ADDR, preOptMod);
-	UpdateData(OCM_ADDR, preOutputMod);
+	if(changed == TRUE)
+	{
+		UpdateData(AM_ADDR, preOptMod);
+		UpdateData(OCM_ADDR, preOutputMod);
+		changed = FALSE;
+	}
+	
 }
 
 void OpenRelay(void)
@@ -33,6 +40,15 @@ void CloseRelay(void)
 void OperateRelay(uint16_t status)
 {
 	(status == OPEN) ? OpenRelay() : CloseRelay();
+}
+
+void OperateValve(uint16_t val)
+{
+	uint16_t raw;
+	
+	raw = Convert_MV_To_DAC_Raw(val);
+
+	DacOutput(raw);
 }
 
 void ActuatorCheckingTimer(void)

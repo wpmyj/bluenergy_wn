@@ -25,7 +25,7 @@ void DisplaySetValueRange(void)
 	
 }
 
-void DisplaySetValueRangeKeOptFun(uint8_t key)
+void DisplaySetValueRangeKeyOptFun(uint8_t key)
 {
 	needRefresh = TRUE;
 	switch(key)

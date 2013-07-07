@@ -222,6 +222,7 @@ void EXTI15_10_IRQHandler(void)										  //外部中断0号线中断处理函数
 	for(cal=0;cal<100000;cal++);								  //简单延时，按键消抖
 	if(!GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_13))				  //检测是否是S1按下
 	{
+		MenuTimeoutTimerInit();
 		menus[currentMenu].optFun(UP);
 	}      	
   } else if(EXTI_GetITStatus(EXTI_Line14) != RESET)						  //检测是否发生了0号线中断
@@ -231,6 +232,7 @@ void EXTI15_10_IRQHandler(void)										  //外部中断0号线中断处理函数
 	for(cal=0;cal<100000;cal++);								  //简单延时，按键消抖
 	if(!GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_14))				  //检测是否是S1按下
 	{
+		MenuTimeoutTimerInit();
 		menus[currentMenu].optFun(DOWN);
 	}      	
   } else if(EXTI_GetITStatus(EXTI_Line15) != RESET)						  //检测是否发生了0号线中断
@@ -240,6 +242,7 @@ void EXTI15_10_IRQHandler(void)										  //外部中断0号线中断处理函数
 	for(cal=0;cal<100000;cal++);								  //简单延时，按键消抖
 	if(!GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_15))				  //检测是否是S1按下
 	{		
+		MenuTimeoutTimerInit();
 		menus[currentMenu].optFun(ENTER);
 	}      	
   }

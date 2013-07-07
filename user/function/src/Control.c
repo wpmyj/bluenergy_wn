@@ -15,18 +15,25 @@ uint16_t Convert_PID_OutputToRaw(uint16_t in)
 	return (uint16_t)(tmp / 100);
 }
 
-uint16_t Convert_DAC_VolageToCurrent(uint16_t raw)
+uint16_t Convert_DAC_RawToCurrent(uint16_t raw)
 {
 	long tmp;
 	tmp = (long)raw * 20000;
 	return (uint16_t)(tmp / 4095);
 }
 
+uint16_t Convert_MV_To_DAC_Raw(uint16_t mv)
+{
+	long tmp;
+	tmp = (long)mv * 4095;
+	return (uint16_t)(tmp / 100);
+}
+
 void CurrentOutput(uint16_t mv)
 {
 	uint16_t dacOutput, currentOutput;
 	dacOutput = Convert_PID_OutputToRaw(mv);
-	currentOutput = Convert_DAC_VolageToCurrent(dacOutput);
+	currentOutput = Convert_DAC_RawToCurrent(dacOutput);
 	UpdateData(CO_ADDR, currentOutput);
 	DacOutput(dacOutput); 
 }
@@ -75,6 +82,7 @@ void ManualControl(void)
 	if(GetData(OCM_ADDR) == AO_MOD)
 	{
 		//手动AO控制算法
+		OperateValve(GetData(MV_ADDR));
 	} 
 	else if(GetData(AM_ADDR) == DO_MOD)
 	{

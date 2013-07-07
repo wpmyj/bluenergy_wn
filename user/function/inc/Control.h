@@ -6,4 +6,5 @@
 #define		D 	0x02
 
 void RegulatingValveControl(void);
+uint16_t Convert_MV_To_DAC_Raw(uint16_t mv);
 
