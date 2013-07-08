@@ -6,7 +6,7 @@
 extern uint8_t windowPointer = 0, currentMenu = 0, needRefresh = TRUE;
 extern void (*displayModel)(uint8_t);
 
-extern const Menu menus[72] = {{4, "信息查询",  KeyOptFun, 5, 4, 1}, 	// 0
+extern const Menu menus[142] = {{4, "信息查询",  KeyOptFun, 5, 4, 1}, 	// 0
 					 {4, "人工模式",  KeyOptFun, 8, 0, 2}, 				// 1 
 					 {4, "参数设置",  KeyOptFun, 11, 1, 3}, 				// 2 
 					 {4, "系统校准",  KeyOptFun, 26, 2, 4}, 				// 3
@@ -20,25 +20,25 @@ extern const Menu menus[72] = {{4, "信息查询",  KeyOptFun, 5, 4, 1}, 	// 0
 					 {5, "调节阀控制",  DisplayValveControlKeyOptFun, 67, 8, 10}, 			// 9
 					 {2, "返回",  	KeyOptFun,0, 9, 8}, 				// 10
 					 
-					 {6, "输出控制模式",  KeyOptFun, NULL, 25, 12}, 	// 11
-					 {4, "量程上限",  KeyOptFun, NULL, 11, 13}, 		// 12
-					 {4, "量程下限",  KeyOptFun, NULL, 12, 14}, 		// 13
-					 {4, "告警上限",  KeyOptFun, NULL, 13, 15}, 		// 14
-					 {4, "告警下限",  KeyOptFun, NULL, 14, 16}, 		// 15
-					 {5, "告警上上限",  KeyOptFun, NULL, 15, 17}, 		// 16
-					 {5, "告警下下限",  KeyOptFun, NULL, 16, 18}, 		// 17
+					 {6, "输出控制模式", SetOutputModeKeyOptFun, 72, 25, 12}, 			// 11
+					 {4, "量程上限",  SetRangeHighKeyOptFun, 74, 11, 13}, 			// 12
+					 {4, "量程下限",  SetRangeLowKeyOptFun, 80, 12, 14}, 		// 13
+					 {4, "告警上限",  SetAlarmRangeHighKeyOptFun, 86, 13, 15}, 		// 14
+					 {4, "告警下限",  SetAlarmRangeLowKeyOptFun, 98, 14, 16}, 		// 15
+					 {5, "告警上上限",  SetAlarmRangeHighHighKeyOptFun, 92, 15, 17}, 		// 16
+					 {5, "告警下下限",  SetAlarmRangeLowLowKeyOptFun, 104, 16, 18}, 		// 17
 					 {4, "设定液位",  SetValueKeyOptFun, 44, 17, 19}, 	// 18
-					 {5, "阀门正反向",  KeyOptFun, NULL, 18, 20}, 		// 19
-					 {4, "阻尼系数",  KeyOptFun, NULL, 19, 21}, 		// 20
-					 {4, "比例增益",  KeyOptFun, NULL, 20, 22}, 		// 21
-					 {4, "积分时间",  KeyOptFun, NULL, 21, 23}, 		// 22
-					 {4, "微分时间",  KeyOptFun, NULL, 22, 24}, 		// 23
-					 {5, "液位上下限",  KeyOptFun, NULL, 23, 62}, 		// 24
-					 {2, "返回",  	KeyOptFun, NULL, 62, 11}, 			// 25
+					 {5, "阀门正反向",  SetValveDirectionKeyOptFun, 73, 18, 20}, 		// 19
+					 {4, "阻尼系数",  SetDampValueKeyOptFun, 123, 19, 21}, 			// 20
+					 {4, "比例增益",  SetPKeyOptFun, 127, 20, 22}, 		// 21
+					 {4, "积分时间",  SetIKeyOptFun, 132, 21, 23}, 		// 22
+					 {4, "微分时间",  SetDKeyOptFun, 137, 22, 24}, 		// 23
+					 {4, "液位上限",  SetDOValueRangeHighKeyOptFun, 110, 23, 116}, 			// 24
+					 {2, "返回",  	KeyOptFun, 2, 62, 11}, 			// 25
 					 
 					 {4, "零点校准",  KeyOptFun, NULL, 28, 27}, 		// 26
 					 {4, "满度校准",  KeyOptFun, NULL, 26, 28}, 		// 27
-					 {2, "返回",	 KeyOptFun, NULL, 27, 26}, 			// 28
+					 {2, "返回",	 KeyOptFun, 3, 27, 26}, 			// 28
 					 
 					 {6, "输出控制模式",	 DisplayOutputControlModInfoKeyOptFun, 55, 40, 30}, 	// 29
 					 {4, "量程范围",	 DisplayMeasureRangeKeyOptFun, 53, 29, 31}, 		// 30
@@ -85,7 +85,7 @@ extern const Menu menus[72] = {{4, "信息查询",  KeyOptFun, 5, 4, 1}, 	// 0
 					 {4, "设备地址", DisplayDeviceAddrKeyOptFun, 61, 39, 40}, 	// 60
 					 {2, "返回",	 ReturnToSubMenuKeyOptFun, 60, 61, 61},	//61	PID系数返回
 
-					 {4, "设备地址", SetDeviceAddrKeyOptFun, 63, 24, 25}, // 62
+					 {4, "设备地址", SetDeviceAddrKeyOptFun, 63, 116, 25}, // 62
 					 {1, "",	 ChangeDeviceAddrKeyOptFun, 64, 66, 64},	//63		液位小数2 位
 					 {1, "",	 ChangeDeviceAddrKeyOptFun, 65, 63, 65},	//64		液位小数3 位
 					 {2, "保存",	 SaveDeviceAddrKeyOptFun, 63, 63, 66},	//65		液位保存
@@ -97,6 +97,162 @@ extern const Menu menus[72] = {{4, "信息查询",  KeyOptFun, 5, 4, 1}, 	// 0
 					 {2, "保存",	 SaveValveValueKeyOptFun, 67, 67, 71},	//70	液位保存
 					 {2, "返回",	 ReturnFromSetValueMenuKeyOptFun, 9, 70, 67}, //71		液位返回
 
+					 {2, "返回",  	ChangeOutputModeKeyOptFun, 11, 72, 72}, 	  // 72
+
+					 {2, "返回",  	ChangeValveDirectionKeyOptFun, 19, 73, 73}, 	  // 73
+
+					
+					 // 运行参数 - 设定量程 H
+				     {1, "",	   ChangeRangeHighkeyOptFun, 12, 77, 75}, //74		  液位整数1 位
+
+				     {1, "",	   ChangeRangeHighkeyOptFun, 12, 74, 76}, //75		  液位小数1 位
+
+				     {1, "",	   ChangeRangeHighkeyOptFun, 12, 75, 77}, //76		  液位小数2 位
+
+				     {1, "",	   ChangeRangeHighkeyOptFun, 12, 76, 78}, //77		  液位小数3 位
+
+				     {2, "保存",	   SaveRangeHighKeyOptFun, 12, 74, 79},   //78		  液位保存
+
+					 {2, "返回",	 ReturnFromSetValueMenuKeyOptFun, 12, 78, 74}, //79		液位返回
+
+					 // 运行参数 - 设定量程 L
+				     {1, "",	   ChangeRangeLowkeyOptFun, 13, 83, 81}, //80		  液位整数1 位
+
+				     {1, "",	   ChangeRangeLowkeyOptFun, 13, 80, 82}, //81		  液位小数1 位
+
+				     {1, "",	   ChangeRangeLowkeyOptFun, 13, 81, 83}, //82		  液位小数2 位
+
+				     {1, "",	   ChangeRangeLowkeyOptFun, 13, 82, 84}, //83		  液位小数3 位
+
+				     {2, "保存",	   SaveRangeLowKeyOptFun, 13, 80, 85},   //84		  液位保存
+
+					 {2, "返回",	 ReturnFromSetValueMenuKeyOptFun, 13, 84, 80}, //85		液位返回
+
+					  // 运行参数 - 设定告警量程 H
+				     {1, "",	   ChangeAlarmRangeHighkeyOptFun, 14, 89, 87}, //86		  液位整数1 位
+
+				     {1, "",	   ChangeAlarmRangeHighkeyOptFun, 14, 86, 88}, //87		  液位小数1 位
+
+				     {1, "",	   ChangeAlarmRangeHighkeyOptFun, 14, 87, 89}, //88		  液位小数2 位
+
+				     {1, "",	   ChangeAlarmRangeHighkeyOptFun, 14, 88, 90}, //89		  液位小数3 位
+
+				     {2, "保存",	   SaveAlarmRangeHighKeyOptFun, 14, 86, 91},   //90		  液位保存
+
+					 {2, "返回",	 ReturnFromSetValueMenuKeyOptFun, 14, 90, 86}, //91		液位返回
+
+					  // 运行参数 - 设定告警量程 HH
+				     {1, "",	   ChangeAlarmRangeHighHighkeyOptFun, 16, 95, 93}, //92		  液位整数1 位
+
+				     {1, "",	   ChangeAlarmRangeHighHighkeyOptFun, 16, 92, 94}, //93		  液位小数1 位
+
+				     {1, "",	   ChangeAlarmRangeHighHighkeyOptFun, 16, 93, 95}, //94		  液位小数2 位
+
+				     {1, "",	   ChangeAlarmRangeHighHighkeyOptFun, 16, 94, 96}, //95		  液位小数3 位
+
+				     {2, "保存",	   SaveAlarmRangeHighHighKeyOptFun, 16, 92, 97},//96		  液位保存
+
+					 {2, "返回",	 ReturnFromSetValueMenuKeyOptFun, 16, 96, 92}, //97		液位返回
+
+					  // 运行参数 - 设定告警量程 L
+				     {1, "",	   ChangeAlarmRangeLowkeyOptFun, 15, 101, 99}, //98		  液位整数1 位
+
+				     {1, "",	   ChangeAlarmRangeLowkeyOptFun, 15, 98, 100}, //99		  液位小数1 位
+
+				     {1, "",	   ChangeAlarmRangeLowkeyOptFun, 15, 99, 101}, //100		  液位小数2 位
+
+				     {1, "",	   ChangeAlarmRangeLowkeyOptFun, 15, 100, 102}, //101		  液位小数3 位
+
+				     {2, "保存",	   SaveAlarmRangeLowKeyOptFun, 15, 98, 103},   //102		  液位保存
+
+					 {2, "返回",	 ReturnFromSetValueMenuKeyOptFun, 15, 102, 98}, //103		液位返回
+
+					  // 运行参数 - 设定告警量程 LL
+				     {1, "",	   ChangeAlarmRangeLowLowkeyOptFun, 17, 107, 105}, //104		  液位整数1 位
+
+				     {1, "",	   ChangeAlarmRangeLowLowkeyOptFun, 17, 104, 106}, //105		  液位小数1 位
+
+				     {1, "",	   ChangeAlarmRangeLowLowkeyOptFun, 17, 105, 107}, //106		  液位小数2 位
+
+				     {1, "",	   ChangeAlarmRangeLowLowkeyOptFun, 17, 106, 108}, //107		  液位小数3 位
+
+				     {2, "保存",	   SaveAlarmRangeLowLowKeyOptFun, 17, 104, 109},   //108		  液位保存
+
+					 {2, "返回",	 ReturnFromSetValueMenuKeyOptFun, 17, 108, 104}, //109		液位返回
+
+				       // 运行参数 - 设定液位范围H - DO 
+				     {1, "",	   ChangeDOValueRangeHighkeyOptFun, 24, 113, 111}, //110		  液位整数1 位
+
+				     {1, "",	   ChangeDOValueRangeHighkeyOptFun, 24, 110, 112}, //111		  液位小数1 位
+
+				     {1, "",	   ChangeDOValueRangeHighkeyOptFun, 24, 111, 113}, //112		  液位小数2 位
+
+				     {1, "",	   ChangeDOValueRangeHighkeyOptFun, 24, 112, 114}, //113		  液位小数3 位
+
+				     {2, "保存",	   SaveDOValueRangeHighKeyOptFun, 24, 110, 115},   //114		  液位保存
+
+					 {2, "返回",	 ReturnFromSetValueMenuKeyOptFun, 24, 114, 110}, //115		液位返回
+
+     			 	  // 运行参数 - 设定告警量程 H
+					 {4, "液位下限",  SetDOValueRangeLowKeyOptFun, 117, 24, 62}, 			// 116
+				
+				     {1, "",	   ChangeDOValueRangeLowkeyOptFun, 14, 120, 118}, //117		  液位整数1 位
+
+				     {1, "",	   ChangeDOValueRangeLowkeyOptFun, 14, 117, 119}, //118		  液位小数1 位
+
+				     {1, "",	   ChangeDOValueRangeLowkeyOptFun, 14, 118, 120}, //119		  液位小数2 位
+
+				     {1, "",	   ChangeDOValueRangeLowkeyOptFun, 14, 119, 121}, //120		  液位小数3 位
+
+				     {2, "保存",	   SaveDOValueRangeLowKeyOptFun, 14, 117, 122},   //121		  液位保存
+
+					 {2, "返回",	 ReturnFromSetValueMenuKeyOptFun, 14, 121, 117}, //122		液位返回
+
+					   // 运行参数 - 设定阻尼系数
+
+				     {1, "",	   ChangeDampValuekeyOptFun, 20, 124, 124}, //123		  液位小数2 位
+
+				     {1, "",	   ChangeDampValuekeyOptFun, 20, 125, 125}, //124		  液位小数3 位
+
+				     {2, "保存",	   SaveDampValueKeyOptFun, 20, 123, 126},  //125		  液位保存
+
+					 {2, "返回",	 ReturnFromSetValueMenuKeyOptFun, 20, 125, 123}, //126		液位返回
+
+					  // 运行参数 - 设定P 系数
+
+				     {1, "",	   ChangePkeyOptFun, 21, 129, 128}, //127		  液位小数2 位
+
+				     {1, "",	   ChangePkeyOptFun, 21, 127, 129}, //128		  液位小数3 位
+
+					 {1, "",	   ChangePkeyOptFun, 21, 128, 130}, //129		  液位小数3 位
+
+				     {2, "保存",	   SavePKeyOptFun, 21, 127, 131},  //130		  液位保存
+
+					 {2, "返回",	 ReturnFromSetValueMenuKeyOptFun, 21, 130, 127}, //131		液位返回
+
+					  // 运行参数 - 设定I 系数
+
+				     {1, "",	   ChangeIkeyOptFun, 22, 134, 133}, //132		  液位小数2 位
+
+				     {1, "",	   ChangeIkeyOptFun, 22, 132, 134}, //133		  液位小数3 位
+
+					 {1, "",	   ChangeIkeyOptFun, 22, 133, 135}, //134		  液位小数3 位
+
+				     {2, "保存",	   SaveIKeyOptFun, 22, 132, 136},  //135		  液位保存
+
+					 {2, "返回",	 ReturnFromSetValueMenuKeyOptFun, 22, 135, 132}, //136		液位返回
+
+				       // 运行参数 - 设定D 系数
+
+				     {1, "",	   ChangeDkeyOptFun, 23, 139, 138}, //137		  液位小数2 位
+
+				     {1, "",	   ChangeDkeyOptFun, 23, 137, 139}, //138		  液位小数3 位
+
+					 {1, "",	   ChangeDkeyOptFun, 23, 138, 140}, //139		  液位小数3 位
+
+				     {2, "保存",	   SaveDKeyOptFun, 23, 137, 141},  //140		  液位保存
+
+					 {2, "返回",	 ReturnFromSetValueMenuKeyOptFun, 23, 140, 137}, //141		液位返回
 };
 
 void MainWindow(void)

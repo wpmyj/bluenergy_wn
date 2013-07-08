@@ -5,7 +5,6 @@
 #include "SetValue.h"
 #include "SetDeviceAddr.h"
 
-extern const Menu menus[];
 extern uint8_t currentMenu, needRefresh;
 extern void (*displayModel)(uint8_t);
 uint8_t newSetDeviceAddrValue;

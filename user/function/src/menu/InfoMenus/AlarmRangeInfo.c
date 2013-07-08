@@ -14,25 +14,25 @@ void DisplayAlarmRange(void)
 	alarmRangeHH = (float)GetData(RH_ADDR)/1000; 
 	sprintf( bufHH, "%4.3f", alarmRangeHH);
 	DisplayOneLine12x16_with_params(4, 0, 3, "AHH:", FALSE);
-	DisplayOneLine12x16_with_params(42, 0, 6, bufHH, FALSE);
+	DisplayOneLine12x16_with_params(42, 0, 5, bufHH, FALSE);
 	DisplayOneLine12x16_with_params(105, 0, 1, "M", FALSE);
 
 	alarmRangeH = (float)GetData(RL_ADDR)/1000; 
 	sprintf( bufH, "%4.3f", alarmRangeH);
 	DisplayOneLine12x16_with_params(4, 2, 3, "AH:", FALSE);
-	DisplayOneLine12x16_with_params(42, 2, 6, bufH, FALSE);
+	DisplayOneLine12x16_with_params(42, 2, 5, bufH, FALSE);
 	DisplayOneLine12x16_with_params(105, 2, 1, "M", FALSE);
 
 	alarmRangeL = (float)GetData(RH_ADDR)/1000; 
 	sprintf( bufL, "%4.3f", alarmRangeL);
 	DisplayOneLine12x16_with_params(4, 4, 3, "AL:", FALSE);
-	DisplayOneLine12x16_with_params(42, 4, 6, bufL, FALSE);
+	DisplayOneLine12x16_with_params(42, 4, 5, bufL, FALSE);
 	DisplayOneLine12x16_with_params(105, 4, 1, "M", FALSE);
 
 	alarmRangeLL = (float)GetData(RL_ADDR)/1000; 
 	sprintf( bufLL, "%4.3f", alarmRangeLL);
 	DisplayOneLine12x16_with_params(4, 6, 3, "ALL:", FALSE);
-	DisplayOneLine12x16_with_params(42, 6, 6, bufLL, FALSE);
+	DisplayOneLine12x16_with_params(42, 6, 5, bufLL, FALSE);
 	DisplayOneLine12x16_with_params(105, 6, 1, "M", FALSE);
 	
 }

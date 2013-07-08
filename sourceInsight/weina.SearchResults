@@ -1,6 +1,3 @@
----- DisplaySetRelayStatusKeOptFun Matches (5 in 0 files) ----
-Menu.c (user\function\src\menu):					 {5, "µç´Å·§¿ØÖÆ",  DisplaySetRelayStatusKeOptFun, 42, 10, 9}, // 8
-RegulatingValveControl.c (user\...\controlmenus):void DisplaySetRelayStatusKeOptFun(uint8_t key)
-RegulatingValveControl.h (user\...\controlmenus):void DisplaySetRelayStatusKeOptFun(uint8_t key);
-RelayControl.c (user\...\controlmenus):void DisplaySetRelayStatusKeOptFun(uint8_t key)
-RelayControl.h (user\...\controlmenus):void DisplaySetRelayStatusKeOptFun(uint8_t key);
+---- Convert_DAC_VolageToCurrent Matches (2 in 0 files) ----
+Control.c (user\function\src):uint16_t Convert_DAC_VolageToCurrent(uint16_t raw)
+Control.c (user\function\src):	currentOutput = Convert_DAC_VolageToCurrent(dacOutput);
