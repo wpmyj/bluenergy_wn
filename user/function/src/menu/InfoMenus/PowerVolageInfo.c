@@ -1,22 +1,23 @@
 #include "Include.h"
 #include "Menu.h"
+#include "Adc.h"
 
 extern uint8_t needRefresh;
 extern void (*displayModel)(uint8_t);
 
-uint16_t Convert_ADC_ValueToVolage(uint16_t raw)
+uint16_t Convert_ADC_ValueTo_24V_Volage(uint16_t raw)
 {
 	long tmp;
-	tmp = (long)raw * 3300;
+	tmp = (long)raw * 24000;
 	return (uint16_t)(tmp / 4095);	
 }
 
-void DisplayVolageInputInfo(void)
+void DisplayPowerVolageInfo(void)
 {
 	char buf[5];
 	float currentVolage;
 	
-	currentVolage = (float)Convert_ADC_ValueToVolage(GetData(VI_ADDR))/1000; 
+	currentVolage = (float)Convert_ADC_ValueTo_24V_Volage(GetPowerAdcValue())/1000; 
 	sprintf( buf, "%4.3f", currentVolage);
 
 	DisplayOneLine12x16_with_params(4, 3, 5, buf, FALSE);
@@ -24,7 +25,7 @@ void DisplayVolageInputInfo(void)
 	
 }
 
-void DisplayVolageInputInfoKeyOptFun(uint8_t key)
+void DisplayPowerVolageInfoKeyOptFun(uint8_t key)
 {
 	needRefresh = TRUE;
 	switch(key)
@@ -38,7 +39,7 @@ void DisplayVolageInputInfoKeyOptFun(uint8_t key)
 			case ENTER:
 				MoveToNextMenu();
 				StartScreenRefreshTimer();
-				ChangeDisplayMode(DisplayVolageInputInfo);
+				ChangeDisplayMode(DisplayPowerVolageInfo);
 				break;
 			default:
 				break;

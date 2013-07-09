@@ -30,4 +30,5 @@
 #include "SetD.h"
 #include "CalibrationZero.h"
 #include "CalibrationFull.h"
+#include "PowerVolageInfo.h"
 

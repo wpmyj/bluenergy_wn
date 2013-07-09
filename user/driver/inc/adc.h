@@ -30,5 +30,5 @@
 uint16_t GetVINAdcValue(void);
 void V_IOUT_adcInit(void);
 void ADC_IN_adcInit(void);
-
+uint16_t GetPowerAdcValue(void);
 

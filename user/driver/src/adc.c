@@ -64,5 +64,15 @@ void ADC_IN_adcInit(void)
 
 uint16_t GetVINAdcValue(void)
 {
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_8, 1, ADC_SampleTime_55Cycles5);
+	ADC_Cmd(ADC1, ENABLE);
 	return ADC_GetConversionValue(ADC1);	//读取ADC1转换出的值
 }
+
+uint16_t GetPowerAdcValue(void)
+{
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_6, 1, ADC_SampleTime_55Cycles5);
+	ADC_Cmd(ADC1, ENABLE);
+	return ADC_GetConversionValue(ADC1);	//读取ADC1转换出的值
+}
+

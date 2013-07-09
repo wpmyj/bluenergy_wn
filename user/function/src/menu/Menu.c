@@ -6,7 +6,7 @@
 extern uint8_t windowPointer = 0, currentMenu = 0, needRefresh = TRUE;
 extern void (*displayModel)(uint8_t);
 
-extern const Menu menus[146] = {{4, "信息查询",  KeyOptFun, 5, 4, 1}, 	// 0
+extern const Menu menus[147] = {{4, "信息查询",  KeyOptFun, 5, 4, 1}, 	// 0
 					 {4, "人工模式",  KeyOptFun, 8, 0, 2}, 				// 1 
 					 {4, "参数设置",  KeyOptFun, 11, 1, 3}, 				// 2 
 					 {4, "系统校准",  KeyOptFun, 26, 2, 4}, 				// 3
@@ -49,7 +49,7 @@ extern const Menu menus[146] = {{4, "信息查询",  KeyOptFun, 5, 4, 1}, 	// 0
 					 {5, "皮挨帝系数",	 DisplayPID_InfoKeyOptFun, 58, 34, 36}, 			// 35		
 					 {4, "电流输出",	 DisplayCurrentOutputKeyOptFun, 51, 35, 37}, 	// 36
 					 {4, "电压输入",	 DisplayVolageInputInfoKeyOptFun, 59, 36, 38}, 		// 37
-					 {4, "电源电压",	 KeyOptFun, NULL, 37, 39}, 		// 38
+					 {4, "电源电压",	 DisplayPowerVolageInfoKeyOptFun, 146, 37, 39}, 		// 38
 					 {6, "液位设定范围", DisplaySetValueRangeKeyOptFun, 52, 38, 60}, 	// 39
 					 {2, "返回",	 KeyOptFun, 6,     60, 29}, 		// 40
 			
@@ -263,6 +263,9 @@ extern const Menu menus[146] = {{4, "信息查询",  KeyOptFun, 5, 4, 1}, 	// 0
 					 {2, "保存",	   SaveCalibrationFullKeyOptFun, 27, 144, 145},  //144	
 
 					 {2, "返回",	 ReturnFromSetValueMenuKeyOptFun, 27, 144, 145}, //145	
+
+					 {2, "返回",	 ReturnToSubMenuKeyOptFun, 38, 146, 146},	//146		PID系数返回
+
 };
 
 void MainWindow(void)
