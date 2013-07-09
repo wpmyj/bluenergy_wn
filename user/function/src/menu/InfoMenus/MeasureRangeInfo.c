@@ -14,13 +14,13 @@ void DisplayMeasureRange(void)
 	rangeHigh = (float)GetData(RH_ADDR)/1000; 
 	sprintf( bufH, "%4.3f", rangeHigh);
 	DisplayOneLine12x16_with_params(4, 2, 3, "RH:", FALSE);
-	DisplayOneLine12x16_with_params(42, 2, 6, bufH, FALSE);
+	DisplayOneLine12x16_with_params(42, 2, 5, bufH, FALSE);
 	DisplayOneLine12x16_with_params(105, 2, 1, "M", FALSE);
 
 	rangeLow = (float)GetData(RL_ADDR)/1000; 
 	sprintf( bufL, "%4.3f", rangeLow);
 	DisplayOneLine12x16_with_params(4, 4, 3, "RL:", FALSE);
-	DisplayOneLine12x16_with_params(42, 4, 6, bufL, FALSE);
+	DisplayOneLine12x16_with_params(42, 4, 5, bufL, FALSE);
 	DisplayOneLine12x16_with_params(105, 4, 1, "M", FALSE);
 	
 }

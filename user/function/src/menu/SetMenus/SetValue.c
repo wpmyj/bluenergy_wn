@@ -143,7 +143,7 @@ void SaveValueKeyOptFun(uint8_t key)
 void ReturnFromSetValueMenuKeyOptFun(uint8_t key)
 {
 	needRefresh = TRUE;
-
+	StopScreenRefreshTimer();
 	switch(key)
 	{
 		case UP:

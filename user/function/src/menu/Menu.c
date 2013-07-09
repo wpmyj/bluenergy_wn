@@ -6,7 +6,7 @@
 extern uint8_t windowPointer = 0, currentMenu = 0, needRefresh = TRUE;
 extern void (*displayModel)(uint8_t);
 
-extern const Menu menus[142] = {{4, "信息查询",  KeyOptFun, 5, 4, 1}, 	// 0
+extern const Menu menus[146] = {{4, "信息查询",  KeyOptFun, 5, 4, 1}, 	// 0
 					 {4, "人工模式",  KeyOptFun, 8, 0, 2}, 				// 1 
 					 {4, "参数设置",  KeyOptFun, 11, 1, 3}, 				// 2 
 					 {4, "系统校准",  KeyOptFun, 26, 2, 4}, 				// 3
@@ -36,8 +36,8 @@ extern const Menu menus[142] = {{4, "信息查询",  KeyOptFun, 5, 4, 1}, 	// 0
 					 {4, "液位上限",  SetDOValueRangeHighKeyOptFun, 110, 23, 116}, 			// 24
 					 {2, "返回",  	KeyOptFun, 2, 62, 11}, 			// 25
 					 
-					 {4, "零点校准",  KeyOptFun, NULL, 28, 27}, 		// 26
-					 {4, "满度校准",  KeyOptFun, NULL, 26, 28}, 		// 27
+					 {4, "零点校准",  DisplayCalibrationZeroKeyOptFun, 142, 28, 27}, 		// 26
+					 {4, "满度校准",  DisplayCalibrationFullKeyOptFun, 144, 26, 28}, 		// 27
 					 {2, "返回",	 KeyOptFun, 3, 27, 26}, 			// 28
 					 
 					 {6, "输出控制模式",	 DisplayOutputControlModInfoKeyOptFun, 55, 40, 30}, 	// 29
@@ -51,7 +51,7 @@ extern const Menu menus[142] = {{4, "信息查询",  KeyOptFun, 5, 4, 1}, 	// 0
 					 {4, "电压输入",	 DisplayVolageInputInfoKeyOptFun, 59, 36, 38}, 		// 37
 					 {4, "电源电压",	 KeyOptFun, NULL, 37, 39}, 		// 38
 					 {6, "液位设定范围", DisplaySetValueRangeKeyOptFun, 52, 38, 60}, 	// 39
-					 {2, "返回",	 KeyOptFun, NULL,     60, 29}, 		// 40
+					 {2, "返回",	 KeyOptFun, 6,     60, 29}, 		// 40
 			
 					 {0, "",	 ReturnToSubMenuKeyOptFun, 5, 41, 41}, 	// 41  	出厂信息
 
@@ -242,7 +242,7 @@ extern const Menu menus[142] = {{4, "信息查询",  KeyOptFun, 5, 4, 1}, 	// 0
 
 					 {2, "返回",	 ReturnFromSetValueMenuKeyOptFun, 22, 135, 132}, //136		液位返回
 
-				       // 运行参数 - 设定D 系数
+				      // 运行参数 - 设定D 系数
 
 				     {1, "",	   ChangeDkeyOptFun, 23, 139, 138}, //137		  液位小数2 位
 
@@ -253,6 +253,16 @@ extern const Menu menus[142] = {{4, "信息查询",  KeyOptFun, 5, 4, 1}, 	// 0
 				     {2, "保存",	   SaveDKeyOptFun, 23, 137, 141},  //140		  液位保存
 
 					 {2, "返回",	 ReturnFromSetValueMenuKeyOptFun, 23, 140, 137}, //141		液位返回
+						
+					  // 零点校准
+					 {2, "保存",	   SaveCalibrationZeroKeyOptFun, 26, 142, 143},  //142		 
+
+					 {2, "返回",	 ReturnFromSetValueMenuKeyOptFun, 26, 142, 143}, //143		
+
+					  // 满度校准
+					 {2, "保存",	   SaveCalibrationFullKeyOptFun, 27, 144, 145},  //144	
+
+					 {2, "返回",	 ReturnFromSetValueMenuKeyOptFun, 27, 144, 145}, //145	
 };
 
 void MainWindow(void)
