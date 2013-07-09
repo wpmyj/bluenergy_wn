@@ -206,7 +206,7 @@ extern const Menu menus[147] = {{4, "信息查询",  KeyOptFun, 5, 4, 1}, 	// 0
 
 				     {2, "保存",	   SaveDOValueRangeLowKeyOptFun, 14, 117, 122},   //121		  液位保存
 
-					 {2, "返回",	 ReturnFromSetValueMenuKeyOptFun, 14, 121, 117}, //122		液位返回
+					 {2, "返回",	 ReturnFromSetValueMenuKeyOptFun, 116, 121, 117}, //122		液位返回
 
 					   // 运行参数 - 设定阻尼系数
 
