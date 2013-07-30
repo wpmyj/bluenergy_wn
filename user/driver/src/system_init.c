@@ -85,7 +85,7 @@ void USARTx_Configuration(void)
 	  - 无校验位
 	  - 关闭数据流控制 (RTS and CTS signals)
 	*/
-	USART_InitStructure.USART_BaudRate = 4800;                   //设置串口波特率
+	USART_InitStructure.USART_BaudRate = 9600;                   //设置串口波特率
 	USART_InitStructure.USART_WordLength = USART_WordLength_8b;    //设置数据长度为8位
 	USART_InitStructure.USART_StopBits = USART_StopBits_1;         //设置一个停止位
 	USART_InitStructure.USART_Parity = USART_Parity_No ;           //无校验位
@@ -402,6 +402,19 @@ void GPIO_DO_REALY_Configration(void)
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 }
 
+void GPIO_DO_RS485_Configration(void)
+{
+	/* Enable ,打开GPIO 时钟*/
+	GPIO_InitTypeDef GPIO_InitStructure;
+
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
+
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;			  //时钟速度为50M
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;		  //端口模式为浮空输入方式
+	GPIO_Init(GPIOA, &GPIO_InitStructure);
+}
+
 void GPIO_DO_LED_Configration(void)
 {
 	/* Enable ,打开GPIO 时钟*/
@@ -429,13 +442,13 @@ void GPIO_Configuration(void)
 	GPIO_DI_KEY2_Configration();
 	GPIO_DO_REALY_Configration();
 	GPIO_DO_LED_Configration();
-	
+	GPIO_DO_RS485_Configration();
 }
 
 void ADC_Configuration()
 {
 	//V_IOUT_adcInit();
-	A24IN_adcInit();
+	//A24IN_adcInit();
 	ADC_IN_adcInit();	
 }
 

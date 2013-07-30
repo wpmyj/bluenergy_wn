@@ -79,7 +79,7 @@ void SetRangeHighKeyOptFun(uint8_t key)
 void SaveRangeHigh(void)
 {
 	// SAVE to FLASH
-	UpdateData(RH_ADDR, newRangeHigh);
+	UpdateData(RH_ADDR, newRangeHigh, TRUE);
 }
 
 void ChangeRangeHighkeyOptFun(uint8_t key)

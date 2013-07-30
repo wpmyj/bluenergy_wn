@@ -23,6 +23,7 @@ void ChangeDisplayMode(void * currentDisplayMode);
 void MainWindowRefreshTimerInit(void);
 void MenuTimeoutTimerInit(void);
 void DisplayOneGB12x16(uint8_t x, uint8_t y, char index, bool inverse);
+void MenuTimeoutTimerStop(void);
 
 typedef struct Menu {	
 	uint8_t displayContentLength;

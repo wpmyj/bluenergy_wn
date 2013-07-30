@@ -7,4 +7,5 @@
 
 void RegulatingValveControl(void);
 uint16_t Convert_MV_To_DAC_Raw(uint16_t mv);
+void AutoControlTimerInit(void);
 

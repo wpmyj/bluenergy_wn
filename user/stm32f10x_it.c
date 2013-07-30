@@ -28,6 +28,8 @@ unsigned int cal;
 extern Menu menus[];
 extern uint8_t windowPointer, currentMenu;
 
+COM com2;
+
 /** @addtogroup StdPeriph_Examples
   * @{
   */
@@ -191,19 +193,40 @@ void RTC_IRQHandler(void)
 ******************************************************************************/
 void USART2_IRQHandler(void)                                        //串口1中断处理函数
 {
-    uint8_t Data;
-    if(USART_GetITStatus(USART2, USART_IT_RXNE) != RESET)               //检测是否是接收中断
+	// 串口接收
+	if(USART_GetITStatus(USART2, USART_IT_RXNE) != RESET)
+    {		
+		/* Clear the USART1 Receive interrupt */
+	  	USART_ClearITPendingBit(USART2, USART_IT_RXNE);
+	  	
+	  	/* Read one byte from the receive data register */
+	  	com2.recBuf[com2.RecCnt++] = USART_ReceiveData(USART2);
+	  	//com2.RecTimeOutCnt = 0;					/*清超时计数器*/
+	  	//com2.RecFstFlg = 1;						/*接收到起始字符时，开始计数超时时间*/
+	  	TmrCfg(USART_REC_TIMEOUT_TIMER, ModbusRecTimeoutTimerHanler, (void *)0, 0, 0, 1, FALSE, TRUE);
+    }
+	// 串口发送
+    if(USART_GetITStatus(USART2, USART_IT_TXE) != RESET)
     {
-        /* Read one byte from the receive data register */
-        Data = (uint8_t)USART_ReceiveData(USART2);               //接收一字节数据
-		if(Data == 0x88)
-		{
-			GPIO_SetBits(GPIOA, GPIO_Pin_12);	
-		}
-		if(Data == 0x77)
-		{
-			GPIO_ResetBits(GPIOA, GPIO_Pin_12);	
-		}		
+  
+	  	USART_ClearFlag(USART2, USART_FLAG_TC);
+	  	if(com2.TrCnt >= com2.TrLen)
+	  	{
+	  		com2.TrCnt = 0;
+	  		com2.TrOk = 1;
+			com2.TrLen = 0;
+	  		/* Disable the USART1 Transmit interrupt */
+	  	  	USART_ITConfig(USART2, USART_IT_TXE, DISABLE);
+			uDelay(1);
+			RS485_RW_Select(RS485_READ);
+	  	}
+	  	else
+	   	{
+	  		
+	  		/* Write one byte to the transmit data register */
+	  		usartSendData(com2.trBuf[com2.TrCnt++]); //发送下一个字
+	  	}
+  
     }
 }
 /******************************************************************************
@@ -222,7 +245,7 @@ void EXTI15_10_IRQHandler(void)										  //外部中断0号线中断处理函数
 	for(cal=0;cal<100000;cal++);								  //简单延时，按键消抖
 	if(!GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_13))				  //检测是否是S1按下
 	{
-		MenuTimeoutTimerInit();
+		TmrReset(MENU_TIMEOUT_TIMER);
 		menus[currentMenu].optFun(UP);
 	}      	
   } else if(EXTI_GetITStatus(EXTI_Line14) != RESET)						  //检测是否发生了0号线中断
@@ -232,7 +255,7 @@ void EXTI15_10_IRQHandler(void)										  //外部中断0号线中断处理函数
 	for(cal=0;cal<100000;cal++);								  //简单延时，按键消抖
 	if(!GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_14))				  //检测是否是S1按下
 	{
-		MenuTimeoutTimerInit();
+		TmrReset(MENU_TIMEOUT_TIMER);
 		menus[currentMenu].optFun(DOWN);
 	}      	
   } else if(EXTI_GetITStatus(EXTI_Line15) != RESET)						  //检测是否发生了0号线中断
@@ -242,7 +265,7 @@ void EXTI15_10_IRQHandler(void)										  //外部中断0号线中断处理函数
 	for(cal=0;cal<100000;cal++);								  //简单延时，按键消抖
 	if(!GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_15))				  //检测是否是S1按下
 	{		
-		MenuTimeoutTimerInit();
+		TmrReset(MENU_TIMEOUT_TIMER);
 		menus[currentMenu].optFun(ENTER);
 	}      	
   }

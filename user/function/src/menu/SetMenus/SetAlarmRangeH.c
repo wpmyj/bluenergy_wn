@@ -79,7 +79,7 @@ void SetAlarmRangeHighKeyOptFun(uint8_t key)
 void SaveAlarmRangeHigh(void)
 {
 	// SAVE to FLASH
-	UpdateData(AH_ADDR, newAlarmRangeHigh);
+	UpdateData(AH_ADDR, newAlarmRangeHigh, TRUE);
 }
 
 void ChangeAlarmRangeHighkeyOptFun(uint8_t key)

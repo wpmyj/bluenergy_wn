@@ -62,7 +62,7 @@ void DisplayValveControlKeyOptFun(uint8_t key)
 void SaveValveValue(void)
 {
 	// SAVE to FLASH
-	UpdateData(MV_ADDR, newRegulatingValveValue);
+	UpdateData(MV_ADDR, newRegulatingValveValue, FALSE);
 }
 
 void UpdateValveValue(uint8_t how, uint8_t baseMenu)

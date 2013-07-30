@@ -79,7 +79,7 @@ void SetAlarmRangeLowKeyOptFun(uint8_t key)
 void SaveAlarmRangeLow(void)
 {
 	// SAVE to FLASH
-	UpdateData(AL_ADDR, newAlarmRangeLow);
+	UpdateData(AL_ADDR, newAlarmRangeLow, TRUE);
 }
 
 void ChangeAlarmRangeLowkeyOptFun(uint8_t key)

@@ -4,13 +4,6 @@
 extern uint8_t needRefresh;
 extern void (*displayModel)(uint8_t);
 
-uint16_t Convert_ADC_ValueToVolage(uint16_t raw)
-{
-	long tmp;
-	tmp = (long)raw * 3300;
-	return (uint16_t)(tmp / 4095);	
-}
-
 void DisplayVolageInputInfo(void)
 {
 	char buf[5];

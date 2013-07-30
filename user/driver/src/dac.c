@@ -40,7 +40,7 @@ void DAC_VOLTAGE_Configuration(void)
 
 void DacOutput(uint16_t value)
 {
-	DAC_SetChannel1Data(DAC_Align_12b_R, 0xffff - value);
+	DAC_SetChannel1Data(DAC_Align_12b_R, value);
 	while(ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC)==RESET); 
 }
 

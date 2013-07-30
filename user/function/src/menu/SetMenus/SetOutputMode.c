@@ -47,10 +47,10 @@ void ChangeOutputModeKeyOptFun(uint8_t key)
 	switch(key)
 		{
 			case UP:
-				UpdateData(OCM_ADDR, 0);
+				UpdateData(OCM_ADDR, 0, TRUE);
 				break;
 			case DOWN:
-				UpdateData(OCM_ADDR, 1);
+				UpdateData(OCM_ADDR, 1, TRUE);
 				break;
 			case ENTER:				
 				ChangeDisplayMode(DisplayMenu);

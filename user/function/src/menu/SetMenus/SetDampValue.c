@@ -73,7 +73,7 @@ void SetDampValueKeyOptFun(uint8_t key)
 void SaveDampValue(void)
 {
 	// SAVE to FLASH
-	UpdateData(DAMP_ADDR, newDampValue);
+	UpdateData(DAMP_ADDR, newDampValue, TRUE);
 }
 
 void ChangeDampValuekeyOptFun(uint8_t key)

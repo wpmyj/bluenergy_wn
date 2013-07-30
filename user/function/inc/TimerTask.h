@@ -24,7 +24,8 @@
 #define MENU_TIMEOUT_TIMER 	0
 #define RELAY_ACTION_TIMER	1
 #define MAIN_WINDOW_REFRESH_TIMER	2
-
+#define USART_REC_TIMEOUT_TIMER		3
+#define AUTO_CONTROL_TIMER 	4
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x.h"

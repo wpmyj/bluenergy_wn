@@ -12,16 +12,16 @@ void SaveOptMod(void)
 void SetOptMod(uint16_t optMod, uint16_t outputMod)
 {	
 	changed = TRUE;
-	UpdateData(AM_ADDR, optMod);
-	UpdateData(OCM_ADDR, outputMod);
+	UpdateData(AM_ADDR, optMod, TRUE);
+	UpdateData(OCM_ADDR, outputMod, TRUE);
 }
 
 void RestoreOptMod(void)
 {
 	if(changed == TRUE)
 	{
-		UpdateData(AM_ADDR, preOptMod);
-		UpdateData(OCM_ADDR, preOutputMod);
+		UpdateData(AM_ADDR, preOptMod, TRUE);
+		UpdateData(OCM_ADDR, preOutputMod, TRUE);
 		changed = FALSE;
 	}
 	

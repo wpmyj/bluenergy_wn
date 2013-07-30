@@ -47,10 +47,10 @@ void ChangeValveDirectionKeyOptFun(uint8_t key)
 	switch(key)
 		{
 			case UP:
-				UpdateData(AOFR_ADDR, 0);
+				UpdateData(AOFR_ADDR, 0, TRUE);
 				break;
 			case DOWN:
-				UpdateData(AOFR_ADDR, 1);
+				UpdateData(AOFR_ADDR, 1, TRUE);
 				break;
 			case ENTER:				
 				ChangeDisplayMode(DisplayMenu);

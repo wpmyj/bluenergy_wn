@@ -6,10 +6,10 @@
 extern uint8_t windowPointer = 0, currentMenu = 0, needRefresh = TRUE;
 extern void (*displayModel)(uint8_t);
 
-extern const Menu menus[147] = {{4, "信息查询",  KeyOptFun, 5, 4, 1}, 	// 0
+extern const Menu menus[165] = {{4, "信息查询",  KeyOptFun, 5, 4, 1}, 	// 0
 					 {4, "人工模式",  KeyOptFun, 8, 0, 2}, 				// 1 
 					 {4, "参数设置",  KeyOptFun, 11, 1, 3}, 				// 2 
-					 {4, "系统校准",  KeyOptFun, 26, 2, 4}, 				// 3
+					 {4, "系统校准",  DisplayCalibrationStartValueKeyOptFun, 147, 2, 4}, 				// 3
 					 {2, "返回",  	 ReturnToMainWindowKeyOptFun, 0, 3, 0}, // 4
 					 
 					 {4, "基本信息",  SubMenuKeyOptFun, 41, 7, 6}, 		// 5
@@ -255,17 +255,43 @@ extern const Menu menus[147] = {{4, "信息查询",  KeyOptFun, 5, 4, 1}, 	// 0
 					 {2, "返回",	 ReturnFromSetValueMenuKeyOptFun, 23, 140, 137}, //141		液位返回
 						
 					  // 零点校准
-					 {2, "保存",	   SaveCalibrationZeroKeyOptFun, 26, 142, 143},  //142		 
+					 {2, "保存",	   SaveCalibrationZeroKeyOptFun, 144, 142, 143},  //142		 
 
-					 {2, "返回",	 ReturnFromSetValueMenuKeyOptFun, 26, 142, 143}, //143		
+					 {3, "下一步",	 MoveToSetValueHighKeyOptFun, 159, 142, 143}, //143		
 
 					  // 满度校准
-					 {2, "保存",	   SaveCalibrationFullKeyOptFun, 27, 144, 145},  //144	
+					 {2, "保存",	   SaveCalibrationFullKeyOptFun, 145, 144, 145},  //144	
 
-					 {2, "返回",	 ReturnFromSetValueMenuKeyOptFun, 27, 144, 145}, //145	
+					 {2, "返回",	 ReturnFromSetValueMenuKeyOptFun, 3, 144, 145}, //145	
 
 					 {2, "返回",	 ReturnToSubMenuKeyOptFun, 38, 146, 146},	//146		PID系数返回
 
+					  // 初始液位设定
+					 
+					 {1, "",	   ChangeStartValuekeyOptFun, 3, 150, 148}, //147		  液位小数2 位					 
+					 {1, "",	   ChangeStartValuekeyOptFun, 3, 147, 149}, //148		  液位小数3 位					 
+					 {1, "",	   ChangeStartValuekeyOptFun, 3, 148, 150}, //149		  液位小数3 位
+					 {1, "",	   ChangeStartValuekeyOptFun, 3, 149, 151}, //150		  液位小数3 位					 
+					 {2, "保存",	 SaveStartValueKeyOptFun, 3, 147, 152},	//151	
+					 {3, "下一步",	 MoveToSetValueLowKeyOptFun, 142, 151, 147}, //152		返回
+
+					  //低位设定
+					 
+					 {1, "",	   ChangeValueLowkeyOptFun, 3, 156, 154}, //153		  液位小数2 位					 
+					 {1, "",	   ChangeValueLowkeyOptFun, 3, 153, 155}, //154		  液位小数3 位					 
+					 {1, "",	   ChangeValueLowkeyOptFun, 3, 154, 156}, //155		  液位小数3 位
+					 {1, "",	   ChangeValueLowkeyOptFun, 3, 155, 157}, //156		  液位小数3 位					 
+					 {2, "保存",	 SaveValueLowKeyOptFun, 3, 153, 158},	//157	
+					 {3, "下一步",	 MoveToSetValueHighKeyOptFun, 159, 157, 153}, //158		返回
+
+					  //高位设定
+					 
+					 {1, "",	   ChangeValueHighkeyOptFun, 3, 162, 160}, //159		  液位小数2 位					 
+					 {1, "",	   ChangeValueHighkeyOptFun, 3, 159, 161}, //160		  液位小数3 位					 
+					 {1, "",	   ChangeValueHighkeyOptFun, 3, 160, 162}, //161		  液位小数3 位
+					 {1, "",	   ChangeValueHighkeyOptFun, 3, 161, 163}, //162		  液位小数3 位					 
+					 {2, "保存",	 SaveValueHighKeyOptFun, 3, 159, 164},	//163	
+					 {2, "返回",	 ReturnFromCalibrateMenuKeyOptFun, 3, 163, 159}, //164		返回
 };
 
 void MainWindow(void)
@@ -364,6 +390,7 @@ void KeyOptFun(uint8_t key)
 	if(displayModel == MainWindow)
 	{
 		displayModel = DisplayMenu;
+		MenuTimeoutTimerInit();
 	} else {
 		TmrStop(MAIN_WINDOW_REFRESH_TIMER);
 		switch(key)
@@ -454,6 +481,10 @@ void MenuInit(void)
 
 void MainWindowRefreshTimer(void)
 {
+	uint16_t currentValue = GetCurrentEngineValue();
+
+	UpdateData(PV_ADDR, currentValue, FALSE);
+
 	needRefresh = TRUE;
 }
 
@@ -468,8 +499,15 @@ void MenuTimeout(void)
 	displayModel = MainWindow;
 	currentMenu = windowPointer = 0;
 	RestoreOptMod();
-	StartScreenRefreshTimer();
+	StopScreenRefreshTimer();
+	MainWindowRefreshTimerInit();
 }
+
+void MenuTimeoutTimerStop(void)
+{
+	TmrStop(MENU_TIMEOUT_TIMER);
+}
+
 
 void MenuTimeoutTimerInit(void)
 {

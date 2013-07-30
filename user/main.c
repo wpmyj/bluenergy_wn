@@ -71,7 +71,8 @@ TmrTasksInit(void)
     TmrInit();
 	MainWindowRefreshTimerInit();
 	//ActuatorTimerInit();
-	
+	ModbusRecTimeoutTimerInit();
+	AutoControlTimerInit();
 }
 
 /*******************************************************************************
@@ -95,6 +96,9 @@ void DevicesInit()
 {
 	LcdInit();
 	CleanScreen();
+	GPIO_ResetBits(GPIOA, GPIO_Pin_12);
+	RS485_RW_Select(RS485_READ);
+	uDelay(1);
 }
 	
 /**
@@ -117,12 +121,12 @@ int main(void)
 	DevicesInit();
 	SystemParamsInit();    
 	TmrTasksInit();
-	MenuInit();
+	MenuInit();	
     while(1)
     {    	
 		TmrTask(0);
 		DisplayWindow();
-		ControlMode();				
+		ControlMode();
 	}
 }
 

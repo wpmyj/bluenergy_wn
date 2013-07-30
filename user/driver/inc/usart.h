@@ -42,6 +42,8 @@
 #define	NAK			0x04
 #define	CLEAN		0x05
 
+#define RS485_READ	0x00
+#define RS485_WRITE	0x01
 
 /* Exported types ------------------------------------------------------------*/
 typedef struct
@@ -62,4 +64,5 @@ typedef struct
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
 void usartSendData(uint8_t data);
+void RS485_RW_Select(uint8_t chanel);
 

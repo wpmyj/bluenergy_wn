@@ -3,13 +3,12 @@
 
 extern uint8_t needRefresh;
 extern void (*displayModel)(uint8_t);
-uint16_t deviceAddr;
 
 void DisplayDeviceAddr(void)
 {
 	char buf[2];
 
-	sprintf( buf, "%2d", deviceAddr);
+	sprintf( buf, "%2d", GetData(DA_ADDR));
 	DisplayOneLine16x16_with_params(4, 4, 4, "…Ë±∏µÿ÷∑", FALSE);	
 	DisplayOne12x16(68, 4, ':', FALSE);
 	DisplayOneLine12x16_with_params(80, 4, 2, buf, FALSE);	

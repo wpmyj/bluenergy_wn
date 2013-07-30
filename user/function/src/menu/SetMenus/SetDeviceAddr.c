@@ -12,6 +12,7 @@ uint8_t newSetDeviceAddrValue;
 void SetDeviceAddr(void)
 {
 	char value[2], preValue[2];
+	uint8_t deviceAddr = (uint8_t)GetData(DA_ADDR);
 	preValue[0] = ((newSetDeviceAddrValue / 10) % 10) + 48;
 	preValue[1] = (newSetDeviceAddrValue % 10) + 48;
 	value[0] = (deviceAddr / 10) + 48;
@@ -44,7 +45,7 @@ void SetDeviceAddrKeyOptFun(uint8_t key)
 				MoveToRightMenu();
 				break;
 			case ENTER:
-				newSetDeviceAddrValue = deviceAddr;
+				newSetDeviceAddrValue = (uint8_t)GetData(DA_ADDR);
 				ChangeDisplayMode(SetDeviceAddr);
 				MoveToNextMenu();				
 				break;
@@ -57,7 +58,7 @@ void SetDeviceAddrKeyOptFun(uint8_t key)
 void SaveDeviceAddr(void)
 {
 	// SAVE to FLASH
-	deviceAddr = newSetDeviceAddrValue;
+	UpdateData(DA_ADDR, newSetDeviceAddrValue, TRUE);
 }
 
 void UpdateDeviceAddr(uint8_t how, uint8_t baseMenu)

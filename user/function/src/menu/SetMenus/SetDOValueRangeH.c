@@ -79,7 +79,7 @@ void SetDOValueRangeHighKeyOptFun(uint8_t key)
 void SaveDOValueRangeHigh(void)
 {
 	// SAVE to FLASH
-	UpdateData(SVH_ADDR, newDOValueRangeHigh);
+	UpdateData(SVH_ADDR, newDOValueRangeHigh, TRUE);
 }
 
 void ChangeDOValueRangeHighkeyOptFun(uint8_t key)

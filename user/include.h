@@ -19,4 +19,5 @@
 #include "Control.h"
 #include "RelayControl.h"
 #include "Actuator.h"
+#include "Modbus.h"
 

@@ -79,7 +79,7 @@ void SetDOValueRangeLowKeyOptFun(uint8_t key)
 void SaveDOValueRangeLow(void)
 {
 	// SAVE to FLASH
-	UpdateData(SVL_ADDR, newDOValueRangeLow);
+	UpdateData(SVL_ADDR, newDOValueRangeLow, TRUE);
 }
 
 void ChangeDOValueRangeLowkeyOptFun(uint8_t key)

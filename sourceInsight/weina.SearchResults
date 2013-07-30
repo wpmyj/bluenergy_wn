@@ -1,3 +1,50 @@
----- Convert_DAC_VolageToCurrent Matches (2 in 0 files) ----
-Control.c (user\function\src):uint16_t Convert_DAC_VolageToCurrent(uint16_t raw)
-Control.c (user\function\src):	currentOutput = Convert_DAC_VolageToCurrent(dacOutput);
+---- deviceAddr Matches (12 in 5 files) ----
+Data.c (user\data\src):189
+	deviceAddr = 0x01;
+}
+
+Data.h (user\data\inc):155
+extern uint16_t deviceAddr;
+
+typedef struct Calibration {
+DeviceAddrInfo.c (user\...\infomenus):6
+uint16_t deviceAddr;
+
+void DisplayDeviceAddr(void)
+DeviceAddrInfo.c (user\...\infomenus):12
+	sprintf( buf, "%2d", deviceAddr);
+	DisplayOneLine16x16_with_params(4, 4, 4, "设备地址", FALSE);	
+	DisplayOne12x16(68, 4, ':', FALSE);
+Modbus.c (user\function\src):8
+extern uint16_t deviceAddr;
+extern uint8_t Data[];
+
+Modbus.c (user\function\src):92
+		if(rbuf[0] == (uint8_t)deviceAddr)							                    	/*校验设备地址*/
+		{
+			if(RecPakChk(rbuf,rlen) == TRUE)										/*CRC校验*/
+Modbus.c (user\function\src):133
+				trBuf[0] = deviceAddr;
+				trBuf[1] = fncCode;
+				trBuf[2] = dataNum * 2;	//bytes				
+Modbus.c (user\function\src):147
+				trBuf[0] = deviceAddr;
+				trBuf[1] = fncCode;
+				trBuf[2] = 0;	
+Modbus.c (user\function\src):168
+					trBuf[0] = deviceAddr;
+					trBuf[1] = fncCode;
+					trBuf[2] = 0;	
+SetDeviceAddr.c (user\...\setmenus):17
+	value[0] = (deviceAddr / 10) + 48;
+	value[1] = (deviceAddr % 10) + 48;
+	
+	DisplayOneLine16x16_with_params(4, 0, 2, "当前", FALSE);
+SetDeviceAddr.c (user\...\setmenus):47
+				newSetDeviceAddrValue = deviceAddr;
+				ChangeDisplayMode(SetDeviceAddr);
+				MoveToNextMenu();				
+SetDeviceAddr.c (user\...\setmenus):60
+	deviceAddr = newSetDeviceAddrValue;
+}
+

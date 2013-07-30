@@ -39,4 +39,17 @@ void usartSendData(uint8_t data)
 {
 	USART_SendData(USART2, data);                 					//发送一字节数据
 	while(USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET);
-}	
+}
+
+void RS485_RW_Select(uint8_t chanel)
+{
+	if(chanel == RS485_READ)
+	{
+		GPIO_ResetBits(GPIOA, GPIO_Pin_1);
+	}
+	else if(chanel == RS485_WRITE)
+	{
+		GPIO_SetBits(GPIOA, GPIO_Pin_1);
+	}	
+}
+

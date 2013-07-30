@@ -76,7 +76,7 @@ void SetIKeyOptFun(uint8_t key)
 void SaveI(void)
 {
 	// SAVE to FLASH
-	UpdateData(I_ADDR, newI);
+	UpdateData(I_ADDR, newI, TRUE);
 }
 
 void ChangeIkeyOptFun(uint8_t key)

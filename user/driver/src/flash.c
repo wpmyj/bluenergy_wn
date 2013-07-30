@@ -58,6 +58,27 @@ void EraseFlash_by_Page(FlashDataInfoData_16 *FlashOptionDataStruct)
 	}
 }
 
+void EraseFlash(uint32_t StartAddr, uint32_t EndAddr)
+{
+	uint32_t EraseCounter;
+	__IO uint32_t NbrOfPage;
+	volatile FLASH_Status FLASHStatus;
+	FLASHStatus = FLASH_COMPLETE;
+	/* Unlock the Flash Program Erase controller */
+	FLASH_Unlock();
+	/* Define the number of page to be erased */
+	NbrOfPage = (EndAddr - StartAddr) / FLASH_PAGE_SIZE;
+	NbrOfPage = (NbrOfPage > 0) ? NbrOfPage : 1;
+	/* Clear All pending flags */
+	FLASH_ClearFlag(FLASH_FLAG_BSY | FLASH_FLAG_EOP | FLASH_FLAG_PGERR | FLASH_FLAG_WRPRTERR);
+	/* Erase the FLASH pages */
+	for(EraseCounter = 0; (EraseCounter < NbrOfPage) && (FLASHStatus == FLASH_COMPLETE); EraseCounter++)
+	{
+		FLASHStatus = FLASH_ErasePage(StartAddr + (FLASH_PAGE_SIZE * EraseCounter));
+	}
+}
+
+
 void WriteFlash_by_32Bit(FlashDataInfoData_32 *FlashOptionDataStruct)
 {
 	uint32_t Address = 0x00;
@@ -88,32 +109,25 @@ void ReadFlash_by_32Bit(FlashDataInfoData_32 *FlashOptionDataStruct)
 	}
 }
 
-void ReadFlash_by_16Bit(FlashDataInfoData_16 *FlashOptionDataStruct)
+uint16_t ReadFlash_by_16Bit(uint32_t StartAddr)
 {
 	uint32_t Address = 0x00;
-	uint32_t Count = 0;
-	/* Read the corectness of written data */
-	Address = FlashOptionDataStruct->StartAddr;
-	for(Count = 0; (Count < FlashOptionDataStruct->DataSize); Count++)
-	{
-		FlashOptionDataStruct->Data[Count] = (*(__IO uint16_t*) Address);
-		Address += 2;
-	}
+
+	Address = StartAddr;
+
+	return (*(__IO uint16_t*) Address);
 }
 
-void WriteFlash_by_16Bit(FlashDataInfoData_16 *FlashOptionDataStruct)
+bool WriteFlash_by_16Bit(uint32_t StartAddr, uint16_t Data)
 {
-	uint32_t Address = 0x00;
-	volatile FLASH_Status FLASHStatus;
-	uint32_t Count = 0;
-	FLASHStatus = FLASH_COMPLETE;
 	/*  FLASH Word program of data at addresses defined by StartAddr and EndAddr*/
-	
-	for(Count = 0; (Count < FlashOptionDataStruct->DataSize) && (FLASHStatus == FLASH_COMPLETE); Count++)
+	bool Status = FALSE;
+	FLASH_Unlock();
+	//FLASH_EraseOptionBytes();
+	if(FLASH_COMPLETE == FLASH_ProgramHalfWord(StartAddr, Data))
 	{
-		Address = FlashOptionDataStruct->StartAddr + FlashOptionDataStruct->Offset;
-		FLASHStatus = FLASH_ProgramHalfWord(Address, FlashOptionDataStruct->Data[Count]);
-		FlashOptionDataStruct->Offset += 2;
+		Status = TRUE;
 	}
-
+	return Status;
 }
+

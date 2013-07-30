@@ -87,70 +87,79 @@ typedef struct Data{
 } Data;
 */
 
-#define		OCM_ADDR		0x0000	
-#define		AM_ADDR			0x0002
-#define		RH_ADDR			0x0004
-#define		RL_ADDR			0x0006
-#define		AH_ADDR			0x0008
-#define		AL_ADDR			0x000A
-#define		AHH_ADDR		0x000C
-#define		ALL_ADDR		0x000E
-#define		SV_ADDR			0x0010
-#define		PV_ADDR			0x0012
-#define		AOFR_ADDR		0x0014
-#define		DAMP_ADDR		0x0016
-#define		MV_ADDR			0x0018
-#define		P_ADDR			0x001A
-#define		I_ADDR			0x001C
-#define		D_ADDR			0x001E
-#define		CO_ADDR			0x0020
-#define		VI_ADDR			0x0022
-#define		PWR_ADDR		0x0024
-#define		SVH_ADDR		0x0026
-#define		SVL_ADDR		0x0028
-#define		CZ_ADDR			0x002A
-#define		CF_ADDR			0x002C
+#define		OCM_ADDR		0	
+#define		AM_ADDR			2
+#define		RH_ADDR			4
+#define		RL_ADDR			6
+#define		AH_ADDR			8
+#define		AL_ADDR			10
+#define		AHH_ADDR		12
+#define		ALL_ADDR		14
+#define		SV_ADDR			16
+#define		PV_ADDR			18
 
-#define		VENDOR0_ADDR	0x0050
-#define		VENDOR1_ADDR	0x0052
-#define		VENDOR2_ADDR	0x0054
-#define		VENDOR3_ADDR	0x0056
-#define		VENDOR4_ADDR	0x0058
-#define		VENDOR5_ADDR	0x005A
-#define		VENDOR6_ADDR	0x005C
-#define		VENDOR7_ADDR	0x005E
-#define		VENDOR8_ADDR	0x0060
-#define		PRODUCT0_ADDR	0x0062
-#define		PRODUCT1_ADDR	0x0064
-#define		PRODUCT2_ADDR	0x0066
-#define		PRODUCT3_ADDR	0x0068
-#define		PRODUCT4_ADDR	0x006A
-#define		PRODUCT5_ADDR	0x006C
-#define		PRODUCT6_ADDR	0x006E
-#define		PRODUCT7_ADDR	0x0070
-#define		PRODUCT8_ADDR	0x0072
-#define		R_YEAR_ADDR		0x0074
-#define		R_DATE_ADDR		0x0076
-#define		Q_YEAR_ADDR		0x0078
-#define		Q_DATE_ADDR		0x007A
+#define		AOFR_ADDR		40
+#define		DAMP_ADDR		42
+#define		MV_ADDR			44
+#define		P_ADDR			46
+#define		I_ADDR			48
+#define		D_ADDR			50
+#define		CO_ADDR			52
+#define		VI_ADDR			54
+#define		PWR_ADDR		56
+#define		SVH_ADDR		58
+#define		SVL_ADDR		60
+#define		RS_ADDR			62
+#define		MH_ADDR			64
+#define		ZR_ADDR			66
+#define		RR_ADDR			68
+#define		RE_ADDR			70
+#define		DA_ADDR			72
+
+#define		VENDOR0_ADDR	80
+#define		VENDOR1_ADDR	82
+#define		VENDOR2_ADDR	84
+#define		VENDOR3_ADDR	86
+#define		VENDOR4_ADDR	88
+#define		VENDOR5_ADDR	90
+#define		VENDOR6_ADDR	92
+#define		VENDOR7_ADDR	94
+#define		VENDOR8_ADDR	96
+#define		PRODUCT0_ADDR	98
+#define		PRODUCT1_ADDR	100
+#define		PRODUCT2_ADDR	102
+#define		PRODUCT3_ADDR	104
+#define		PRODUCT4_ADDR	106
+#define		PRODUCT5_ADDR	108
+#define		PRODUCT6_ADDR	110
+#define		PRODUCT7_ADDR	112
+#define		PRODUCT8_ADDR	114
+#define		R_YEAR_ADDR		116
+#define		R_DATE_ADDR		118
+#define		Q_YEAR_ADDR		120
+#define		Q_DATE_ADDR		122
 
 #define 	OPEN			0x01
 #define 	CLOSE			0x00
 
+#define 	FLASH_DATA_ADDR			0x08019000
+#define		FLASH_OPT_FLAG_ADDR		0x08019800	
+
 uint16_t GetData(uint16_t type);
-void UpdateData(uint8_t type, uint16_t val);
+void UpdateData(uint8_t type, uint16_t val, bool writeToFlash);
 uint16_t GetRelayStatus(void);
 void SetRelay(int16_t status);
 
-extern uint8_t Data[52];
-
-extern uint16_t DO;
-
-extern uint16_t deviceAddr;
+extern uint8_t Data[128];
 
 typedef struct Calibration {
-	uint16_t 	zero;
-	uint16_t 	ref;
-	uint16_t 	max;
+	uint16_t 	zeroRaw;
+	uint16_t 	refRaw;
+	uint16_t	curRaw;
+	uint16_t 	refEngine;
+	uint16_t	curEngine;
+	uint16_t	mountingHight;
 } Calibration;
+
+extern Calibration CalibrationSensor;
 

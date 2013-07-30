@@ -95,7 +95,7 @@ void SetValueKeyOptFun(uint8_t key)
 void SaveValue(void)
 {
 	// SAVE to FLASH
-	UpdateData(SV_ADDR, newSetValue);
+	UpdateData(SV_ADDR, newSetValue, TRUE);
 }
 
 void ChangeValueKeyOptFun(uint8_t key)

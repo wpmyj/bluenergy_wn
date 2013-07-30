@@ -331,7 +331,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>0</Optim>
+            <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>0</OneElfS>
@@ -346,7 +346,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER,STM32F10X_HD,USE_STM3210E_EVAL</Define>
               <Undefine></Undefine>
-              <IncludePath>..\lib\inc;..\lib\src;..\sys;..\user\driver\inc;..\user\driver\src;..\user\function\inc;..\user\driver\src;..\user\resoucre;..\user</IncludePath>
+              <IncludePath>..\lib\inc;..\lib\src;..\sys;..\user\driver\inc;..\user\driver\src;..\user\function\inc;..\user\driver\src;..\user\resoucre;..\user;..\user\lib\inc;..\user\data\inc;..\user\function\inc\menu;..\user\function\inc\menu\CalibrationMenus;..\user\function\inc\menu\ControlMenus;..\user\function\inc\menu\InfoMenus;..\user\function\inc\menu\SetMenus</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -546,6 +546,16 @@
               <FileType>1</FileType>
               <FilePath>..\user\driver\src\usart.c</FilePath>
             </File>
+            <File>
+              <FileName>adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\driver\src\adc.c</FilePath>
+            </File>
+            <File>
+              <FileName>dac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\driver\src\dac.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -567,9 +577,19 @@
               <FilePath>..\user\function\src\TimerTask.c</FilePath>
             </File>
             <File>
-              <FileName>Menu.c</FileName>
+              <FileName>modbus.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\user\function\src\Menu.c</FilePath>
+              <FilePath>..\user\function\src\modbus.c</FilePath>
+            </File>
+            <File>
+              <FileName>Control.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\Control.c</FilePath>
+            </File>
+            <File>
+              <FileName>Actuator.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\Actuator.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -591,6 +611,21 @@
               <FileType>5</FileType>
               <FilePath>..\user\resoucre\GB2432.h</FilePath>
             </File>
+            <File>
+              <FileName>ascii_12x16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\user\resoucre\ascii_12x16.h</FilePath>
+            </File>
+            <File>
+              <FileName>GB1216.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\user\resoucre\GB1216.h</FilePath>
+            </File>
+            <File>
+              <FileName>GB2424.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\user\resoucre\GB2424.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -600,6 +635,221 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>..\doc\readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>menu</GroupName>
+          <Files>
+            <File>
+              <FileName>Menu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\Menu.c</FilePath>
+            </File>
+            <File>
+              <FileName>CalibrationZero.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\CalibrationMenus\CalibrationZero.c</FilePath>
+            </File>
+            <File>
+              <FileName>CalibrationFull.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\CalibrationMenus\CalibrationFull.c</FilePath>
+            </File>
+            <File>
+              <FileName>RegulatingValveControl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\ControlMenus\RegulatingValveControl.c</FilePath>
+            </File>
+            <File>
+              <FileName>RelayControl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\ControlMenus\RelayControl.c</FilePath>
+            </File>
+            <File>
+              <FileName>AlarmRangeInfo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\InfoMenus\AlarmRangeInfo.c</FilePath>
+            </File>
+            <File>
+              <FileName>BasicInfo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\InfoMenus\BasicInfo.c</FilePath>
+            </File>
+            <File>
+              <FileName>CurrentOutputInfo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\InfoMenus\CurrentOutputInfo.c</FilePath>
+            </File>
+            <File>
+              <FileName>DampInfo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\InfoMenus\DampInfo.c</FilePath>
+            </File>
+            <File>
+              <FileName>DeviceAddrInfo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\InfoMenus\DeviceAddrInfo.c</FilePath>
+            </File>
+            <File>
+              <FileName>MeasureRangeInfo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\InfoMenus\MeasureRangeInfo.c</FilePath>
+            </File>
+            <File>
+              <FileName>OutputControlModInfo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\InfoMenus\OutputControlModInfo.c</FilePath>
+            </File>
+            <File>
+              <FileName>PIDInfo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\InfoMenus\PIDInfo.c</FilePath>
+            </File>
+            <File>
+              <FileName>PowerVolageInfo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\InfoMenus\PowerVolageInfo.c</FilePath>
+            </File>
+            <File>
+              <FileName>RelayStatusInfo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\InfoMenus\RelayStatusInfo.c</FilePath>
+            </File>
+            <File>
+              <FileName>ValueSetInfo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\InfoMenus\ValueSetInfo.c</FilePath>
+            </File>
+            <File>
+              <FileName>ValueSetRangeInfo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\InfoMenus\ValueSetRangeInfo.c</FilePath>
+            </File>
+            <File>
+              <FileName>VolageInputInfo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\InfoMenus\VolageInputInfo.c</FilePath>
+            </File>
+            <File>
+              <FileName>SetAlarmRangeH.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\SetMenus\SetAlarmRangeH.c</FilePath>
+            </File>
+            <File>
+              <FileName>SetAlarmRangeHH.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\SetMenus\SetAlarmRangeHH.c</FilePath>
+            </File>
+            <File>
+              <FileName>SetAlarmRangeL.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\SetMenus\SetAlarmRangeL.c</FilePath>
+            </File>
+            <File>
+              <FileName>SetAlarmRangeLL.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\SetMenus\SetAlarmRangeLL.c</FilePath>
+            </File>
+            <File>
+              <FileName>SetD.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\SetMenus\SetD.c</FilePath>
+            </File>
+            <File>
+              <FileName>SetDampValue.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\SetMenus\SetDampValue.c</FilePath>
+            </File>
+            <File>
+              <FileName>SetDeviceAddr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\SetMenus\SetDeviceAddr.c</FilePath>
+            </File>
+            <File>
+              <FileName>SetDOValueRangeH.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\SetMenus\SetDOValueRangeH.c</FilePath>
+            </File>
+            <File>
+              <FileName>SetDOValueRangeL.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\SetMenus\SetDOValueRangeL.c</FilePath>
+            </File>
+            <File>
+              <FileName>SetI.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\SetMenus\SetI.c</FilePath>
+            </File>
+            <File>
+              <FileName>SetOutputMode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\SetMenus\SetOutputMode.c</FilePath>
+            </File>
+            <File>
+              <FileName>SetP.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\SetMenus\SetP.c</FilePath>
+            </File>
+            <File>
+              <FileName>SetRangeH.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\SetMenus\SetRangeH.c</FilePath>
+            </File>
+            <File>
+              <FileName>SetRangeL.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\SetMenus\SetRangeL.c</FilePath>
+            </File>
+            <File>
+              <FileName>SetValue.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\SetMenus\SetValue.c</FilePath>
+            </File>
+            <File>
+              <FileName>SetValveDirection.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\SetMenus\SetValveDirection.c</FilePath>
+            </File>
+            <File>
+              <FileName>CalibrationStartValue.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\CalibrationMenus\CalibrationStartValue.c</FilePath>
+            </File>
+            <File>
+              <FileName>CalibrationValueHigh.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\CalibrationMenus\CalibrationValueHigh.c</FilePath>
+            </File>
+            <File>
+              <FileName>CalibrationValueLow.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\function\src\menu\CalibrationMenus\CalibrationValueLow.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>data</GroupName>
+          <Files>
+            <File>
+              <FileName>Data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\data\src\Data.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>exlib</GroupName>
+          <Files>
+            <File>
+              <FileName>iir_stm32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\lib\src\iir_stm32.c</FilePath>
+            </File>
+            <File>
+              <FileName>PID_C_stm32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\lib\src\PID_C_stm32.c</FilePath>
             </File>
           </Files>
         </Group>

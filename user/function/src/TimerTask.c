@@ -329,4 +329,3 @@ void TmrCfg(uint8_t n, void (*fnct)(void *), void *arg, uint8_t min, uint8_t sec
 		TmrStart(n);
 	}
 }
-

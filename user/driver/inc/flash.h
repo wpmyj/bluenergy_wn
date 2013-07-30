@@ -37,7 +37,6 @@ typedef struct
   __IO uint32_t StartAddr;
   __IO uint32_t EndAddr;
   __IO uint32_t DataSize;
-  __IO uint32_t Offset;
   uint16_t Data[2048];
 } FlashDataInfoData_16;
 
@@ -47,6 +46,7 @@ typedef struct
 void EraseFlash_by_Page(FlashDataInfoData_16 *FlashOptionDataStruct);
 void ReadFlash_by_32Bit(FlashDataInfoData_32 *);
 void WriteFlash_by_32Bit(FlashDataInfoData_32 *);
-void ReadFlash_by_16Bit(FlashDataInfoData_16 *);
-void WriteFlash_by_16Bit(FlashDataInfoData_16 *);
+uint16_t ReadFlash_by_16Bit(uint32_t StartAddr);
+bool WriteFlash_by_16Bit(uint32_t StartAddr, uint16_t Data);
+void EraseFlash(uint32_t StartAddr, uint32_t EndAddr);
 
