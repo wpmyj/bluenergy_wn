@@ -17,7 +17,7 @@ void ModbusRecTimeoutTimerHanler(void)
 
 void ModbusRecTimeoutTimerInit(void)
 {
-	TmrCfg(USART_REC_TIMEOUT_TIMER, ModbusRecTimeoutTimerHanler, (void *)0, 0, 0, 1, FALSE, FALSE);
+	TmrCfg(USART_REC_TIMEOUT_TIMER, ModbusRecTimeoutTimerHanler, (void *)0, 0, 0, 10, FALSE, FALSE);
 }
 
 //从串口获取数据
@@ -28,7 +28,7 @@ bool RdCom(COM *pCOM,uint8_t *RBuf,uint8_t* NumOfDataRecv)
 		pCOM->RecOk = 0;
 		*NumOfDataRecv=0;
 		*NumOfDataRecv=pCOM->RecLen;
-		memcpy(RBuf,&com2.recBuf[0],pCOM->RecLen);
+		memcpy(RBuf,&com2.recBuf[0], pCOM->RecLen);
 		return TRUE;
 	}
 	else return FALSE;
@@ -84,7 +84,7 @@ bool getModbusPackage(uint8_t *pFncCode,			                    /*返回功能码*/
 						   uint16_t *pDataNum,
 						   uint8_t *pData)
 {
-	uint8_t rbuf[128];
+	static uint8_t rbuf[128];
 	uint8_t rlen;
 	if(RdCom(&com2, rbuf, &rlen) == TRUE)				                            /*从串口获取数据*/
 	{
@@ -103,7 +103,7 @@ bool getModbusPackage(uint8_t *pFncCode,			                    /*返回功能码*/
 				else
 				{
 					*pDataNum = j;
-					memcpy(pData, &rbuf[7], j * 2);
+					memcpy(pData, &rbuf[7], (j * 2));
 				}
 				//Modbus异常返回数据报处理
 				//...
@@ -121,8 +121,8 @@ void parseModbusPackage(void)
 	uint8_t fncCode;			                    /*返回功能码*/
 	uint16_t dataStartAddr;	                            /*返回数据地址*/
 	uint16_t dataNum;
-	uint8_t	trBuf[64];
-	uint8_t dataBuf[64];
+	static uint8_t	trBuf[128];
+	static uint8_t dataBuf[128];
 	
 	if(getModbusPackage(&fncCode, &dataStartAddr, &dataNum, dataBuf) == TRUE)
 	{
@@ -132,15 +132,15 @@ void parseModbusPackage(void)
 				trBuf[0] = (uint8_t)GetData(DA_ADDR);
 				trBuf[1] = fncCode;
 				trBuf[2] = dataNum * 2;	//bytes				
-				memcpy(&trBuf[3], &Data[dataStartAddr * 2], dataNum * 2);				
+				memcpy(&trBuf[3], &Data[dataStartAddr * 2], (dataNum * 2));				
 				TrPakChk(trBuf, 5 + dataNum * 2);
 
-				WrCom(&com2, trBuf, 5 + dataNum * 2);
+				WrCom(&com2, trBuf, 5 + (dataNum * 2));
 
 				break;
 			case WR_MULT_HOLD_REG:
 				//接收数据
-				memcpy(&Data[dataStartAddr * 2], &dataBuf[0], dataNum * 2);
+				memcpy(&Data[dataStartAddr * 2], &dataBuf[0], (dataNum * 2));
 				SaveDataToFlash();
 				//响应写多个寄存器
 				trBuf[0] = (uint8_t)GetData(DA_ADDR);

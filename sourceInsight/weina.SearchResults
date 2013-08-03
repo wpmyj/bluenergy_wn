@@ -1,50 +1,33 @@
----- deviceAddr Matches (12 in 5 files) ----
-Data.c (user\data\src):189
-	deviceAddr = 0x01;
+---- ModbusRecTimeoutTimerHanler Matches (7 in 4 files) ----
+Modbus.c (user\function\src):10
+void ModbusRecTimeoutTimerHanler(void)
+{	
+	com2.RecLen = com2.RecCnt;
+Modbus.c (user\function\src):20
+	TmrCfg(USART_REC_TIMEOUT_TIMER, ModbusRecTimeoutTimerHanler, (void *)0, 0, 0, 10, FALSE, FALSE);
 }
 
-Data.h (user\data\inc):155
-extern uint16_t deviceAddr;
+Modbus.h (user\function\inc):63
+void ModbusRecTimeoutTimerHanler(void);
+bool RdCom(COM *pCOM,uint8_t *RBuf,uint8_t* NumOfDataRecv);
+void WrCom(COM  *pCOM,uint8_t *WBuf,uint8_t NumOfDataTrans);
+Stm32f10x_it.c (user):206
+	  	TmrCfg(USART_REC_TIMEOUT_TIMER, ModbusRecTimeoutTimerHanler, (void *)0, 0, 0, 1, FALSE, TRUE);
+    }
+	// 串口发送
+Weina.htm (obj):10
+ModbusRecTimeoutTimerHanler &rArr; parseModbusPackage &rArr; getModbusPackage &rArr; RecPakChk &rArr; CRC16
+<P>
+<H3>
+Weina.htm (obj):87
+ <LI><a href="#[37]">ModbusRecTimeoutTimerHanler</a> from modbus.o(.text) referenced from stm32f10x_it.o(.text)
+ <LI><a href="#[98]">MoveToSetValueHighKeyOptFun</a> from calibrationzero.o(.text) referenced 2 times from menu.o(.constdata)
+ <LI><a href="#[9c]">MoveToSetValueLowKeyOptFun</a> from calibrationstartvalue.o(.text) referenced from menu.o(.constdata)
+Weina.htm (obj):1595
+<BR>[Called By]<UL><LI><a href="#[37]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ModbusRecTimeoutTimerHanler
+</UL>
 
-typedef struct Calibration {
-DeviceAddrInfo.c (user\...\infomenus):6
-uint16_t deviceAddr;
-
-void DisplayDeviceAddr(void)
-DeviceAddrInfo.c (user\...\infomenus):12
-	sprintf( buf, "%2d", deviceAddr);
-	DisplayOneLine16x16_with_params(4, 4, 4, "设备地址", FALSE);	
-	DisplayOne12x16(68, 4, ':', FALSE);
-Modbus.c (user\function\src):8
-extern uint16_t deviceAddr;
-extern uint8_t Data[];
-
-Modbus.c (user\function\src):92
-		if(rbuf[0] == (uint8_t)deviceAddr)							                    	/*校验设备地址*/
-		{
-			if(RecPakChk(rbuf,rlen) == TRUE)										/*CRC校验*/
-Modbus.c (user\function\src):133
-				trBuf[0] = deviceAddr;
-				trBuf[1] = fncCode;
-				trBuf[2] = dataNum * 2;	//bytes				
-Modbus.c (user\function\src):147
-				trBuf[0] = deviceAddr;
-				trBuf[1] = fncCode;
-				trBuf[2] = 0;	
-Modbus.c (user\function\src):168
-					trBuf[0] = deviceAddr;
-					trBuf[1] = fncCode;
-					trBuf[2] = 0;	
-SetDeviceAddr.c (user\...\setmenus):17
-	value[0] = (deviceAddr / 10) + 48;
-	value[1] = (deviceAddr % 10) + 48;
-	
-	DisplayOneLine16x16_with_params(4, 0, 2, "当前", FALSE);
-SetDeviceAddr.c (user\...\setmenus):47
-				newSetDeviceAddrValue = deviceAddr;
-				ChangeDisplayMode(SetDeviceAddr);
-				MoveToNextMenu();				
-SetDeviceAddr.c (user\...\setmenus):60
-	deviceAddr = newSetDeviceAddrValue;
-}
-
+<P><STRONG><a name="[37]"></a>ModbusRecTimeoutTimerHanler</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, modbus.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 852<LI>Call Chain = ModbusRecTimeoutTimerHanler &rArr; parseModbusPackage &rArr; getModbusPackage &rArr; RecPakChk &rArr; CRC16
+</UL>
+<BR>[Calls]<UL><LI><a href="#[141]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parseModbusPackage

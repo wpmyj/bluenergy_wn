@@ -7,7 +7,7 @@ uint16_t Convert_ADC_ValueToMeter(uint16_t raw)
 {
 	long tmp;
 	tmp = (long)raw * 3300;
-	return (uint16_t)(tmp / 4095);	
+	return (uint16_t)(tmp / 4095);
 }
 
 uint16_t Convert_ADC_ValueToVolage(uint16_t raw)
@@ -17,11 +17,23 @@ uint16_t Convert_ADC_ValueToVolage(uint16_t raw)
 	return (uint16_t)(tmp / 4095);	
 }
 
-uint16_t Convert_PID_OutputToRaw(uint16_t in)
+uint16_t Convert_MV_To_DAC_Raw(uint16_t in)
 {
 	long tmp;
-	tmp = (long)in * 4095;
-	return (uint16_t)(tmp / 100);
+	//回采adc参考电压, 通过参考电压修正当前adc值
+	if(in >= 0 && in <= 100)
+	{
+		if(GetData(AOFR_ADDR) == 1)
+		{
+			in = 100 - in;	
+		}
+		tmp = (long)in * 2979;		
+		return (uint16_t)(tmp / 100) + 750;
+	} else 
+	{
+		return (GetData(AOFR_ADDR) == 0) ? 0 : 3724;
+	}
+	
 }
 
 uint16_t Convert_DAC_RawToCurrent(uint16_t raw)
@@ -31,36 +43,37 @@ uint16_t Convert_DAC_RawToCurrent(uint16_t raw)
 	return (uint16_t)(tmp / 4095);
 }
 
-uint16_t Convert_MV_To_DAC_Raw(uint16_t mv)
-{
-	long tmp;
-	tmp = (long)mv * 4095;
-	return (uint16_t)(tmp / 100);
-}
-
-uint16_t GetCurrentEngineValue(void)
+uint16_t GetCurrentEngineValue(uint16_t curRaw)
 {
 	float k, k1, k2, b ,y;
+	CalibrationSensor.curRaw = curRaw;
 
-	CalibrationSensor.curRaw = GetVINAdcValue();
+	if((CalibrationSensor.curRaw >= CalibrationSensor.zeroRaw)
+		&& (CalibrationSensor.refRaw > CalibrationSensor.zeroRaw)
+		&& (CalibrationSensor.refEngine > CalibrationSensor.mountingHight))
+	{				
+		k1 = (float)(CalibrationSensor.curRaw - CalibrationSensor.zeroRaw);
+		k2 = (float)(CalibrationSensor.refRaw - CalibrationSensor.zeroRaw);
+		k = k1 / k2;
+		b = (float)CalibrationSensor.mountingHight;
+		
+		y = k * (CalibrationSensor.refEngine - CalibrationSensor.mountingHight) + b;
+
+		CalibrationSensor.curEngine = (uint16_t)y;
+		return CalibrationSensor.curEngine;
+	}
+	else
+	{
+		return GetData(RH_ADDR);
+	}
 	
-	k1 = (float)(CalibrationSensor.curRaw - CalibrationSensor.zeroRaw);
-	k2 = (float)(CalibrationSensor.refRaw - CalibrationSensor.zeroRaw);
-	k = k1 / k2;
-	b = (float)CalibrationSensor.mountingHight;
-	
-	y = k * (CalibrationSensor.refEngine - CalibrationSensor.mountingHight) + b;
-
-	CalibrationSensor.curEngine = (uint16_t)y;
-
-	return CalibrationSensor.curEngine;
 }
 
 /* 电流输出为4~20mA */
 void CurrentOutput(uint16_t mv)
 {
 	uint16_t dacOutput, currentOutput;
-	dacOutput = Convert_PID_OutputToRaw(mv);
+	dacOutput = Convert_MV_To_DAC_Raw(mv);
 	currentOutput = Convert_DAC_RawToCurrent(dacOutput);
 	UpdateData(CO_ADDR, currentOutput, FALSE);
 	DacOutput(dacOutput);
@@ -72,6 +85,10 @@ uint16_t PID_Calc(uint16_t In, uint16_t Ref, uint16_t *Coeff)
 	if(In > Ref)
 	{
 		mv = 0;
+	}
+	else if(Ref - In > 3000)
+	{
+		mv = 100;
 	}
 	else
 	{
@@ -93,11 +110,11 @@ uint16_t PID_Calc(uint16_t In, uint16_t Ref, uint16_t *Coeff)
 void RegulatingValveControl(void)
 {
 	uint16_t adcVolageIn = Convert_ADC_ValueToVolage(GetVINAdcValue());
-	uint16_t currentValue = GetCurrentEngineValue();
+	uint16_t currentValue = GetCurrentEngineValue(GetVINAdcValue());
 	uint16_t setValue = GetData(SV_ADDR);
 	uint16_t Coeff[3];
 	uint16_t mv;
-
+	/* PID 数据有效性判断与出错处理 */
 	Coeff[P] = GetData(P_ADDR);
 	Coeff[I] = GetData(I_ADDR);
 	Coeff[D] = GetData(D_ADDR);
@@ -106,18 +123,20 @@ void RegulatingValveControl(void)
 	
 	mv = PID_Calc(currentValue, setValue, Coeff);		
 	UpdateData(MV_ADDR, mv, FALSE);
-	CurrentOutput(mv);
+	CurrentOutput(mv);//闭环检测，修正
 }
 
 void DO_ThresholdControl(void)
 {
 	
-	uint16_t currentValue = GetCurrentEngineValue();
+	uint16_t currentValue = GetCurrentEngineValue(GetVINAdcValue());
 	uint16_t maxValue, minValue;
 
 	maxValue = GetData(SVH_ADDR);
 	minValue = GetData(SVL_ADDR);
-
+	/*[MODIFY] 加越界保护, 数据合法性检查max < alarm high
+	  min > alarm low
+	*/
 	if(currentValue > maxValue)
 	{
 		UpdateData(RS_ADDR, CLOSE, FALSE);

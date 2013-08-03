@@ -96,7 +96,7 @@ void DevicesInit()
 {
 	LcdInit();
 	CleanScreen();
-	GPIO_ResetBits(GPIOA, GPIO_Pin_12);
+	GPIO_ResetBits(GPIOA, GPIO_Pin_12); //GPIO
 	RS485_RW_Select(RS485_READ);
 	uDelay(1);
 }

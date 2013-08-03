@@ -481,7 +481,7 @@ void MenuInit(void)
 
 void MainWindowRefreshTimer(void)
 {
-	uint16_t currentValue = GetCurrentEngineValue();
+	uint16_t currentValue = GetCurrentEngineValue(GetVINAdcValue());
 
 	UpdateData(PV_ADDR, currentValue, FALSE);
 

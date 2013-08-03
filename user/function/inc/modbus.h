@@ -46,14 +46,14 @@ uint16_t const wCRCTable[] = {
 typedef struct
 {	
 
-	uint8_t trBuf[64];
+	uint8_t trBuf[256];
 	uint8_t  RecCnt;
 	uint8_t  RecLen;
 	uint8_t  RecFstFlg;
 	uint16_t RecTimeOutCnt;
 	bool   RecOk;
 	
-	uint8_t recBuf[64];
+	uint8_t recBuf[256];
 	uint8_t  TrCnt;
 	uint8_t  TrLen;
 	bool   TrOk;
