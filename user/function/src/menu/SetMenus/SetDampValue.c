@@ -15,12 +15,12 @@ void SetDampValue(void)
 	DisplayOneLine16x16_with_params(4, 0, 2, "当前", FALSE); 
 	DisplayOne12x16(40, 0, ((GetData(DAMP_ADDR) / 10) % 10) + 48, FALSE);
 	DisplayOne12x16(64, 0, (GetData(DAMP_ADDR) % 10) + 48, FALSE);
-	DisplayOneLine12x16_with_params(100, 0, 1, "S", FALSE);
+	DisplayOneLine12x16_with_params(100, 0, 1, "s", FALSE);
 	
 	DisplayOneLine16x16_with_params(4, 3, 2, "设定", FALSE);
 	DisplayValueAndSimbol(40, 3, ((newDampValue / 10) % 10) + 48, 123);
 	DisplayValueAndSimbol(64, 3, (newDampValue % 10) + 48, 124);
-	DisplayOneLine12x16_with_params(100, 3, 1, "S", FALSE);
+	DisplayOneLine12x16_with_params(100, 3, 1, "s", FALSE);
 
 	DisplayOneLine16x16_with_params(4, 6, 2, "保存", (currentMenu == 125) ? TRUE : FALSE);
 	DisplayOneLine16x16_with_params(99, 6, 2, "返回", (currentMenu == 126) ? TRUE : FALSE);

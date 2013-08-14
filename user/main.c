@@ -108,7 +108,7 @@ void DevicesInit()
   */
 int main(void)
 {
-	SystemResourcesInit(RCC_INIT 
+	SystemResourcesInit(RCC_INIT
                         | FLASH_INIT
                       	| USART_INIT
                         | GPIO_INIT
@@ -119,9 +119,9 @@ int main(void)
                         | ADC_INIT);
 	
 	DevicesInit();
-	SystemParamsInit();    
+	SystemParamsInit();
 	TmrTasksInit();
-	MenuInit();	
+	MenuInit();
     while(1)
     {    	
 		TmrTask(0);

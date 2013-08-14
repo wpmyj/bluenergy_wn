@@ -13,7 +13,7 @@ void DisplayVolageInputInfo(void)
 	sprintf( buf, "%4.3f", currentVolage);
 
 	DisplayOneLine12x16_with_params(4, 3, 5, buf, FALSE);
-	DisplayOneLine12x16_with_params(64, 3, 1, "V", FALSE);
+	DisplayOneLine12x16_with_params(64, 3, 1, "v", FALSE);
 	
 }
 

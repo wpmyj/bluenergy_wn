@@ -16,7 +16,7 @@ void DisplayCalibrationStartValue(void)
 	char value[5], preValue[5];
 	
 		sprintf( preValue, "%4.3f", ((float)newStartValue) / 1000);
-		sprintf( value, "%4.3f", ((float)CalibrationSensor.mountingHight) / 1000);
+		sprintf( value, "%4.3f", ((float)GetData(MH_ADDR)) / 1000);
 		
 		DisplayOneLine16x16_with_params(4, 0, 4, "安装高度", FALSE); 
 		DisplayOneLine12x16_with_params(70, 0, 5, value, FALSE);
@@ -27,7 +27,7 @@ void DisplayCalibrationStartValue(void)
 		DisplayValueAndSimbol(64, 3, preValue[2], 148);
 		DisplayValueAndSimbol(76, 3, preValue[3], 149);
 		DisplayValueAndSimbol(88, 3, preValue[4], 150);
-		DisplayOneLine12x16_with_params(100, 3, 1, "M", FALSE);
+		DisplayOneLine12x16_with_params(100, 3, 1, "m", FALSE);
 	
 		DisplayOneLine16x16_with_params(4, 6, 2, "保存", (currentMenu == 151) ? TRUE : FALSE);
 		DisplayOneLine16x16_with_params(83, 6, 3, "下一步", (currentMenu == 152) ? TRUE : FALSE);	
@@ -48,7 +48,7 @@ void DisplayCalibrationStartValueKeyOptFun(uint8_t key)
 				break;
 			case ENTER:
 				MenuTimeoutTimerStop();
-				newStartValue = CalibrationSensor.mountingHight;
+				newStartValue = GetData(MH_ADDR);
 				displayModel = DisplayCalibrationStartValue;
 				MoveToNextMenu();				
 				break;
@@ -102,7 +102,6 @@ void ChangeStartValuekeyOptFun(uint8_t key)
 void SaveStartValue(void)
 {
 	UpdateData(MH_ADDR, newStartValue, TRUE);
-	CalibrationSensor.mountingHight = newStartValue;
 }
 
 void SaveStartValueKeyOptFun(uint8_t key)

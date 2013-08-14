@@ -28,7 +28,7 @@ void DisplayCalibrationValueLow(void)
 		DisplayValueAndSimbol(64, 3, preValue[2], 154);
 		DisplayValueAndSimbol(76, 3, preValue[3], 155);
 		DisplayValueAndSimbol(88, 3, preValue[4], 156);
-		DisplayOneLine12x16_with_params(100, 3, 1, "M", FALSE);
+		DisplayOneLine12x16_with_params(100, 3, 1, "m", FALSE);
 	
 		DisplayOneLine16x16_with_params(4, 6, 2, "保存", (currentMenu == 157) ? TRUE : FALSE);
 		DisplayOneLine16x16_with_params(83, 6, 3, "下一步", (currentMenu == 158) ? TRUE : FALSE);	

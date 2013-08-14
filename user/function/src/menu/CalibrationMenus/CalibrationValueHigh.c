@@ -16,7 +16,7 @@ void DisplayCalibrationValueHigh(void)
 	char value[5], preValue[5];
 	
 		sprintf( preValue, "%4.3f", ((float)newValueHigh) / 1000);
-		sprintf( value, "%4.3f", ((float)CalibrationSensor.refEngine) / 1000);
+		sprintf( value, "%4.3f", ((float)GetData(RE_ADDR)) / 1000);
 		
 		DisplayOneLine16x16_with_params(4, 0, 7, "请输入当前液位", FALSE); 		
 		
@@ -26,7 +26,7 @@ void DisplayCalibrationValueHigh(void)
 		DisplayValueAndSimbol(64, 3, preValue[2], 160);
 		DisplayValueAndSimbol(76, 3, preValue[3], 161);
 		DisplayValueAndSimbol(88, 3, preValue[4], 162);
-		DisplayOneLine12x16_with_params(100, 3, 1, "M", FALSE);
+		DisplayOneLine12x16_with_params(100, 3, 1, "m", FALSE);
 	
 		DisplayOneLine16x16_with_params(4, 6, 2, "保存", (currentMenu == 163) ? TRUE : FALSE);
 		DisplayOneLine16x16_with_params(99, 6, 2, "返回", (currentMenu == 164) ? TRUE : FALSE);	
@@ -46,7 +46,7 @@ void DisplayCalibrationValueHighKeyOptFun(uint8_t key)
 				MoveToRightMenu();
 				break;
 			case ENTER:
-				newValueHigh = CalibrationSensor.refEngine;
+				newValueHigh = GetData(RE_ADDR);
 				displayModel = DisplayCalibrationValueHigh;
 				MoveToNextMenu();				
 				break;
@@ -102,10 +102,8 @@ void SaveValueHigh(void)
 	uint16_t currentADC_Value = GetVINAdcValue();
 	
 	UpdateData(RE_ADDR, newValueHigh, TRUE);
-	CalibrationSensor.refEngine = newValueHigh;
 
 	UpdateData(RR_ADDR, currentADC_Value, TRUE);
-	CalibrationSensor.refRaw= currentADC_Value;
 }
 
 void SaveValueHighKeyOptFun(uint8_t key)

@@ -29,7 +29,7 @@ void SetValue(void)
 	
 	DisplayOneLine16x16_with_params(4, 0, 2, "当前", FALSE); 
 	DisplayOneLine12x16_with_params(40, 0, 5, value, FALSE);
-	DisplayOneLine12x16_with_params(100, 0, 1, "M", FALSE);
+	DisplayOneLine12x16_with_params(100, 0, 1, "m", FALSE);
 	
 	DisplayOneLine16x16_with_params(4, 3, 2, "设定", FALSE);
 	DisplayValueAndSimbol(40, 3, preValue[0], 44);
@@ -37,7 +37,7 @@ void SetValue(void)
 	DisplayValueAndSimbol(64, 3, preValue[2], 45);
 	DisplayValueAndSimbol(76, 3, preValue[3], 46);
 	DisplayValueAndSimbol(88, 3, preValue[4], 47);
-	DisplayOneLine12x16_with_params(100, 3, 1, "M", FALSE);
+	DisplayOneLine12x16_with_params(100, 3, 1, "m", FALSE);
 
 	DisplayOneLine16x16_with_params(4, 6, 2, "保存", (currentMenu == 48) ? TRUE : FALSE);
 	DisplayOneLine16x16_with_params(99, 6, 2, "返回", (currentMenu == 49) ? TRUE : FALSE);

@@ -1,8 +1,6 @@
 #include "Include.h"
 #include "Control.h"
 
-Calibration CalibrationSensor;
-
 uint16_t Convert_ADC_ValueToMeter(uint16_t raw)
 {
 	long tmp;
@@ -46,21 +44,28 @@ uint16_t Convert_DAC_RawToCurrent(uint16_t raw)
 uint16_t GetCurrentEngineValue(uint16_t curRaw)
 {
 	float k, k1, k2, b ,y;
-	CalibrationSensor.curRaw = curRaw;
+	float refRaw = GetData(RR_ADDR),
+		  zeroRaw = GetData(ZR_ADDR), 
+		  mountingHight = GetData(MH_ADDR),
+		  refEngine = GetData(RE_ADDR); 
 
-	if((CalibrationSensor.curRaw >= CalibrationSensor.zeroRaw)
-		&& (CalibrationSensor.refRaw > CalibrationSensor.zeroRaw)
-		&& (CalibrationSensor.refEngine > CalibrationSensor.mountingHight))
+	
+	
+	if(curRaw <= zeroRaw)
+	{
+		return GetData(RL_ADDR);
+	}
+	else if((refRaw > zeroRaw)
+		&& (refEngine > mountingHight))
 	{				
-		k1 = (float)(CalibrationSensor.curRaw - CalibrationSensor.zeroRaw);
-		k2 = (float)(CalibrationSensor.refRaw - CalibrationSensor.zeroRaw);
+		k1 = curRaw - zeroRaw;
+		k2 = refRaw - zeroRaw;
 		k = k1 / k2;
-		b = (float)CalibrationSensor.mountingHight;
+		b = mountingHight;
 		
-		y = k * (CalibrationSensor.refEngine - CalibrationSensor.mountingHight) + b;
-
-		CalibrationSensor.curEngine = (uint16_t)y;
-		return CalibrationSensor.curEngine;
+		y = k * (refEngine -  mountingHight) + b;
+		
+		return (uint16_t)y;
 	}
 	else
 	{
@@ -193,6 +198,8 @@ void AutoControlHandler(void)
 
 void AutoControlTimerInit(void)
 {
-	TmrCfg(AUTO_CONTROL_TIMER, AutoControlHandler, (void *)0, 0, 5, 0, TRUE, TRUE);
+	uint8_t timeout = (uint8_t) GetData(ST_ADDR);
+	
+	TmrCfg(AUTO_CONTROL_TIMER, AutoControlHandler, (void *)0, 0, timeout, 0, TRUE, TRUE);
 }
 

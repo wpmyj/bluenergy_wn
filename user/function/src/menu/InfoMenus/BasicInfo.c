@@ -9,10 +9,10 @@ void GetInfoFromData(uint8_t baseAddr, uint8_t info[], uint8_t *length)
 {
 	uint8_t officeSet = 0;
 
-	while(((Data[baseAddr + officeSet] != 0x00) || (Data[baseAddr + officeSet + 1] != 0x00)) && (officeSet < 16))
+	while(((Data[baseAddr * 2 + officeSet] != 0x00) || (Data[baseAddr * 2 + officeSet + 1] != 0x00)) && (officeSet < 16))
 	{
-		info[officeSet] = Data[baseAddr + officeSet];
-		info[officeSet + 1] = Data[baseAddr + officeSet + 1];
+		info[officeSet] = Data[baseAddr * 2 + officeSet];
+		info[officeSet + 1] = Data[baseAddr * 2 + officeSet + 1];
 		officeSet += 2;
 		(*length)++;
 	}
@@ -24,8 +24,8 @@ void GetDateFromData(uint8_t baseAddr, uint8_t info[])
 
 	for(i = 0; i < 2; i++)
 	{
-		info[2 * i] = ((Data[baseAddr + i] >> 4) & 0x0f) + 48;
-		info[2 * i + 1] = (Data[baseAddr + i] & 0x0f) + 48;
+		info[2 * i] = ((Data[baseAddr * 2 + i] >> 4) & 0x0f) + 48;
+		info[2 * i + 1] = (Data[baseAddr * 2 + i] & 0x0f) + 48;
 	}
 }
 

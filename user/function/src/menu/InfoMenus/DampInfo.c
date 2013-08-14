@@ -20,7 +20,7 @@ void DisplayDampInfo(void)
 
 	DisplayOneLine12x16_with_params(50, 2, 2, buf, FALSE);	
 
-	DisplayOne12x16(74, 2, 'S', FALSE);
+	DisplayOne12x16(74, 2, 's', FALSE);
 }
 
 void DisplayDampInfoKeyOptFun(uint8_t key)

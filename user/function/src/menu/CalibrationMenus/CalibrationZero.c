@@ -47,7 +47,6 @@ void SaveCalibrationZero(void)
 	uint16_t currentADC_Value = GetVINAdcValue();
 	
 	UpdateData(ZR_ADDR, currentADC_Value, TRUE);
-	CalibrationSensor.zeroRaw = currentADC_Value;
 }
 
 void SaveCalibrationZeroKeyOptFun(uint8_t key)

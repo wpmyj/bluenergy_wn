@@ -15,7 +15,7 @@ void DisplaySetValue(void)
 	sprintf( buf, "%4.3f", current);
 	DisplayOneLine12x16_with_params(4, 3, 3, "SV:", FALSE);
 	DisplayOneLine12x16_with_params(42, 3, 5, buf, FALSE);
-	DisplayOneLine12x16_with_params(105, 3, 1, "M", FALSE);
+	DisplayOneLine12x16_with_params(105, 3, 1, "m", FALSE);
 	
 }
 

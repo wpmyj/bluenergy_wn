@@ -5,6 +5,7 @@
 #include "Stm32f10x_dac.h"
 #include "Stm32f10x_adc.h"
 #include "Stm32f10x_exti.h"
+#include "Stm32f10x_dma.h"
 
 #include "stdio.h"
 

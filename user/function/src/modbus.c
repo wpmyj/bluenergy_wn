@@ -17,7 +17,9 @@ void ModbusRecTimeoutTimerHanler(void)
 
 void ModbusRecTimeoutTimerInit(void)
 {
-	TmrCfg(USART_REC_TIMEOUT_TIMER, ModbusRecTimeoutTimerHanler, (void *)0, 0, 0, 10, FALSE, FALSE);
+	uint16_t timeout = (uint8_t)GetData(MT_ADDR);
+	
+	TmrCfg(USART_REC_TIMEOUT_TIMER, ModbusRecTimeoutTimerHanler, (void *)0, 0, 0, timeout, FALSE, FALSE);
 }
 
 //从串口获取数据
@@ -84,7 +86,7 @@ bool getModbusPackage(uint8_t *pFncCode,			                    /*返回功能码*/
 						   uint16_t *pDataNum,
 						   uint8_t *pData)
 {
-	static uint8_t rbuf[128];
+	static uint8_t rbuf[MODBUS_DATA_SIZE];
 	uint8_t rlen;
 	if(RdCom(&com2, rbuf, &rlen) == TRUE)				                            /*从串口获取数据*/
 	{
@@ -121,8 +123,8 @@ void parseModbusPackage(void)
 	uint8_t fncCode;			                    /*返回功能码*/
 	uint16_t dataStartAddr;	                            /*返回数据地址*/
 	uint16_t dataNum;
-	static uint8_t	trBuf[128];
-	static uint8_t dataBuf[128];
+	static uint8_t	trBuf[MODBUS_DATA_SIZE];
+	static uint8_t dataBuf[MODBUS_DATA_SIZE];
 	
 	if(getModbusPackage(&fncCode, &dataStartAddr, &dataNum, dataBuf) == TRUE)
 	{
@@ -131,8 +133,8 @@ void parseModbusPackage(void)
 			case RD_HOLD_REG:
 				trBuf[0] = (uint8_t)GetData(DA_ADDR);
 				trBuf[1] = fncCode;
-				trBuf[2] = dataNum * 2;	//bytes				
-				memcpy(&trBuf[3], &Data[dataStartAddr * 2], (dataNum * 2));				
+				trBuf[2] = dataNum * 2;	//bytes
+				memcpy(&trBuf[3], &Data[dataStartAddr * 2], (dataNum * 2));
 				TrPakChk(trBuf, 5 + dataNum * 2);
 
 				WrCom(&com2, trBuf, 5 + (dataNum * 2));
@@ -150,7 +152,7 @@ void parseModbusPackage(void)
 				trBuf[4] = 0;	
 				trBuf[5] = dataNum;	//bytes						
 				TrPakChk(trBuf, 8);
-
+				AutoControlTimerInit();
 				WrCom(&com2, trBuf, 8);
 				break;
 			case WR_SINGAL_COIL:

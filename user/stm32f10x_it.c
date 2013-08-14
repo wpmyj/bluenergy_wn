@@ -203,7 +203,7 @@ void USART2_IRQHandler(void)                                        //´®¿Ú1ÖÐ¶Ï´
 	  	com2.recBuf[com2.RecCnt++] = USART_ReceiveData(USART2);
 	  	//com2.RecTimeOutCnt = 0;					/*Çå³¬Ê±¼ÆÊýÆ÷*/
 	  	//com2.RecFstFlg = 1;						/*½ÓÊÕµ½ÆðÊ¼×Ö·ûÊ±£¬¿ªÊ¼¼ÆÊý³¬Ê±Ê±¼ä*/
-	  	TmrCfg(USART_REC_TIMEOUT_TIMER, ModbusRecTimeoutTimerHanler, (void *)0, 0, 0, 10, FALSE, TRUE);
+	  	TmrCfg(USART_REC_TIMEOUT_TIMER, ModbusRecTimeoutTimerHanler, (void *)0, 0, 0, (uint8_t)GetData(MT_ADDR), FALSE, TRUE);
     }
 	// ´®¿Ú·¢ËÍ
     if(USART_GetITStatus(USART2, USART_IT_TXE) != RESET)

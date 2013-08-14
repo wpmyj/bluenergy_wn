@@ -1,33 +1,29 @@
----- ModbusRecTimeoutTimerHanler Matches (7 in 4 files) ----
-Modbus.c (user\function\src):10
-void ModbusRecTimeoutTimerHanler(void)
-{	
-	com2.RecLen = com2.RecCnt;
-Modbus.c (user\function\src):20
-	TmrCfg(USART_REC_TIMEOUT_TIMER, ModbusRecTimeoutTimerHanler, (void *)0, 0, 0, 10, FALSE, FALSE);
+---- AutoControlTimerInit Matches (7 in 4 files) ----
+Control.c (user\function\src):199
+void AutoControlTimerInit(void)
+{
+	uint8_t timeout = (uint8_t) GetData(ST_ADDR);
+Control.h (user\function\inc):10
+void AutoControlTimerInit(void);
+
+Main.c (user):75
+	AutoControlTimerInit();
 }
 
-Modbus.h (user\function\inc):63
-void ModbusRecTimeoutTimerHanler(void);
-bool RdCom(COM *pCOM,uint8_t *RBuf,uint8_t* NumOfDataRecv);
-void WrCom(COM  *pCOM,uint8_t *WBuf,uint8_t NumOfDataTrans);
-Stm32f10x_it.c (user):206
-	  	TmrCfg(USART_REC_TIMEOUT_TIMER, ModbusRecTimeoutTimerHanler, (void *)0, 0, 0, 1, FALSE, TRUE);
-    }
-	// ´®¿Ú·¢ËÍ
-Weina.htm (obj):10
-ModbusRecTimeoutTimerHanler &rArr; parseModbusPackage &rArr; getModbusPackage &rArr; RecPakChk &rArr; CRC16
-<P>
-<H3>
-Weina.htm (obj):87
- <LI><a href="#[37]">ModbusRecTimeoutTimerHanler</a> from modbus.o(.text) referenced from stm32f10x_it.o(.text)
- <LI><a href="#[98]">MoveToSetValueHighKeyOptFun</a> from calibrationzero.o(.text) referenced 2 times from menu.o(.constdata)
- <LI><a href="#[9c]">MoveToSetValueLowKeyOptFun</a> from calibrationstartvalue.o(.text) referenced from menu.o(.constdata)
-Weina.htm (obj):1595
-<BR>[Called By]<UL><LI><a href="#[37]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ModbusRecTimeoutTimerHanler
+Weina.htm (obj):1352
+<LI><a href="#[11d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AutoControlTimerInit
+</UL>
+<BR>[Called By]<UL><LI><a href="#[35]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+Weina.htm (obj):1541
+<LI><a href="#[11d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AutoControlTimerInit
 </UL>
 
-<P><STRONG><a name="[37]"></a>ModbusRecTimeoutTimerHanler</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, modbus.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 852<LI>Call Chain = ModbusRecTimeoutTimerHanler &rArr; parseModbusPackage &rArr; getModbusPackage &rArr; RecPakChk &rArr; CRC16
+Weina.htm (obj):1731
+<P><STRONG><a name="[11d]"></a>AutoControlTimerInit</STRONG> (Thumb, 36 bytes, Stack size 24 bytes, control.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = AutoControlTimerInit &rArr; TmrCfg &rArr; TmrSetMST
 </UL>
-<BR>[Calls]<UL><LI><a href="#[141]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;parseModbusPackage
+<BR>[Calls]<UL><LI><a href="#[134]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TmrCfg
+Weina.htm (obj):3637
+<LI><a href="#[11d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AutoControlTimerInit
+<LI><a href="#[1a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DisplayCalibrationStartValue
+<LI><a href="#[1a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetValveDirection

@@ -8,9 +8,11 @@ extern __IO uint32_t DataStartAddr = FLASH_DATA_ADDR;
 
 uint16_t GetData(uint16_t type)
 {
+	uint8_t typeAddr = type * 2;
+	
 	uint16_t returnVal;
-	returnVal = Data[type];
-	returnVal = (returnVal << 8) + Data[type + 1];
+	returnVal = Data[typeAddr];
+	returnVal = (returnVal << 8) + Data[typeAddr + 1];
 	
 	return returnVal;
 }
@@ -51,8 +53,10 @@ void SaveDataToFlash(void)
 
 void UpdateData(uint8_t type, uint16_t val, bool writeToFlash)
 {
-	Data[type] = (uint8_t)((val & 0xff00) >> 8);
-	Data[type + 1] = (uint8_t)(val & 0xff);
+	uint8_t typeAddr = type * 2;
+		
+	Data[typeAddr] = (uint8_t)((val & 0xff00) >> 8);
+	Data[typeAddr + 1] = (uint8_t)(val & 0xff);
 
 	if(writeToFlash == TRUE)
 	{
@@ -68,14 +72,6 @@ uint16_t GetRelayStatus(void)
 void SetRelay(int16_t status)
 {
 	UpdateData(RS_ADDR, status, FALSE);
-}
-
-void InitCalibrationValue(void)
-{				
-	CalibrationSensor.mountingHight = GetData(MH_ADDR);
-	CalibrationSensor.zeroRaw = GetData(ZR_ADDR);
-	CalibrationSensor.refEngine= GetData(RE_ADDR);
-	CalibrationSensor.refRaw = GetData(RR_ADDR);
 }
 
 bool NeedToWriteDefaultValueToFlash(void)
@@ -117,57 +113,65 @@ void WriteDefaultValueToFlash(void)
 {
 	uint8_t i = 0;
 	uint16_t vender[9], product[9];
-	uint16_t defaultData[] = {
-		0,	//输出控制模式（0-AO，1-DO）	
-		0,		//自动/手动模式（0-自动，1-手动）
-		8000,	//量程上限（8m）
-		0,	//量程上限（0m）
-		7000,	//告警上限7000	
-		1000,	//告警上限1000	
-		7800,//告警上上限7800
-		500,	//告警下下限500
-		5000,	//设定液位5000
-		0,	//当前液位
-
-		0,	//AO输出正反向控制（0-正向，1-反向）
-  		1,	//阻尼系数，此处表示数字滤波时间常数（0～32s）
- 		100,	//PID输出值（阀门开度：0～100%）
-		10,	//比例增益:1~10
-		0,		//积分时间
-		0,		//微分时间
-		0,	//控制器电流信号输出
-		0,	//传感器电压信号输入
-		24,	//24V供电输入 mV
-		6000,	//设定液位上限（DO使用）
-		4000,	//设定液位下限（DO使用）
-		0,	//继电器状态（0-关，1-开）
-		0,	//液位初始高度（传感器安装高度）
-		310,	//零点原始值
-		4033,	//参考点原始值
-		8000,	//参考点工程值mm
-		1	//设备地址
-	};	
+	uint16_t rangeData[] = {
+		0,	//输出控制模式（0-AO，1-DO）						--0--
+		0,		//自动/手动模式（0-自动，1-手动）			--1--
+		8000,	//量程上限（8m）								--2--
+		0,	//量程上限（0m）									--3--
+		7000,	//告警上限7000									--4--
+		1000,	//告警上限1000									--5--
+		7800,//告警上上限7800									--6--
+		500,	//告警下下限500									--7--
+		5000,	//设定液位5000									--8--
+		0,	//当前液位											--9--
+	};
 	
-	for(i = 0; i < 10; i++)
+	uint16_t paramsData[] = {
+		0,	//AO输出正反向控制（0-正向，1-反向）					--20--
+  		1,	//阻尼系数，此处表示数字滤波时间常数（0～32s）	--21--
+ 		100,	//PID输出值（阀门开度：0～100%）					--22--
+		10,	//比例增益:1~10												--23--
+		0,		//积分时间												--24--
+		0,		//微分时间												--25--
+		0,	//控制器电流信号输出										--26--
+		0,	//传感器电压信号输入										--27--
+		24,	//24V供电输入 mV												--28--
+		6000,	//设定液位上限（DO使用）							--29--
+		4000,	//设定液位下限（DO使用）							--30--
+		0,	//继电器状态（0-关，1-开）								--31--
+		1,	//设备地址													--32--
+		0,	//液位初始高度（传感器安装高度）					--33--
+		310,	//零点原始值											--34--
+		4033,	//参考点原始值											--35--
+		8000,	//参考点工程值mm										--36--
+		1,		//自动控制 调度周期									--37--													
+		3000,	//PID粗调液位高度差									--38--
+		0,		//Error Code													--39--
+		10		//Modbus timeout time 											--40--
+	};
+
+	//Init default range data
+	for(i = 0; i < 20; i++)
 	{
-		UpdateData(OCM_ADDR + i * 2, defaultData[i], FALSE);
+		UpdateData(OCM_ADDR + i, rangeData[i], FALSE);
 	}
 
-	for(i = 10; i < 27; i++)
+	//init default params data
+	for(i = 0; i < 21; i++)
 	{
-		UpdateData(AOFR_ADDR + (i - 10) * 2, defaultData[i], FALSE);
+		UpdateData(AOFR_ADDR + i, paramsData[i], FALSE);
 	}
 
 	ConvertStringToWordArray("西安维纳", vender);
 	for(i = 0; i < 9; i++)
 	{
-		UpdateData(VENDOR0_ADDR + i * 2, vender[i], FALSE);
+		UpdateData(VENDOR0_ADDR + i, vender[i], FALSE);
 	}
 
 	ConvertAsciiToWordArray("ABC-0123", product);
 	for(i = 0; i < 9; i++)
 	{
-		UpdateData(PRODUCT0_ADDR + i * 2, product[i], FALSE);
+		UpdateData(PRODUCT0_ADDR + i, product[i], FALSE);
 	}
 
 	UpdateData(R_YEAR_ADDR, 0x2013, FALSE);
@@ -186,6 +190,5 @@ void SystemParamsInit(void)
 		WriteDefaultValueToFlash();
 	}
 	LoadDataFromFlash();
-	InitCalibrationValue();
 }
 

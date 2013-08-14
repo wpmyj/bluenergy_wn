@@ -8,8 +8,8 @@ extern void (*displayModel)(uint8_t);
 uint16_t Convert_ADC_ValueTo_24V_Volage(uint16_t raw)
 {
 	long tmp;
-	tmp = (long)raw * 24000;
-	return (uint16_t)(tmp / 4095);	
+	tmp = (long)raw * 3300 * 11 / 4095;
+	return (uint16_t)tmp;	
 }
 
 void DisplayPowerVolageInfo(void)
@@ -21,7 +21,7 @@ void DisplayPowerVolageInfo(void)
 	sprintf( buf, "%4.3f", currentVolage);
 
 	DisplayOneLine12x16_with_params(4, 3, 5, buf, FALSE);
-	DisplayOneLine12x16_with_params(64, 3, 1, "V", FALSE);
+	DisplayOneLine12x16_with_params(64, 3, 1, "v", FALSE);
 	
 }
 

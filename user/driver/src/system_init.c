@@ -449,7 +449,8 @@ void ADC_Configuration()
 {
 	//V_IOUT_adcInit();
 	//A24IN_adcInit();
-	ADC_IN_adcInit();	
+	//ADC_IN_adcInit();	
+	ADC_DMAS_adcInit();
 }
 
 void Flash_Configuration(uint8_t eraseFlag)
